@@ -1,4 +1,9 @@
 <script>
+
+  import Range from "./Range.svelte"	
+	let value = 42;
+	let theme = "default";
+
   import {
     useForm,
     validators,
@@ -57,12 +62,44 @@
 <br />
 <button disabled={!$form.valid} on:click={handleLogin}>Login</button>
 
-<!-- <pre>
-{JSON.stringify($form, null, " ")}
-</pre> -->
+
+<div class="purple-theme">
+	<label for="basic-range">Opacity Level</label>
+	<Range on:change={(e) => value = e.detail.value} id="basic-slider" />
+</div>
+<h3>
+	{value}
+</h3>
+
+
 <style>
   :global(.touched:invalid) {
     border-color: red;
     outline-color: red;
   }
+
+
+  .purple-theme {
+		--track-focus: #C368FF;
+		--track-highlight-bgcolor: #C368FF;
+		--track-highlight-bg: linear-gradient(90deg, #C368FF, #C965FF);
+		--thumb-holding-outline: rgba(191, 102, 251, 0.3);
+		--tooltip-bgcolor: #C368FF;
+		--tooltip-bg: linear-gradient(45deg, #C368FF, #C965FF);
+	}
+	
+	.theme-buttons {
+		display: flex;
+		justify-content: center;
+	}
+
+	h3 {
+		text-align: center;
+	}
+	
+	label {
+		margin: 8px;
+		font-size: 16px;
+		font-weight: 600;
+	}
 </style>

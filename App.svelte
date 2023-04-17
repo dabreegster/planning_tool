@@ -10,12 +10,14 @@
   import LoadGeojson from "./components/LoadGeojson.svelte";
   import ScoreLegend from "./components/ScoreLegend.svelte";
   import PdfDownload from "./components/PdfDownload.svelte";
+  import OpacitySlider from "./components/OpacitySlider.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
   let login_password = "connect";
   let squareID;
+  let tileOpacity;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -33,10 +35,11 @@
   </div>
   <div>
     <Map {innerHeight}>
-      <TileLayer />
+      <OpacitySlider bind:tileOpacity/>
+      <TileLayer {tileOpacity}/>
       <LoadGeojson bind:squareID />
       <PdfDownload {squareID} />
-      <ScoreLegend/>
+      <ScoreLegend {tileOpacity}/>
     </Map>
   </div>
 {/if}

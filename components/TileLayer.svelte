@@ -1,10 +1,12 @@
 <script>
-  import { onMount, getContext } from "svelte";
+  import { onMount, getContext, setContext } from "svelte";
 
   const { getMap } = getContext("map");
   const map = getMap();
 
+  export let tileOpacity;
   let scoreLayer = "Hide";
+
   let PMTILES_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_test.pmtiles";
   const source = "blackpool_test";
@@ -55,10 +57,16 @@
             "#053061",
           ],
           // "fill-outline-color": "rgba(0, 0, 0, 0.2)",
-          "fill-opacity": 0.7,
+          "fill-opacity": tileOpacity/100,
         },
       });
     }
+  }
+  $: setLayer();
+
+  $: {
+    setContext("tileOpacity", tileOpacity); 
+    setLayer();
   }
 
   function scoreTypes() {
@@ -90,7 +98,7 @@
   <label
     class="govuk-label"
     for="scoreLayer"
-    style="margin-right: 10px; margin-top: -2px; font-size: 1.8rem;"
+    style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
   >
     Scores:
   </label>
@@ -111,7 +119,7 @@
   div {
     z-index: 1;
     position: absolute;
-    top: 5px;
+    top: 95px;
     left: 10px;
     background: white;
     padding: 10px;

@@ -1,5 +1,6 @@
 <script>
-  // TODO Share with BaseScoreLayer
+  export let tileOpacity;
+
   let paddedNumbers = [
     0,
     " ",
@@ -76,12 +77,12 @@
   let colours = getHexColors();
 </script>
 
-<div class="sidebar" style="height: 140px;">
+<div class="box">
   <div class="legendtitle">Connectivity score</div>
   <br />
   <div class="legend">
     {#each colours as colour}
-      <div class="square" style="background-color: {colour};" />
+      <div class="square" style="background-color: {colour}; opacity: {tileOpacity/100};" />
     {/each}
   </div>
 
@@ -96,7 +97,7 @@
 
 <style>
   .legendtitle {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
   .legend {
     display: flex;
@@ -104,17 +105,16 @@
   .square {
     width: 4px;
     height: 50px;
-    opacity: 0.7;
   }
   .numbers {
     width: 35px;
     height: 10px;
     color: black;
     opacity: 1;
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
-  .sidebar {
+  .box {
     background-color: white;
     position: absolute;
     width: 430px;

@@ -103,7 +103,7 @@
   }
 </script>
 
-<button class="govuk-label" style="font-size: 1.8rem;" on:click={resetMapAndID}
+<button class="govuk-label" style="font-size: 1.5rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
 </button>
 
@@ -111,7 +111,7 @@
   button {
     z-index: 1;
     position: absolute;
-    top: 70px;
+    top: 160px;
     left: 10px;
     background: white;
     padding: 10px;
