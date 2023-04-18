@@ -11,6 +11,7 @@
   import ScoreLegend from "./components/ScoreLegend.svelte";
   import PdfDownload from "./components/PdfDownload.svelte";
   import OpacitySlider from "./components/OpacitySlider.svelte";
+  import SnapToPostcode from "./components/SnapToPostcode.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -40,6 +41,7 @@
       <LoadGeojson bind:squareID />
       <PdfDownload {squareID} />
       <ScoreLegend {tileOpacity} />
+      <SnapToPostcode />
     </Map>
   </div>
 {/if}

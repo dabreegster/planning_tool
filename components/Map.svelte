@@ -59,7 +59,6 @@
   onDestroy(() => {
     map.remove();
   });
-
 </script>
 
 <div style="height: {innerHeight - 113}px" bind:this={mapContainer}>
