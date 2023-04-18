@@ -82,7 +82,10 @@
   <br />
   <div class="legend">
     {#each colours as colour}
-      <div class="square" style="background-color: {colour}; opacity: {tileOpacity/100};" />
+      <div
+        class="square"
+        style="background-color: {colour}; opacity: {tileOpacity / 100};"
+      />
     {/each}
   </div>
 

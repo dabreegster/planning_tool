@@ -1,8 +1,7 @@
 <script>
-
-  import Range from "./Range.svelte"	
-	let value = 42;
-	let theme = "default";
+  import Range from "./Range.svelte";
+  let value = 42;
+  let theme = "default";
 
   import {
     useForm,
@@ -62,15 +61,13 @@
 <br />
 <button disabled={!$form.valid} on:click={handleLogin}>Login</button>
 
-
 <div class="purple-theme">
-	<label for="basic-range">Opacity Level</label>
-	<Range on:change={(e) => value = e.detail.value} id="basic-slider" />
+  <label for="basic-range">Opacity Level</label>
+  <Range on:change={(e) => (value = e.detail.value)} id="basic-slider" />
 </div>
 <h3>
-	{value}
+  {value}
 </h3>
-
 
 <style>
   :global(.touched:invalid) {
@@ -78,28 +75,27 @@
     outline-color: red;
   }
 
-
   .purple-theme {
-		--track-focus: #C368FF;
-		--track-highlight-bgcolor: #C368FF;
-		--track-highlight-bg: linear-gradient(90deg, #C368FF, #C965FF);
-		--thumb-holding-outline: rgba(191, 102, 251, 0.3);
-		--tooltip-bgcolor: #C368FF;
-		--tooltip-bg: linear-gradient(45deg, #C368FF, #C965FF);
-	}
-	
-	.theme-buttons {
-		display: flex;
-		justify-content: center;
-	}
+    --track-focus: #c368ff;
+    --track-highlight-bgcolor: #c368ff;
+    --track-highlight-bg: linear-gradient(90deg, #c368ff, #c965ff);
+    --thumb-holding-outline: rgba(191, 102, 251, 0.3);
+    --tooltip-bgcolor: #c368ff;
+    --tooltip-bg: linear-gradient(45deg, #c368ff, #c965ff);
+  }
 
-	h3 {
-		text-align: center;
-	}
-	
-	label {
-		margin: 8px;
-		font-size: 16px;
-		font-weight: 600;
-	}
+  .theme-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  label {
+    margin: 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
 </style>

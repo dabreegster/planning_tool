@@ -11,7 +11,6 @@
   export let squareInfoGeoJson;
   export let squareID;
 
-
   function emptyGeojson() {
     return {
       type: "FeatureCollection",
@@ -51,7 +50,7 @@
     let resp = await callApi(req);
     if (resp !== "click_not_on_square") {
       squareInfoGeoJson = resp;
-      squareID = squareInfoGeoJson['name']
+      squareID = squareInfoGeoJson["name"];
     }
   });
 

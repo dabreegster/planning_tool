@@ -17,7 +17,7 @@
       type: "vector",
       url: "pmtiles://" + PMTILES_URL,
     });
-    setLayer();
+    // setLayer();
   });
 
   function setLayer() {
@@ -57,7 +57,7 @@
             "#053061",
           ],
           // "fill-outline-color": "rgba(0, 0, 0, 0.2)",
-          "fill-opacity": tileOpacity/100,
+          "fill-opacity": tileOpacity / 100,
         },
       });
     }
@@ -65,7 +65,7 @@
   $: setLayer();
 
   $: {
-    setContext("tileOpacity", tileOpacity); 
+    setContext("tileOpacity", tileOpacity);
     setLayer();
   }
 

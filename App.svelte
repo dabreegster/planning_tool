@@ -35,11 +35,11 @@
   </div>
   <div>
     <Map {innerHeight}>
-      <OpacitySlider bind:tileOpacity/>
-      <TileLayer {tileOpacity}/>
+      <OpacitySlider bind:tileOpacity />
+      <TileLayer {tileOpacity} />
       <LoadGeojson bind:squareID />
       <PdfDownload {squareID} />
-      <ScoreLegend {tileOpacity}/>
+      <ScoreLegend {tileOpacity} />
     </Map>
   </div>
 {/if}

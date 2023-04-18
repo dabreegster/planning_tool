@@ -59,6 +59,7 @@
   onDestroy(() => {
     map.remove();
   });
+
 </script>
 
 <div style="height: {innerHeight - 113}px" bind:this={mapContainer}>
@@ -69,7 +70,7 @@
 
 <style>
   :global(.mapboxgl-ctrl-group > button) {
-  width: 50px;
-  height: 50px;
+    width: 50px;
+    height: 50px;
   }
 </style>
