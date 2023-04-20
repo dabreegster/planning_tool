@@ -43,11 +43,12 @@
 
   map.on("click", async function (e) {
     console.log(`Lookup square for ${e.lngLat}`);
+    console.time("square API");
     let info = await getSquareInfo(e.lngLat);
+    console.timeEnd("square API");
     if (info == "click_not_on_square") {
       return;
     }
-    console.log(`Got square info ${JSON.stringify(info)}`);
     squareID = info.name;
 
     // Now make the floodfill request
@@ -56,15 +57,17 @@
       // TODO Set through UI
       trip_start_seconds: 30000,
     };
+    console.time("floodfill API");
     let resp = await callFloodfillApi(req);
+    console.timeEnd("floodfill API");
 
     dataChanged(resp);
   });
 
   function dataChanged(resp) {
     let gj = emptyGeojson();
-    window.x = resp;
 
+    console.time("Build GJ data");
     // Circles for destinations
     for (let [
       purpose,
@@ -107,13 +110,13 @@
         },
       });
     }
-    console.log(
-      `Max link scores per purpose: ${JSON.stringify(maxPerPurpose)}`
-    );
+    console.timeEnd("Build GJ data");
 
     map.getSource(source).setData(gj);
 
+    console.time("Set layers");
     setLayers();
+    console.timeEnd("Set layers");
   }
 
   function setLayers() {
