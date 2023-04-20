@@ -128,7 +128,7 @@
     map.addLayer({
       source,
       id: pointLayer,
-      filter: ["==", "$type", "Point"],
+      filter: ["all", ["==", "$type", "Point"], ["==", "purpose", purposeIdx]],
       type: "circle",
       paint: {
         "circle-radius": 5.0,
