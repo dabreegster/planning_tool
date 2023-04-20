@@ -26,28 +26,6 @@
 
   onMount(() => {
     map.addSource(source, { type: "geojson", data: emptyGeojson() });
-    map.addLayer({
-      source,
-      id: pointLayer,
-      filter: ["==", "$type", "Point"],
-      type: "circle",
-      paint: {
-        "circle-radius": 5.0,
-        "circle-color": "black",
-        "circle-opacity": 1.0,
-      },
-    });
-    map.addLayer({
-      source,
-      id: lineLayer,
-      filter: ["==", "$type", "LineString"],
-      type: "line",
-      paint: {
-        "line-color": "black",
-        "line-width": 5.0,
-        "line-opacity": 1.0,
-      },
-    });
   });
   onDestroy(() => {
     for (let layer of [pointLayer, lineLayer]) {
@@ -105,18 +83,67 @@
     }
 
     // Lines for links
+    let maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
     for (let [linkID, link] of Object.entries(resp[0].link_coordinates)) {
+      let scorePerPurpose = resp[0].per_link_score_per_purpose[linkID];
+      for (let [i, score] of scorePerPurpose.entries()) {
+        maxPerPurpose[i] = Math.max(maxPerPurpose[i], score);
+      }
+
       gj.features.push({
         type: "Feature",
         geometry: {
           type: "LineString",
           coordinates: [link.start_node_longlat, link.end_node_longlat],
         },
-        properties: {},
+        properties: {
+          business: scorePerPurpose[0],
+          education: scorePerPurpose[1],
+          entertainment: scorePerPurpose[2],
+          shopping: scorePerPurpose[3],
+          visit_friends: scorePerPurpose[4],
+        },
       });
     }
+    console.log(
+      `Max link scores per purpose: ${JSON.stringify(maxPerPurpose)}`
+    );
 
     map.getSource(source).setData(gj);
+
+    // Reset layers here. We can't configure them once, because the score scaling is dynamic
+    for (let layer of [pointLayer, lineLayer]) {
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    }
+    map.addLayer({
+      source,
+      id: pointLayer,
+      filter: ["==", "$type", "Point"],
+      type: "circle",
+      paint: {
+        "circle-radius": 5.0,
+        "circle-color": "black",
+        "circle-opacity": 1.0,
+      },
+    });
+    map.addLayer({
+      source,
+      id: lineLayer,
+      filter: ["==", "$type", "LineString"],
+      type: "line",
+      paint: {
+        "line-color": "black",
+        // sqrt(x) / sqrt(max) * 10
+        "line-width": [
+          "*",
+          10,
+          ["/", ["sqrt", ["get", "business"]], Math.sqrt(maxPerPurpose[0])],
+        ],
+        "line-opacity": 1.0,
+      },
+    });
   }
 
   map.on("contextmenu", function () {
