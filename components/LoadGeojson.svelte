@@ -37,6 +37,17 @@
         "circle-opacity": 1.0,
       },
     });
+    map.addLayer({
+      source,
+      id: lineLayer,
+      filter: ["==", "$type", "LineString"],
+      type: "line",
+      paint: {
+        "line-color": "black",
+        "line-width": 5.0,
+        "line-opacity": 1.0,
+      },
+    });
   });
   onDestroy(() => {
     for (let layer of [pointLayer, lineLayer]) {
@@ -91,6 +102,18 @@
           },
         });
       }
+    }
+
+    // Lines for links
+    for (let [linkID, link] of Object.entries(resp[0].link_coordinates)) {
+      gj.features.push({
+        type: "Feature",
+        geometry: {
+          type: "LineString",
+          coordinates: [link.start_node_longlat, link.end_node_longlat],
+        },
+        properties: {},
+      });
     }
 
     map.getSource(source).setData(gj);
