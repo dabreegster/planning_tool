@@ -11,6 +11,8 @@
   const lineLayer = "floodLines";
 
   export let squareID;
+  let maxPerPurpose;
+  let purpose = "business";
 
   function emptyGeojson() {
     return {
@@ -56,10 +58,10 @@
     };
     let resp = await callFloodfillApi(req);
 
-    addStuffToMap(resp);
+    dataChanged(resp);
   });
 
-  function addStuffToMap(resp) {
+  function dataChanged(resp) {
     let gj = emptyGeojson();
     window.x = resp;
 
@@ -83,7 +85,7 @@
     }
 
     // Lines for links
-    let maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
+    maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
     for (let [linkID, link] of Object.entries(resp[0].link_coordinates)) {
       let scorePerPurpose = resp[0].per_link_score_per_purpose[linkID];
       for (let [i, score] of scorePerPurpose.entries()) {
@@ -110,6 +112,12 @@
     );
 
     map.getSource(source).setData(gj);
+
+    setLayers();
+  }
+
+  function setLayers() {
+    let purposeIdx = purposes.indexOf(purpose);
 
     // Reset layers here. We can't configure them once, because the score scaling is dynamic
     for (let layer of [pointLayer, lineLayer]) {
@@ -139,7 +147,11 @@
         "line-width": [
           "*",
           10,
-          ["/", ["sqrt", ["get", "business"]], Math.sqrt(maxPerPurpose[0])],
+          [
+            "/",
+            ["sqrt", ["get", purpose]],
+            Math.sqrt(maxPerPurpose[purposeIdx]),
+          ],
         ],
         "line-opacity": 1.0,
       },
@@ -149,7 +161,36 @@
   map.on("contextmenu", function () {
     resetMapAndID();
   });
+
+  let purposes = [
+    "business",
+    "education",
+    "entertainment",
+    "shopping",
+    "visit_friends",
+  ];
 </script>
+
+<div class="govuk-form-group" style="display: flex;">
+  <label
+    class="govuk-label"
+    for="purpose"
+    style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
+  >
+    Purpose:
+  </label>
+  <select
+    class="govuk-select"
+    id="purpose"
+    name="purpose"
+    bind:value={purpose}
+    on:change={setLayers}
+  >
+    {#each purposes as x}
+      <option value={x}>{x}</option>
+    {/each}
+  </select>
+</div>
 
 <button class="govuk-label" style="font-size: 1.5rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
@@ -165,5 +206,21 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  div {
+    z-index: 1;
+    position: absolute;
+    top: 275px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  select {
+    font-size: 1.3rem;
+    padding: 4px 8px;
   }
 </style>
