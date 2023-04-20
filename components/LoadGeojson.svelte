@@ -107,6 +107,7 @@
           entertainment: scorePerPurpose[2],
           shopping: scorePerPurpose[3],
           visit_friends: scorePerPurpose[4],
+          link_type: link.start_node_longlat[2],
         },
       });
     }
@@ -145,7 +146,16 @@
       filter: ["==", "$type", "LineString"],
       type: "line",
       paint: {
-        "line-color": "black",
+        "line-color": [
+          "match",
+          ["get", "link_type"],
+          0,
+          "black",
+          1,
+          "blue",
+          // Fallback shouldn't happen
+          "red",
+        ],
         // sqrt(x) / sqrt(max) * 10
         "line-width": [
           "*",
