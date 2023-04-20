@@ -1,14 +1,15 @@
 <script>
-  import { onMount, getContext } from "svelte";
-  import { callApi } from "../api.js";
+  import { onMount, onDestroy, getContext } from "svelte";
+  import { getSquareInfo, callFloodfillApi } from "../api.js";
 
   const { getMap } = getContext("map");
 
   const map = getMap();
 
   const source = "squareInfoGeoJson";
-  const layer = "squareInfoLayer";
-  export let squareInfoGeoJson;
+  const pointLayer = "floodPoints";
+  const lineLayer = "floodLines";
+
   export let squareID;
 
   function emptyGeojson() {
@@ -17,89 +18,87 @@
       features: [],
     };
   }
-  function resetMap() {
-    squareInfoGeoJson = null;
-    if (map.getLayer(layer)) {
-      map.removeLayer(layer);
-    }
-    if (map.getLayer("polygon")) {
-      map.removeLayer("polygon");
-    }
-    for (let i = 0; i < 3; i++) {
-      const layerId = `education_${i}`;
-      if (map.getLayer(layerId)) {
-        map.removeLayer(layerId);
-      }
-    }
-  }
-  function resetID() {
-    squareID = null;
-  }
 
   function resetMapAndID() {
-    resetID();
-    resetMap();
+    squareID = null;
+    map.getSource(source).setData(squareInfoGeoJson);
   }
 
   onMount(() => {
     map.addSource(source, { type: "geojson", data: emptyGeojson() });
+    map.addLayer({
+      source,
+      id: pointLayer,
+      filter: ["==", "$type", "Point"],
+      type: "circle",
+      paint: {
+        "circle-radius": 5.0,
+        "circle-color": "black",
+        "circle-opacity": 1.0,
+      },
+    });
+  });
+  onDestroy(() => {
+    for (let layer of [pointLayer, lineLayer]) {
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    }
+
+    if (map.getSource(source)) {
+      map.removeSource(source);
+    }
   });
 
   map.on("click", async function (e) {
-    let req = e.lngLat;
-    let resp = await callApi(req);
-    if (resp !== "click_not_on_square") {
-      squareInfoGeoJson = resp;
-      squareID = squareInfoGeoJson["name"];
+    console.log(`Lookup square for ${e.lngLat}`);
+    let info = await getSquareInfo(e.lngLat);
+    if (info == "click_not_on_square") {
+      return;
     }
+    console.log(`Got square info ${JSON.stringify(info)}`);
+    squareID = info.name;
+
+    // Now make the floodfill request
+    let req = {
+      ...info,
+      // TODO Set through UI
+      trip_start_seconds: 30000,
+    };
+    let resp = await callFloodfillApi(req);
+
+    addStuffToMap(resp);
   });
+
+  function addStuffToMap(resp) {
+    let gj = emptyGeojson();
+    window.x = resp;
+
+    // Circles for destinations
+    for (let [
+      purpose,
+      top3,
+    ] of resp[0].key_destinations_per_purpose.entries()) {
+      for (let pt of top3) {
+        gj.features.push({
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: pt,
+          },
+          properties: {
+            purpose,
+          },
+        });
+      }
+    }
+
+    map.getSource(source).setData(gj);
+  }
 
   map.on("contextmenu", function () {
     resetMapAndID();
   });
-
-  $: {
-    if (squareInfoGeoJson && map.getSource(source)) {
-      map.getSource(source).setData(squareInfoGeoJson);
-      setLayer();
-    }
-  }
-
-  function setLayer() {
-    resetMap();
-
-    map.addLayer({
-      id: "polygon",
-      source: source,
-      type: "line",
-      paint: {
-        "line-color": "#000000",
-        "line-width": 5,
-      },
-      filter: ["==", "$type", "Polygon"],
-    });
-
-    for (let i = 0; i < 3; i++) {
-      const layerId = `education_${i}`;
-      map.addLayer({
-        id: layerId,
-        source: source,
-        type: "circle",
-        paint: {
-          "circle-color": i === 0 ? "#FF8C00" : i === 1 ? "#438759" : "#570861",
-          "circle-radius": i === 0 ? 40 : i === 1 ? 32 : 21,
-          "circle-opacity": 0.8,
-          "circle-stroke-color": "#000000",
-          "circle-stroke-width": 3,
-        },
-        filter: ["all", ["==", "$type", "Point"], ["==", "name", layerId]],
-      });
-    }
-    map.moveLayer("polygon");
-    map.moveLayer("education_0");
-    map.moveLayer("education_1");
-    map.moveLayer("education_2");
-  }
 </script>
 
 <button class="govuk-label" style="font-size: 1.5rem;" on:click={resetMapAndID}

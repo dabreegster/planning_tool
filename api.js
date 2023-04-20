@@ -1,9 +1,19 @@
-const planningGeoJsonAPIEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
+const squareInfoEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
+const floodfillEndpt = "http://localhost:7328";
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
 
-// Takes a payload from  and returns the response
-export async function callApi(req) {
-  const resp = await fetch(planningGeoJsonAPIEndpt, {
+// Takes lat, lng and gives UserInputJSON for floodfillEndpt
+export async function getSquareInfo(req) {
+  const resp = await fetch(squareInfoEndpt, {
+    method: "POST",
+    headers: jsonRequestHeaders(),
+    body: JSON.stringify(req),
+  });
+  return await resp.json();
+}
+
+export async function callFloodfillApi(req) {
+  const resp = await fetch(floodfillEndpt + "/floodfill_pt/", {
     method: "POST",
     headers: jsonRequestHeaders(),
     body: JSON.stringify(req),
