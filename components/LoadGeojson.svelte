@@ -9,6 +9,7 @@
   const source = "squareInfoGeoJson";
   const pointLayer = "floodPoints";
   const lineLayer = "floodLines";
+  const squareLayer = "squareOutline"
   let startTimeSeconds = 28800;
 
   export let squareID;
@@ -31,7 +32,7 @@
     map.addSource(source, { type: "geojson", data: emptyGeojson() });
   });
   onDestroy(() => {
-    for (let layer of [pointLayer, lineLayer]) {
+    for (let layer of [pointLayer, lineLayer, squareLayer]) {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
       }
@@ -52,6 +53,9 @@
         return;
       }
       squareID = info.name;
+      // set square coords to make square in question
+      let squareCoords = info['square_coords']
+      delete info['square_coords']
 
       // Now make the floodfill request
       let req = {
@@ -62,7 +66,7 @@
       let resp = await callFloodfillApi(req);
       console.timeEnd("floodfill API");
 
-      dataChanged(resp);
+      dataChanged(resp, squareCoords);
     } else {
       alert("Start time must be between 06:00 and 22:00");
     }
@@ -73,7 +77,7 @@
       return [parseFloat(long), parseFloat(lat), parseInt(linkType)];
   }
 
-  function dataChanged(resp) {
+  function dataChanged(resp, squareCoords) {
     let gj = emptyGeojson();
 
     console.time("Build GJ data");
@@ -128,6 +132,18 @@
           link_type: linkType,
         },
       });
+      // square for outline
+      gj.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: [squareCoords],
+        },
+        properties : {
+          name:"square"
+        }
+
+      });
     }
     console.timeEnd("Build GJ data");
 
@@ -142,7 +158,7 @@
     let purposeIdx = purposes.indexOf(purpose);
 
     // Reset layers here. We can't configure them once, because the score scaling is dynamic
-    for (let layer of [pointLayer, lineLayer]) {
+    for (let layer of [pointLayer, lineLayer, squareLayer]) {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
       }
@@ -187,6 +203,17 @@
           ],
         ],
         "line-opacity": 1.0,
+      },
+    });
+    // TODO make smoother
+    map.addLayer({
+      source,
+      id: squareLayer,
+      filter: ["all", ["==", "$type", "Polygon"], ["==", "name", "square"]],
+      type: "line",
+      paint: {
+        "line-color": "#000000",
+        "line-width": 2,
       },
     });
   }
