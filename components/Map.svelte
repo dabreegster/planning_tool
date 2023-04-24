@@ -19,7 +19,7 @@
   let loaded = false;
 
   let PMTILES_URL =
-    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_test.pmtiles";
+    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
   const p = new pmtiles.PMTiles(PMTILES_URL);
   protocol.add(p);
 

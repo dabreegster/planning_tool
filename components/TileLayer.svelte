@@ -9,12 +9,12 @@
   let scoreLayer = "Hide";
 
   let PMTILES_URL =
-    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_test.pmtiles";
-  const source = "blackpool_test";
-  const layer = "blackpool_test_grid";
+    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
+  const source = "blackpool_scores_source";
+  const layer = "blackpool_scores";
 
   onMount(async () => {
-    map.addSource("blackpool_test", {
+    map.addSource("blackpool_scores_source", {
       type: "vector",
       url: "pmtiles://" + PMTILES_URL,
     });
@@ -29,7 +29,7 @@
       map.addLayer({
         id: layer,
         source: source,
-        "source-layer": "blackpool_test",
+        "source-layer": "blackpool_scores",
         type: "fill",
         paint: {
           "fill-color": [
@@ -72,26 +72,15 @@
 
   function scoreTypes() {
     let purposes = [
+      "Hide",
       "Business",
       "Education",
       "Shopping",
       "Residential",
       "Entertainment",
+      "Overall"
     ];
-    let modes = ["Driving", "Walking", "Cycling", "PT"];
-    let all = ["Hide", "Overall"];
-
-    for (let mode of modes) {
-      all.push(`Overall ${mode}`);
-    }
-
-    for (let purpose of purposes) {
-      all.push(`Overall ${purpose}`);
-      for (let mode of modes) {
-        all.push(`${purpose} by ${mode}`);
-      }
-    }
-    return all;
+    return purposes;
   }
 </script>
 
