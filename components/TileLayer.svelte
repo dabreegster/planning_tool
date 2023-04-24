@@ -6,7 +6,7 @@
 
   export let tileOpacity;
   // TODO Revert, this is nicer for development
-  let scoreLayer = "Overall";
+  let scoreLayer = "Hide";
 
   let PMTILES_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_test.pmtiles";
