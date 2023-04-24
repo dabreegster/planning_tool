@@ -9,10 +9,11 @@
   const source = "squareInfoGeoJson";
   const pointLayer = "floodPoints";
   const lineLayer = "floodLines";
+  let startTimeSeconds = 28800;
 
   export let squareID;
   let maxPerPurpose;
-  let purpose = "business";
+  let purpose = "Business";
 
   function emptyGeojson() {
     return {
@@ -42,27 +43,35 @@
   });
 
   map.on("click", async function (e) {
-    console.log(`Lookup square for ${e.lngLat}`);
-    console.time("square API");
-    let info = await getSquareInfo(e.lngLat);
-    console.timeEnd("square API");
-    if (info == "click_not_on_square") {
-      return;
+    if (startTimeSeconds >= 21600  && startTimeSeconds <= 79200 ) {
+      console.log(`Lookup square for ${e.lngLat}`);
+      console.time("square API");
+      let info = await getSquareInfo(e.lngLat);
+      console.timeEnd("square API");
+      if (info == "click_not_on_square") {
+        return;
+      }
+      squareID = info.name;
+
+      // Now make the floodfill request
+      let req = {
+        ...info,
+        trip_start_seconds: startTimeSeconds,
+      };
+      console.time("floodfill API");
+      let resp = await callFloodfillApi(req);
+      console.timeEnd("floodfill API");
+
+      dataChanged(resp);
+    } else {
+      alert("Start time must be between 06:00 and 22:00");
     }
-    squareID = info.name;
-
-    // Now make the floodfill request
-    let req = {
-      ...info,
-      // TODO Set through UI
-      trip_start_seconds: 30000,
-    };
-    console.time("floodfill API");
-    let resp = await callFloodfillApi(req);
-    console.timeEnd("floodfill API");
-
-    dataChanged(resp);
   });
+
+  function convertStringToFloatArr(string) {
+    let [long, lat, linkType] = string.split(",");
+      return [parseFloat(long), parseFloat(lat), parseInt(linkType)];
+  }
 
   function dataChanged(resp) {
     let gj = emptyGeojson();
@@ -90,24 +99,33 @@
     // Lines for links
     maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
     for (let [linkID, link] of Object.entries(resp[0].link_coordinates)) {
+      let linkType;
       let scorePerPurpose = resp[0].per_link_score_per_purpose[linkID];
       for (let [i, score] of scorePerPurpose.entries()) {
         maxPerPurpose[i] = Math.max(maxPerPurpose[i], score);
+      }
+      let [startLong, startLat, startLinkType] = convertStringToFloatArr(link[0])
+      let [endLong, endLat, endLinkType] = convertStringToFloatArr(link[1])
+      // check both start and end are PT, rest are walking
+      if (startLinkType + endLinkType == 2 ) {
+        linkType = 1
+      } else {
+        linkType = 0
       }
 
       gj.features.push({
         type: "Feature",
         geometry: {
           type: "LineString",
-          coordinates: [link.start_node_longlat, link.end_node_longlat],
+          coordinates: [[startLong, startLat], [endLong, endLat]],
         },
         properties: {
-          business: scorePerPurpose[0],
-          education: scorePerPurpose[1],
-          entertainment: scorePerPurpose[2],
-          shopping: scorePerPurpose[3],
-          visit_friends: scorePerPurpose[4],
-          link_type: link.start_node_longlat[2],
+          Business: scorePerPurpose[0],
+          Education: scorePerPurpose[1],
+          Entertainment: scorePerPurpose[2],
+          Shopping: scorePerPurpose[3],
+          Residential: scorePerPurpose[4],
+          link_type: linkType,
         },
       });
     }
@@ -135,9 +153,11 @@
       filter: ["all", ["==", "$type", "Point"], ["==", "purpose", purposeIdx]],
       type: "circle",
       paint: {
-        "circle-radius": 5.0,
-        "circle-color": "black",
+        "circle-radius": 10.0,
+        "circle-color": "white",
         "circle-opacity": 1.0,
+        "circle-stroke-color": "black",
+        "circle-stroke-width": 2,
       },
     });
     map.addLayer({
@@ -150,9 +170,9 @@
           "match",
           ["get", "link_type"],
           0,
-          "black",
+          "#1f493d",
           1,
-          "blue",
+          "#EE7C0E",
           // Fallback shouldn't happen
           "red",
         ],
@@ -176,15 +196,21 @@
   });
 
   let purposes = [
-    "business",
-    "education",
-    "entertainment",
-    "shopping",
-    "visit_friends",
+    "Business",
+    "Education",
+    "Entertainment",
+    "Shopping",
+    "Residential",
   ];
+
+  function updateStartTime(timeString) {
+    let [hours, minutes] = timeString.target.value.split(":");
+    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60
+  }
+
 </script>
 
-<div class="govuk-form-group" style="display: flex;">
+<div class="purposeBox" style="display: flex;">
   <label
     class="govuk-label"
     for="purpose"
@@ -209,6 +235,24 @@
   >Clear polygons (right click)
 </button>
 
+<div
+class="startTimeSelection">
+  <label for="start-time-input">Start Time:</label>
+  <input
+    id="start-time-input"
+    type="time"
+    name="start-time-input"
+    value = "08:00"
+    min= "06:00"
+    max="22:00"
+    style="font-size: 16px; padding:5px"
+    on:change={(e) => updateStartTime(e)}
+  />
+  <span class="validity"></span>
+</div>
+
+
+
 <style>
   button {
     z-index: 1;
@@ -221,7 +265,7 @@
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
   }
 
-  div {
+  .purposeBox {
     z-index: 1;
     position: absolute;
     top: 275px;
@@ -235,5 +279,32 @@
   select {
     font-size: 1.3rem;
     padding: 4px 8px;
+  }
+  .startTimeSelection {
+    z-index: 1;
+    position: absolute;
+    top: 340px;
+    left: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem;
+  }
+
+  input + span {
+    padding-right: 30px;
+  }
+
+  input:invalid + span::after {
+    position: absolute;
+    content: "✖";
+    padding-left: 5px;
+  }
+
+  input:valid + span::after {
+    position: absolute;
+    content: "✓";
+    padding-left: 5px;
   }
 </style>
