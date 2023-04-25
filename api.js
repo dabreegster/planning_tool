@@ -1,5 +1,5 @@
 const squareInfoEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
-const floodfillEndpt = "https://65f8-35-246-27-146.ngrok-free.app";
+const floodfillEndpt = "https://3b19-35-246-27-146.ngrok-free.app";
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
 
 // Takes lat, lng and gives UserInputJSON for floodfillEndpt
