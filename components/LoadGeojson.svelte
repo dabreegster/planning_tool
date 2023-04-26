@@ -130,21 +130,23 @@
           Shopping: scorePerPurpose[3],
           Residential: scorePerPurpose[4],
           link_type: linkType,
+          name: "link"
         },
       });
-      // square for outline
-      gj.features.push({
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: [squareCoords],
-        },
-        properties : {
-          name:"square"
-        }
-
-      });
+      
     }
+    // square for outline
+    gj.features.push({
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: squareCoords,
+      },
+      properties : {
+        name:"square"
+      }
+
+    });
     console.timeEnd("Build GJ data");
 
     map.getSource(source).setData(gj);
@@ -179,7 +181,7 @@
     map.addLayer({
       source,
       id: lineLayer,
-      filter: ["==", "$type", "LineString"],
+      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "link"]],
       type: "line",
       paint: {
         "line-color": [
@@ -205,15 +207,14 @@
         "line-opacity": 1.0,
       },
     });
-    // TODO make smoother
     map.addLayer({
       source,
       id: squareLayer,
-      filter: ["all", ["==", "$type", "Polygon"], ["==", "name", "square"]],
+      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
       type: "line",
       paint: {
         "line-color": "#000000",
-        "line-width": 2,
+        "line-width": 3,
       },
     });
   }
