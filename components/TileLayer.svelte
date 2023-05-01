@@ -8,6 +8,36 @@
   // TODO Revert, this is nicer for development
   let scoreLayer = "Hide";
 
+  // let PMTILES_URL =
+  //   // "https://storage.googleapis.com/very-nice-tiles-bucket/entertainmentSharkbng.pmtiles";
+  //   "https://storage.googleapis.com/very-nice-tiles-bucket/gcpshark.pmtiles";
+  // const source = "sharkbng_source";
+  // const layer = "sharkbng";
+
+  // onMount(async () => {
+  //   map.addSource(source, {
+  //     type: "raster",
+  //     url: "pmtiles://" + PMTILES_URL,
+  //   });
+  //   setLayer();
+  // });
+
+  // function setLayer() {
+  //   if (map.getLayer(layer)) {
+  //     map.removeLayer(layer);
+  //   }
+  //   if (scoreLayer == "Hide") {
+  //     map.addLayer({
+  //       id: layer,
+  //       type: "raster",
+  //       source: source,
+  //       paint: {
+  //         "raster-opacity": tileOpacity / 100,
+  //       }
+  //     });
+  //   }
+  // }
+
   let PMTILES_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
   const source = "blackpool_scores_source";
