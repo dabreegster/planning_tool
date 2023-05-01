@@ -1,5 +1,5 @@
 <script>
-  // import "govuk-frontend/govuk/all.scss";
+  import "govuk-frontend/govuk/all.scss";
   import "carbon-components-svelte/css/white.css";
 
   import LandingPage from "./components/LandingPage.svelte";
