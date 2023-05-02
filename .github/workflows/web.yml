@@ -20,7 +20,7 @@ jobs:
 
       - run: npm run setup-govuk-assets
 
-      - run: npm run build --if-present -- --base=/atip/
+      - run: npm run build --if-present
 
       - name: Publish
         uses: peaceiris/actions-gh-pages@v3
