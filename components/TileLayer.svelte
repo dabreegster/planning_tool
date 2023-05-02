@@ -8,91 +8,91 @@
   // TODO Revert, this is nicer for development
   let scoreLayer = "Hide";
 
-  // let PMTILES_URL =
-  //   // "https://storage.googleapis.com/very-nice-tiles-bucket/entertainmentSharkbng.pmtiles";
-  //   "https://storage.googleapis.com/very-nice-tiles-bucket/gcpshark.pmtiles";
-  // const source = "sharkbng_source";
-  // const layer = "sharkbng";
-
-  // onMount(async () => {
-  //   map.addSource(source, {
-  //     type: "raster",
-  //     url: "pmtiles://" + PMTILES_URL,
-  //   });
-  //   setLayer();
-  // });
-
-  // function setLayer() {
-  //   if (map.getLayer(layer)) {
-  //     map.removeLayer(layer);
-  //   }
-  //   if (scoreLayer == "Hide") {
-  //     map.addLayer({
-  //       id: layer,
-  //       type: "raster",
-  //       source: source,
-  //       paint: {
-  //         "raster-opacity": tileOpacity / 100,
-  //       }
-  //     });
-  //   }
-  // }
-
   let PMTILES_URL =
-    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
-  const source = "blackpool_scores_source";
-  const layer = "blackpool_scores";
+    // "https://storage.googleapis.com/very-nice-tiles-bucket/entertainmentSharkbng.pmtiles";
+    "https://storage.googleapis.com/very-nice-tiles-bucket/ew_Entertainment.pmtiles";
+  const source = "sharkbng_source";
+  const layer = "sharkbng";
 
   onMount(async () => {
-    map.addSource("blackpool_scores_source", {
-      type: "vector",
+    map.addSource(source, {
+      type: "raster",
       url: "pmtiles://" + PMTILES_URL,
     });
-    // setLayer();
+    setLayer();
   });
 
   function setLayer() {
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
-    if (scoreLayer != "Hide") {
+    if (scoreLayer == "Hide") {
       map.addLayer({
         id: layer,
+        type: "raster",
         source: source,
-        "source-layer": "blackpool_scores",
-        type: "fill",
         paint: {
-          "fill-color": [
-            "interpolate",
-            ["linear"],
-            ["get", scoreLayer],
-            10,
-            "#67001f",
-            20,
-            "#b2182b",
-            30,
-            "#d6604d",
-            40,
-            "#f4a582",
-            50,
-            "#fddbc7",
-            60,
-            "#d1e5f0",
-            70,
-            "#92c5de",
-            80,
-            "#4393c3",
-            90,
-            "#2166ac",
-            100,
-            "#053061",
-          ],
-          // "fill-outline-color": "rgba(0, 0, 0, 0.2)",
-          "fill-opacity": tileOpacity / 100,
-        },
+          "raster-opacity": tileOpacity / 100,
+        }
       });
     }
   }
+
+  // let PMTILES_URL =
+  //   "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
+  // const source = "blackpool_scores_source";
+  // const layer = "blackpool_scores";
+
+  // onMount(async () => {
+  //   map.addSource("blackpool_scores_source", {
+  //     type: "vector",
+  //     url: "pmtiles://" + PMTILES_URL,
+  //   });
+  //   // setLayer();
+  // });
+
+  // function setLayer() {
+  //   if (map.getLayer(layer)) {
+  //     map.removeLayer(layer);
+  //   }
+  //   if (scoreLayer != "Hide") {
+  //     map.addLayer({
+  //       id: layer,
+  //       source: source,
+  //       "source-layer": "blackpool_scores",
+  //       type: "fill",
+  //       paint: {
+  //         "fill-color": [
+  //           "interpolate",
+  //           ["linear"],
+  //           ["get", scoreLayer],
+  //           10,
+  //           "#67001f",
+  //           20,
+  //           "#b2182b",
+  //           30,
+  //           "#d6604d",
+  //           40,
+  //           "#f4a582",
+  //           50,
+  //           "#fddbc7",
+  //           60,
+  //           "#d1e5f0",
+  //           70,
+  //           "#92c5de",
+  //           80,
+  //           "#4393c3",
+  //           90,
+  //           "#2166ac",
+  //           100,
+  //           "#053061",
+  //         ],
+  //         // "fill-outline-color": "rgba(0, 0, 0, 0.2)",
+  //         "fill-opacity": tileOpacity / 100,
+  //       },
+  //     });
+  //   }
+  // }
   $: setLayer();
 
   $: {
