@@ -15,6 +15,7 @@
   export let squareID;
   let maxPerPurpose;
   let purpose = "Business";
+  export let hoverInfo = null;
 
   function emptyGeojson() {
     return {
@@ -62,9 +63,11 @@
         ...info,
         trip_start_seconds: startTimeSeconds,
       };
+      console.log(req)
       console.time("floodfill API");
       let resp = await callFloodfillApi(req);
       console.timeEnd("floodfill API");
+      console.log(resp)
 
       dataChanged(resp, squareCoords);
     } else {
@@ -73,8 +76,8 @@
   });
 
   function convertStringToFloatArr(string) {
-    let [long, lat, linkType] = string.split(",");
-      return [parseFloat(long), parseFloat(lat), parseInt(linkType)];
+    let [long, lat] = string.split(",");
+      return [parseFloat(long), parseFloat(lat)];
   }
 
   function dataChanged(resp, squareCoords) {
@@ -85,7 +88,7 @@
     for (let [
       purpose,
       top3,
-    ] of resp[0].key_destinations_per_purpose.entries()) {
+    ] of resp.key_destinations_per_purpose.entries()) {
       for (let pt of top3) {
         gj.features.push({
           type: "Feature",
@@ -102,20 +105,13 @@
 
     // Lines for links
     maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
-    for (let [linkID, link] of Object.entries(resp[0].link_coordinates)) {
-      let linkType;
-      let scorePerPurpose = resp[0].per_link_score_per_purpose[linkID];
+    for (let [linkID, link] of Object.entries(resp.link_coordinates)) {
+      let scorePerPurpose = resp.per_link_score_per_purpose[linkID];
       for (let [i, score] of scorePerPurpose.entries()) {
         maxPerPurpose[i] = Math.max(maxPerPurpose[i], score);
       }
-      let [startLong, startLat, startLinkType] = convertStringToFloatArr(link[0])
-      let [endLong, endLat, endLinkType] = convertStringToFloatArr(link[1])
-      // check both start and end are PT, rest are walking
-      if (startLinkType + endLinkType == 2 ) {
-        linkType = 1
-      } else {
-        linkType = 0
-      }
+      let [startLong, startLat] = convertStringToFloatArr(link[0])
+      let [endLong, endLat] = convertStringToFloatArr(link[1])
 
       gj.features.push({
         type: "Feature",
@@ -129,9 +125,12 @@
           Entertainment: scorePerPurpose[2],
           Shopping: scorePerPurpose[3],
           Residential: scorePerPurpose[4],
-          link_type: linkType,
-          name: "link"
+          link_type: resp.link_is_pt[linkID],
+          name: "link",
+          routeName: "141",
+          ptMode: "Bus"
         },
+        id: linkID,
       });
       
     }
@@ -217,6 +216,19 @@
         "line-width": 3,
       },
     });
+
+    map.on("mousemove", lineLayer, (e) => {
+      let feature = e.features[0];
+      if (feature) {
+        hoverInfo = {
+          lngLat: e.lngLat,
+          routeName: feature.properties.routeName,
+        };
+      } else {
+        hoverInfo = null;
+      }
+      console.log(hoverInfo)
+    });
   }
 
   map.on("contextmenu", function () {
@@ -244,7 +256,7 @@
     for="purpose"
     style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
   >
-    Purpose:
+    Displayed route purpose:
   </label>
   <select
     class="govuk-select"
@@ -336,3 +348,4 @@ class="startTimeSelection">
     padding-left: 5px;
   }
 </style>
+
