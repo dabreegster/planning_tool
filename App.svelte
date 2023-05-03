@@ -1,5 +1,5 @@
 <script>
-//   import "govuk-frontend/govuk/all.scss";
+  // import "govuk-frontend/govuk/all.scss";
   import "carbon-components-svelte/css/white.css";
 
   import LandingPage from "./components/LandingPage.svelte";
@@ -12,6 +12,7 @@
   import PdfDownload from "./components/PdfDownload.svelte";
   import OpacitySlider from "./components/OpacitySlider.svelte";
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
+  import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -19,6 +20,7 @@
   let login_password = "connect";
   let squareID;
   let tileOpacity;
+  let hoverInfo
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -38,10 +40,11 @@
     <Map {innerHeight}>
       <OpacitySlider bind:tileOpacity />
       <TileLayer {tileOpacity} />
-      <LoadGeojson bind:squareID />
+      <LoadGeojson bind:squareID bind:hoverInfo />
       <PdfDownload {squareID} />
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />
+      <!-- <HoverRouteInfo {hoverInfo}/> -->
     </Map>
   </div>
 {/if}
