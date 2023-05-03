@@ -13,7 +13,7 @@
         <span class="govuk-header__logotype">
           <img
             aria-label="DfT logo"
-            src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/dft-logo-white.png"
+            src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/dft-logo-white.png"
             height="32"
             style="width:230px"
           />

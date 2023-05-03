@@ -31,7 +31,7 @@
 <br />
 <img
   aria-label="DfT logo"
-  src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/dft-landingpage-logo.png"
+  src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/dft-landingpage-logo.png"
   height="177"
   width="261"
 />
