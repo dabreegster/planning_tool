@@ -4,20 +4,26 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  export let tileOpacity;
+  export let tileOpacity = 70;
   // TODO Revert, this is nicer for development
   let scoreLayer = "Hide";
 
-  let PMTILES_URL =
-    // "https://storage.googleapis.com/very-nice-tiles-bucket/entertainmentSharkbng.pmtiles";
-    "https://storage.googleapis.com/very-nice-tiles-bucket/ew_Entertainment.pmtiles";
-  const source = "sharkbng_source";
-  const layer = "sharkbng";
+  let PMTILES_BUCKET_URL =
+    "https://storage.googleapis.com/very-nice-tiles-bucket/";
+  const layer = "tiles";
 
   onMount(async () => {
-    map.addSource(source, {
+    map.addSource("Entertainment", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_URL,
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Entertainment.pmtiles",
+    });
+    map.addSource("Education", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Education.pmtiles",
+    });
+    map.addSource("Business", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
     });
     setLayer();
   });
@@ -26,11 +32,11 @@
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
-    if (scoreLayer == "Hide") {
+    if (scoreLayer != "Hide") {
       map.addLayer({
         id: layer,
         type: "raster",
-        source: source,
+        source: scoreLayer,
         paint: {
           "raster-opacity": tileOpacity / 100,
         }
@@ -120,7 +126,7 @@
     for="scoreLayer"
     style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
   >
-    Scores:
+    Tile layer score purpose:
   </label>
   <select
     class="govuk-select"
