@@ -25,6 +25,10 @@
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
     });
+    map.addSource("Shopping", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping.pmtiles",
+    });
     setLayer();
   });
 
