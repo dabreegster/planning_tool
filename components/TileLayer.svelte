@@ -13,6 +13,10 @@
   const layer = "tiles";
 
   onMount(async () => {
+    map.addSource("Business", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
+    });
     map.addSource("Entertainment", {
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Entertainment.pmtiles",
@@ -21,13 +25,13 @@
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Education.pmtiles",
     });
-    map.addSource("Business", {
-      type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
-    });
     map.addSource("Shopping", {
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping.pmtiles",
+    });
+    map.addSource("Residential", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Residential.pmtiles",
     });
     setLayer();
   });
