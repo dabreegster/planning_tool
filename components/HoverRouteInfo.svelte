@@ -35,10 +35,12 @@
 >
   {#if hoverInfo != "no_selection"}
     {hoverInfo.routeDetails.vehicle_mode}
-    <br />
+    <br>
     Route: {hoverInfo.routeDetails.route_number}
-    <br />
-    From: {hoverInfo.routeDetails.stop_name_NaPTAN}
+    <br>
+    From: {hoverInfo.routeDetails.origin_stop_name}
+    <br>
+    To: {hoverInfo.routeDetails.destination_stop_name}
   {:else if hoverInfo == "no_selection"}
     <p class="govuk-body">Hover to see route info</p>
   {/if}
@@ -48,8 +50,8 @@
   .hoverOn {
     background-color: white;
     position: fixed;
-    width: 300px;
-    height: 100px;
+    /* width: 300px; */
+    /* height: 100px; */
     padding: 16px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);

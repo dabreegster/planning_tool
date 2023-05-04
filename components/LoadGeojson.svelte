@@ -212,11 +212,10 @@
       },
     });
 
-    map.on("mousemove", lineLayer, (e) => {
+    map.on("mouseover", lineLayer, (e) => {
       console.log(e.features);
       if (e.features) {
         let feature = e.features[0];
-        console.log(feature.properties);
         if (feature.properties.routeDetails != "{}") {
           hoverInfo = {
             routeDetails: JSON.parse(feature.properties.routeDetails),
