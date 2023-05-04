@@ -9,13 +9,13 @@
   const source = "squareInfoGeoJson";
   const pointLayer = "floodPoints";
   const lineLayer = "floodLines";
-  const squareLayer = "squareOutline"
+  const squareLayer = "squareOutline";
   let startTimeSeconds = 28800;
 
   export let squareID;
   let maxPerPurpose;
   let purpose = "Business";
-  export let hoverInfo = null;
+  export let hoverInfo = "no_selection";
 
   function emptyGeojson() {
     return {
@@ -45,7 +45,7 @@
   });
 
   map.on("click", async function (e) {
-    if (startTimeSeconds >= 21600  && startTimeSeconds <= 79200 ) {
+    if (startTimeSeconds >= 21600 && startTimeSeconds <= 79200) {
       console.log(`Lookup square for ${e.lngLat}`);
       console.time("square API");
       let info = await getSquareInfo(e.lngLat);
@@ -55,19 +55,17 @@
       }
       squareID = info.name;
       // set square coords to make square in question
-      let squareCoords = info['square_coords']
-      delete info['square_coords']
+      let squareCoords = info["square_coords"];
+      delete info["square_coords"];
 
       // Now make the floodfill request
       let req = {
         ...info,
         trip_start_seconds: startTimeSeconds,
       };
-      console.log(req)
       console.time("floodfill API");
       let resp = await callFloodfillApi(req);
       console.timeEnd("floodfill API");
-      console.log(resp)
 
       dataChanged(resp, squareCoords);
     } else {
@@ -77,7 +75,7 @@
 
   function convertStringToFloatArr(string) {
     let [long, lat] = string.split(",");
-      return [parseFloat(long), parseFloat(lat)];
+    return [parseFloat(long), parseFloat(lat)];
   }
 
   function dataChanged(resp, squareCoords) {
@@ -85,10 +83,7 @@
 
     console.time("Build GJ data");
     // Circles for destinations
-    for (let [
-      purpose,
-      top3,
-    ] of resp.key_destinations_per_purpose.entries()) {
+    for (let [purpose, top3] of resp.key_destinations_per_purpose.entries()) {
       for (let pt of top3) {
         gj.features.push({
           type: "Feature",
@@ -110,14 +105,17 @@
       for (let [i, score] of scorePerPurpose.entries()) {
         maxPerPurpose[i] = Math.max(maxPerPurpose[i], score);
       }
-      let [startLong, startLat] = convertStringToFloatArr(link[0])
-      let [endLong, endLat] = convertStringToFloatArr(link[1])
+      let [startLong, startLat] = convertStringToFloatArr(link[0]);
+      let [endLong, endLat] = convertStringToFloatArr(link[1]);
 
       gj.features.push({
         type: "Feature",
         geometry: {
           type: "LineString",
-          coordinates: [[startLong, startLat], [endLong, endLat]],
+          coordinates: [
+            [startLong, startLat],
+            [endLong, endLat],
+          ],
         },
         properties: {
           Business: scorePerPurpose[0],
@@ -126,13 +124,11 @@
           Shopping: scorePerPurpose[3],
           Residential: scorePerPurpose[4],
           link_type: resp.link_is_pt[linkID],
+          routeDetails: resp.link_route_details[linkID],
           name: "link",
-          routeName: "141",
-          ptMode: "Bus"
         },
         id: linkID,
       });
-      
     }
     // square for outline
     gj.features.push({
@@ -141,10 +137,9 @@
         type: "LineString",
         coordinates: squareCoords,
       },
-      properties : {
-        name:"square"
-      }
-
+      properties: {
+        name: "square",
+      },
     });
     console.timeEnd("Build GJ data");
 
@@ -218,16 +213,22 @@
     });
 
     map.on("mousemove", lineLayer, (e) => {
-      let feature = e.features[0];
-      if (feature) {
-        hoverInfo = {
-          lngLat: e.lngLat,
-          routeName: feature.properties.routeName,
-        };
+      console.log(e.features);
+      if (e.features) {
+        let feature = e.features[0];
+        console.log(feature.properties);
+        if (feature.properties.routeDetails != "{}") {
+          hoverInfo = {
+            routeDetails: JSON.parse(feature.properties.routeDetails),
+            cursorxy: e.point,
+          };
+        } else {
+          hoverInfo = "no_selection";
+        }
       } else {
-        hoverInfo = null;
+        hoverInfo = "no_selection";
       }
-      console.log(hoverInfo)
+      console.log(hoverInfo);
     });
   }
 
@@ -245,9 +246,8 @@
 
   function updateStartTime(timeString) {
     let [hours, minutes] = timeString.target.value.split(":");
-    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60
+    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
   }
-
 </script>
 
 <div class="purposeBox" style="display: flex;">
@@ -275,23 +275,20 @@
   >Clear polygons (right click)
 </button>
 
-<div
-class="startTimeSelection">
+<div class="startTimeSelection">
   <label for="start-time-input">Start Time:</label>
   <input
     id="start-time-input"
     type="time"
     name="start-time-input"
-    value = "08:00"
-    min= "06:00"
+    value="08:00"
+    min="06:00"
     max="22:00"
     style="font-size: 16px; padding:5px"
     on:change={(e) => updateStartTime(e)}
   />
-  <span class="validity"></span>
+  <span class="validity" />
 </div>
-
-
 
 <style>
   button {
@@ -348,4 +345,3 @@ class="startTimeSelection">
     padding-left: 5px;
   }
 </style>
-

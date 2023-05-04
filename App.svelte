@@ -20,7 +20,7 @@
   let login_password = "connect";
   let squareID;
   let tileOpacity;
-  let hoverInfo
+  let hoverInfo;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -44,7 +44,7 @@
       <PdfDownload {squareID} />
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />
-      <!-- <HoverRouteInfo {hoverInfo}/> -->
+      <HoverRouteInfo {hoverInfo} />
     </Map>
   </div>
 {/if}

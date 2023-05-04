@@ -47,7 +47,7 @@
         source: scoreLayer,
         paint: {
           "raster-opacity": tileOpacity / 100,
-        }
+        },
       });
     }
   }
@@ -122,7 +122,7 @@
       "Shopping",
       "Residential",
       "Entertainment",
-      "Overall"
+      // "Overall"
     ];
     return purposes;
   }
