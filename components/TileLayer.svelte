@@ -6,7 +6,7 @@
 
   export let tileOpacity = 70;
   // TODO Revert, this is nicer for development
-  let scoreLayer = "Hide";
+  let scoreLayer = "Business";
 
   let PMTILES_BUCKET_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
@@ -15,7 +15,7 @@
   onMount(async () => {
     map.addSource("Business", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "nipy_spectral_100.pmtiles",
     });
     map.addSource("Entertainment", {
       type: "raster",
