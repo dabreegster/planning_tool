@@ -212,10 +212,10 @@
       },
     });
 
-    map.on("mouseover", lineLayer, (e) => {
-      console.log(e.features);
-      if (e.features) {
-        let feature = e.features[0];
+    map.on("mousemove", (e) => {
+      const features = map.queryRenderedFeatures(e.point);
+      if (features[0].properties.routeDetails) {
+        let feature = features[0];
         if (feature.properties.routeDetails != "{}") {
           hoverInfo = {
             routeDetails: JSON.parse(feature.properties.routeDetails),
@@ -227,7 +227,6 @@
       } else {
         hoverInfo = "no_selection";
       }
-      console.log(hoverInfo);
     });
   }
 

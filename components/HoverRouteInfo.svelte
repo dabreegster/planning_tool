@@ -34,7 +34,7 @@
   )}px;"
 >
   {#if hoverInfo != "no_selection"}
-    {hoverInfo.routeDetails.vehicle_mode}
+    <b style="font-weight: bold">{hoverInfo.routeDetails.vehicle_mode}</b>
     <br>
     Route: {hoverInfo.routeDetails.route_number}
     <br>
