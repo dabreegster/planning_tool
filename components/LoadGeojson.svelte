@@ -214,13 +214,17 @@
 
     map.on("mousemove", (e) => {
       const features = map.queryRenderedFeatures(e.point);
-      if (features[0].properties.routeDetails) {
-        let feature = features[0];
-        if (feature.properties.routeDetails != "{}") {
-          hoverInfo = {
-            routeDetails: JSON.parse(feature.properties.routeDetails),
-            cursorxy: e.point,
-          };
+      if (features[0]) {
+        if (features[0].properties.routeDetails) {
+          let feature = features[0];
+          if (feature.properties.routeDetails != "{}") {
+            hoverInfo = {
+              routeDetails: JSON.parse(feature.properties.routeDetails),
+              cursorxy: e.point,
+            };
+          } else {
+            hoverInfo = "no_selection";
+          }
         } else {
           hoverInfo = "no_selection";
         }
