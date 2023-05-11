@@ -61,7 +61,7 @@
     padding: 16px;
     border-radius: 10px;
     right: 10px;
-    top: 293px;
+    top: 420px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     font-size: 1.5rem;
   }

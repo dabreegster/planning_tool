@@ -17,7 +17,7 @@
     100,
   ];
 
-  let nipy_spectral = [
+  let nipy_spectral_100 = [
     "#000000",
     "#130015",
     "#2f0035",
@@ -121,6 +121,32 @@
     "#cccccc",
   ];
 
+  let nipy_spectral_25 = ['#7b008c',
+ '#83009a',
+ '#0d00a8',
+ '#0000cd',
+ '#0038dd',
+ '#0080dd',
+ '#009bd7',
+ '#00a8af',
+ '#00aa93',
+ '#00a248',
+ '#00a400',
+ '#00bf00',
+ '#00da00',
+ '#00f400',
+ '#67ff00',
+ '#ccf900',
+ '#f0ea00',
+ '#fdcf00',
+ '#ffa900',
+ '#ff4500',
+ '#f40000',
+ '#db0000',
+ '#ce0000',
+ '#cc9c9c',
+ '#cccccc']
+
   // TODO Simplify this function, probably packages avilable
   function getHexColors() {
     const colors = {
@@ -202,12 +228,31 @@
     {/each}
   </div>
  <br>
-  <div class="legendtitle">nipy_spectral_test</div>
+  <div class="legendtitle">nipy_spectral_test_100</div>
   <br />
   <div class="legend">
-    {#each nipy_spectral as colour}
+    {#each nipy_spectral_100 as colour}
       <div
         class="square"
+        style="background-color: {colour}; opacity: {tileOpacity / 100};"
+      />
+    {/each}
+  </div>
+
+  <div class="legend">
+    {#each paddedNumbers as number}
+      <div class="numbers">
+        {number}
+      </div>
+    {/each}
+  </div>
+  <br>
+  <div class="legendtitle">nipy_spectral_test_25</div>
+  <br />
+  <div class="legend">
+    {#each nipy_spectral_25 as colour}
+      <div
+        class="square25"
         style="background-color: {colour}; opacity: {tileOpacity / 100};"
       />
     {/each}
@@ -233,6 +278,10 @@
   }
   .square {
     width: 4px;
+    height: 50px;
+  }
+  .square25 {
+    width: 16px;
     height: 50px;
   }
   .numbers {
