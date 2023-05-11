@@ -178,8 +178,8 @@
     }
     return interpolatedColor;
   }
-  // let colours = getHexColors();
-  let colours = nipy_spectral;
+  let colours = getHexColors();
+  // let colours = nipy_spectral;
 </script>
 
 <div class="box">
@@ -201,7 +201,28 @@
       </div>
     {/each}
   </div>
+ <br>
+  <div class="legendtitle">nipy_spectral_test</div>
+  <br />
+  <div class="legend">
+    {#each nipy_spectral as colour}
+      <div
+        class="square"
+        style="background-color: {colour}; opacity: {tileOpacity / 100};"
+      />
+    {/each}
+  </div>
+
+  <div class="legend">
+    {#each paddedNumbers as number}
+      <div class="numbers">
+        {number}
+      </div>
+    {/each}
+  </div>
 </div>
+
+
 
 <style>
   .legendtitle {

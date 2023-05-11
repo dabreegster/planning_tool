@@ -6,7 +6,7 @@
 
   export let tileOpacity = 70;
   // TODO Revert, this is nicer for development
-  let scoreLayer = "Business";
+  let scoreLayer = "nipy_spectral_100_test";
 
   let PMTILES_BUCKET_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
@@ -15,7 +15,7 @@
   onMount(async () => {
     map.addSource("Business", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "nipy_spectral_100.pmtiles",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business.pmtiles",
     });
     map.addSource("Entertainment", {
       type: "raster",
@@ -32,6 +32,14 @@
     map.addSource("Residential", {
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Residential.pmtiles",
+    });
+    map.addSource("nipy_spectral_100_test", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "nipy_spectral_100.pmtiles",
+    });
+    map.addSource("nipy_spectral_25_test", {
+      type: "raster",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "nipy_spectral_25.pmtiles",
     });
     setLayer();
   });
@@ -122,6 +130,8 @@
       "Shopping",
       "Residential",
       "Entertainment",
+      "nipy_spectral_100_test",
+      "nipy_spectral_25_test",
       // "Overall"
     ];
     return purposes;
