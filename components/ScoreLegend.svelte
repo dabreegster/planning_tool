@@ -1,22 +1,28 @@
 <script>
   export let tileOpacity;
 
+  // TODO fix this hack way of doing numbers
   let paddedNumbers = [
     0,
+    " ",
     " ",
     " ",
     25,
     " ",
     " ",
+    " ",
     50,
+    " ",
     " ",
     " ",
     75,
     " ",
     " ",
+    " ",
     100,
   ];
 
+  // TODO find function which can create this
   let nipy_spectral_100 = [
     "#000000",
     "#130015",
@@ -121,95 +127,68 @@
     "#cccccc",
   ];
 
-  let nipy_spectral_25 = ['#7b008c',
- '#83009a',
- '#0d00a8',
- '#0000cd',
- '#0038dd',
- '#0080dd',
- '#009bd7',
- '#00a8af',
- '#00aa93',
- '#00a248',
- '#00a400',
- '#00bf00',
- '#00da00',
- '#00f400',
- '#67ff00',
- '#ccf900',
- '#f0ea00',
- '#fdcf00',
- '#ffa900',
- '#ff4500',
- '#f40000',
- '#db0000',
- '#ce0000',
- '#cc9c9c',
- '#cccccc']
-
   // TODO Simplify this function, probably packages avilable
-  function getHexColors() {
-    const colors = {
-      0: "#67001f",
-      10: "#67001f",
-      20: "#b2182b",
-      30: "#d6604d",
-      40: "#f4a582",
-      50: "#fddbc7",
-      60: "#d1e5f0",
-      70: "#92c5de",
-      80: "#4393c3",
-      90: "#2166ac",
-      100: "#053061",
-    };
-    const hexColors = [];
-    for (let i = 0; i <= 100; i++) {
-      const lowerColor = colors[Math.floor(i / 10) * 10];
-      const upperColor = colors[Math.ceil(i / 10) * 10];
-      const interpolatedColor = interpolateColor(
-        lowerColor,
-        upperColor,
-        (i % 10) / 10
-      );
-      hexColors.push(interpolatedColor);
-    }
-    return hexColors;
-  }
+  // function getHexColors() {
+  //   const colors = {
+  //     0: "#67001f",
+  //     10: "#67001f",
+  //     20: "#b2182b",
+  //     30: "#d6604d",
+  //     40: "#f4a582",
+  //     50: "#fddbc7",
+  //     60: "#d1e5f0",
+  //     70: "#92c5de",
+  //     80: "#4393c3",
+  //     90: "#2166ac",
+  //     100: "#053061",
+  //   };
+  //   const hexColors = [];
+  //   for (let i = 0; i <= 100; i++) {
+  //     const lowerColor = colors[Math.floor(i / 10) * 10];
+  //     const upperColor = colors[Math.ceil(i / 10) * 10];
+  //     const interpolatedColor = interpolateColor(
+  //       lowerColor,
+  //       upperColor,
+  //       (i % 10) / 10
+  //     );
+  //     hexColors.push(interpolatedColor);
+  //   }
+  //   return hexColors;
+  // }
 
-  function interpolateColor(lowerColor, upperColor, factor) {
-    const lowerColorArray = [];
-    lowerColorArray.push(parseInt(lowerColor.substring(1, 3), 16));
-    lowerColorArray.push(parseInt(lowerColor.substring(3, 5), 16));
-    lowerColorArray.push(parseInt(lowerColor.substring(5, 7), 16));
+  // function interpolateColor(lowerColor, upperColor, factor) {
+  //   const lowerColorArray = [];
+  //   lowerColorArray.push(parseInt(lowerColor.substring(1, 3), 16));
+  //   lowerColorArray.push(parseInt(lowerColor.substring(3, 5), 16));
+  //   lowerColorArray.push(parseInt(lowerColor.substring(5, 7), 16));
 
-    const upperColorArray = [];
-    upperColorArray.push(parseInt(upperColor.substring(1, 3), 16));
-    upperColorArray.push(parseInt(upperColor.substring(3, 5), 16));
-    upperColorArray.push(parseInt(upperColor.substring(5, 7), 16));
+  //   const upperColorArray = [];
+  //   upperColorArray.push(parseInt(upperColor.substring(1, 3), 16));
+  //   upperColorArray.push(parseInt(upperColor.substring(3, 5), 16));
+  //   upperColorArray.push(parseInt(upperColor.substring(5, 7), 16));
 
-    const interpolatedColorArray = [];
-    for (let i = 0; i < 3; i++) {
-      interpolatedColorArray.push(
-        Math.round(
-          lowerColorArray[i] +
-            factor * (upperColorArray[i] - lowerColorArray[i])
-        )
-      );
-    }
+  //   const interpolatedColorArray = [];
+  //   for (let i = 0; i < 3; i++) {
+  //     interpolatedColorArray.push(
+  //       Math.round(
+  //         lowerColorArray[i] +
+  //           factor * (upperColorArray[i] - lowerColorArray[i])
+  //       )
+  //     );
+  //   }
 
-    let interpolatedColor = "#";
-    for (let i = 0; i < 3; i++) {
-      const hex = interpolatedColorArray[i].toString(16).padStart(2, "0");
-      interpolatedColor += hex;
-    }
-    return interpolatedColor;
-  }
-  let colours = getHexColors();
-  // let colours = nipy_spectral;
+  //   let interpolatedColor = "#";
+  //   for (let i = 0; i < 3; i++) {
+  //     const hex = interpolatedColorArray[i].toString(16).padStart(2, "0");
+  //     interpolatedColor += hex;
+  //   }
+  //   return interpolatedColor;
+  // }
+  // let colours = getHexColors();
 </script>
 
 <div class="box">
-  <div class="legendtitle">Connectivity score</div>
+  <!-- <div class="legendtitle">Connectivity score</div>
   <br />
   <div class="legend">
     {#each colours as colour}
@@ -227,32 +206,13 @@
       </div>
     {/each}
   </div>
- <br>
-  <div class="legendtitle">nipy_spectral_test_100</div>
+ <br> -->
+  <div class="legendtitle">Connectivity score</div>
   <br />
   <div class="legend">
     {#each nipy_spectral_100 as colour}
       <div
         class="square"
-        style="background-color: {colour}; opacity: {tileOpacity / 100};"
-      />
-    {/each}
-  </div>
-
-  <div class="legend">
-    {#each paddedNumbers as number}
-      <div class="numbers">
-        {number}
-      </div>
-    {/each}
-  </div>
-  <br>
-  <div class="legendtitle">nipy_spectral_test_25</div>
-  <br />
-  <div class="legend">
-    {#each nipy_spectral_25 as colour}
-      <div
-        class="square25"
         style="background-color: {colour}; opacity: {tileOpacity / 100};"
       />
     {/each}
@@ -278,10 +238,6 @@
   }
   .square {
     width: 4px;
-    height: 50px;
-  }
-  .square25 {
-    width: 16px;
     height: 50px;
   }
   .numbers {
