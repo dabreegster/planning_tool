@@ -77,7 +77,7 @@
   <label
     class="govuk-label"
     for="scoreLayer"
-    style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
   >
     Tile layer score purpose:
   </label>
@@ -98,7 +98,7 @@
   div {
     z-index: 1;
     position: absolute;
-    top: 95px;
+    top: 5px;
     left: 10px;
     background: white;
     padding: 10px;
@@ -107,7 +107,7 @@
   }
 
   select {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     padding: 4px 8px;
   }
 </style>

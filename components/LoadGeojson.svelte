@@ -256,7 +256,7 @@
   <label
     class="govuk-label"
     for="purpose"
-    style="margin-right: 10px; margin-top: 2px; font-size: 1.5rem;"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
   >
     Displayed route purpose:
   </label>
@@ -273,7 +273,7 @@
   </select>
 </div>
 
-<button class="govuk-label" style="font-size: 1.5rem;" on:click={resetMapAndID}
+<button class="govuk-label" style="font-size: 1.2rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
 </button>
 
@@ -286,7 +286,7 @@
     value="08:00"
     min="06:00"
     max="22:00"
-    style="font-size: 16px; padding:5px"
+    style="font-size: 15px; padding:5px"
     on:change={(e) => updateStartTime(e)}
   />
   <span class="validity" />
@@ -294,20 +294,21 @@
 
 <style>
   button {
-    z-index: 1;
+    display: false;
+    /* z-index: 1;
     position: absolute;
     top: 160px;
     left: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
   }
 
   .purposeBox {
     z-index: 1;
     position: absolute;
-    top: 275px;
+    top: 68px;
     left: 10px;
     background: white;
     padding: 10px;
@@ -316,19 +317,19 @@
   }
 
   select {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     padding: 4px 8px;
   }
   .startTimeSelection {
     z-index: 1;
     position: absolute;
-    top: 340px;
+    top: 131px;
     left: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   input + span {

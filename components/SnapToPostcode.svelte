@@ -34,7 +34,7 @@
 <div class="whitebox">
   <input
     type="text"
-    style="font-size: 1.3rem; width: 160px"
+    style="font-size: 1.2rem; width: 160px"
     placeholder="Find postcode..."
     on:input={handleInput}
     on:keydown={handleKeyPress}
@@ -61,8 +61,8 @@
     padding: 16px;
     border-radius: 10px;
     right: 10px;
-    top: 420px;
+    top: 192px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 </style>

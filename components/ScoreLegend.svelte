@@ -208,7 +208,6 @@
   </div>
  <br> -->
   <div class="legendtitle">Connectivity score</div>
-  <br />
   <div class="legend">
     {#each nipy_spectral_100 as colour}
       <div
@@ -231,27 +230,27 @@
 
 <style>
   .legendtitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   .legend {
     display: flex;
   }
   .square {
-    width: 4px;
-    height: 50px;
+    width: 3.5px;
+    height: 40px;
   }
   .numbers {
     width: 35px;
     height: 10px;
     color: black;
     opacity: 1;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   .box {
     background-color: white;
     position: absolute;
-    width: 430px;
+    width: 380px;
     padding: 16px;
     border-radius: 10px;
     right: 10px;
