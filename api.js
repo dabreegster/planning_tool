@@ -1,5 +1,5 @@
-const squareInfoEndpt = "https://1537-35-242-173-146.ngrok-free.app";
-const floodfillEndpt = "https://a040-35-242-173-146.ngrok-free.app";
+const squareInfoEndpt = "https://815d-35-189-123-220.ngrok-free.app";
+const floodfillEndpt = "https://11af-35-189-123-220.ngrok-free.app";
 
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
 
