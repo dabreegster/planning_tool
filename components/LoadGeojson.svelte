@@ -16,17 +16,21 @@
   let maxPerPurpose;
   let purpose = "Business";
   export let hoverInfo = "no_selection";
+  let isProcessingClick = false;
+
+  let purposes = [
+    "Business",
+    "Education",
+    "Entertainment",
+    "Shopping",
+    "Residential",
+  ];
 
   function emptyGeojson() {
     return {
       type: "FeatureCollection",
       features: [],
     };
-  }
-
-  function resetMapAndID() {
-    squareID = null;
-    map.getSource(source).setData(squareInfoGeoJson);
   }
 
   onMount(() => {
@@ -44,14 +48,12 @@
     }
   });
 
-  let isProcessingClick = false;
 
   map.on("click", async function (e) {
     if (isProcessingClick) {
       console.log("Click is already being processed");
       return;
     }
-
     isProcessingClick = true;
 
     if (startTimeSeconds >= 21600 && startTimeSeconds <= 79200) {
@@ -179,17 +181,6 @@
         id: linkID,
       });
     }
-    // // square for outline
-    // gj.features.push({
-    //   type: "Feature",
-    //   geometry: {
-    //     type: "LineString",
-    //     coordinates: squareCoords,
-    //   },
-    //   properties: {
-    //     name: "square",
-    //   },
-    // });
     console.timeEnd("Build GJ data");
 
     map.getSource(source).setData(gj);
@@ -283,17 +274,19 @@
     });
   }
 
+  function resetMapAndID() {
+    squareID = null;
+    for (let layer of [pointLayer, lineLayer, squareLayer]) {
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    }
+  }
+
+  // on right click clear map
   map.on("contextmenu", function () {
     resetMapAndID();
   });
-
-  let purposes = [
-    "Business",
-    "Education",
-    "Entertainment",
-    "Shopping",
-    "Residential",
-  ];
 
   function updateStartTime(timeString) {
     let [hours, minutes] = timeString.target.value.split(":");
