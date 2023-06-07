@@ -44,18 +44,31 @@
     }
   });
 
+  let isProcessingClick = false;
+
   map.on("click", async function (e) {
+    if (isProcessingClick) {
+      console.log("Click is already being processed");
+      return;
+    }
+
+    isProcessingClick = true;
+
     if (startTimeSeconds >= 21600 && startTimeSeconds <= 79200) {
       console.log(`Lookup square for ${e.lngLat}`);
       console.time("square API");
       let info = await getSquareInfo(e.lngLat);
       console.timeEnd("square API");
       if (info == "click_not_on_square") {
+        console.log("Click not on square");
+        isProcessingClick = false;
         return;
       }
       squareID = info.name;
       // set square coords to make square in question
       let squareCoords = info["square_coords"];
+      // display the square whilst loading
+      let gj = createSquareGeojson(squareCoords);
       delete info["square_coords"];
 
       // Now make the floodfill request
@@ -67,9 +80,11 @@
       let resp = await callFloodfillApi(req);
       console.timeEnd("floodfill API");
 
-      dataChanged(resp, squareCoords);
+      dataChanged(resp, gj);
+      isProcessingClick = false;
     } else {
       alert("Start time must be between 06:00 and 22:00");
+      isProcessingClick = false;
     }
   });
 
@@ -78,8 +93,42 @@
     return [parseFloat(long), parseFloat(lat)];
   }
 
-  function dataChanged(resp, squareCoords) {
+  function createSquareGeojson(squareCoords) {
     let gj = emptyGeojson();
+    // square for outline
+    gj.features.push({
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: squareCoords,
+      },
+      properties: {
+        name: "square",
+      },
+    });
+    map.getSource(source).setData(gj);
+
+    setSquareLayer();
+    return gj
+  }
+
+  function setSquareLayer() {
+    if (map.getLayer(squareLayer)) {
+      map.removeLayer(squareLayer);
+    }
+    map.addLayer({
+      source,
+      id: squareLayer,
+      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
+      type: "line",
+      paint: {
+        "line-color": "#000000",
+        "line-width": 3,
+      },
+    });
+  }
+
+  function dataChanged(resp, gj) {
 
     console.time("Build GJ data");
     // Circles for destinations
@@ -130,17 +179,17 @@
         id: linkID,
       });
     }
-    // square for outline
-    gj.features.push({
-      type: "Feature",
-      geometry: {
-        type: "LineString",
-        coordinates: squareCoords,
-      },
-      properties: {
-        name: "square",
-      },
-    });
+    // // square for outline
+    // gj.features.push({
+    //   type: "Feature",
+    //   geometry: {
+    //     type: "LineString",
+    //     coordinates: squareCoords,
+    //   },
+    //   properties: {
+    //     name: "square",
+    //   },
+    // });
     console.timeEnd("Build GJ data");
 
     map.getSource(source).setData(gj);
@@ -159,6 +208,16 @@
         map.removeLayer(layer);
       }
     }
+    map.addLayer({
+      source,
+      id: squareLayer,
+      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
+      type: "line",
+      paint: {
+        "line-color": "#000000",
+        "line-width": 3,
+      },
+    });
     map.addLayer({
       source,
       id: pointLayer,
@@ -199,16 +258,6 @@
           ],
         ],
         "line-opacity": 1.0,
-      },
-    });
-    map.addLayer({
-      source,
-      id: squareLayer,
-      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
-      type: "line",
-      paint: {
-        "line-color": "#000000",
-        "line-width": 3,
       },
     });
 
