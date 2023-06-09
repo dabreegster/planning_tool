@@ -13,6 +13,7 @@
   import OpacitySlider from "./components/OpacitySlider.svelte";
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
+  import HoverScores from "./components/HoverScores.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -45,6 +46,7 @@
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />
       <HoverRouteInfo {hoverInfo} />
+      <HoverScores />
     </Map>
   </div>
 {/if}
