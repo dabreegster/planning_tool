@@ -7,12 +7,11 @@
 
   const map = getMap();
 
+  // configuration for lat/long -> OSGB easting northing conversion
   var osgb = "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
   var wgs84 = "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs";
 
-  let squareScores = {
-    // "474200_104400":[1,2,3,4,5,6]
-  };
+  let squareScores = {};
   let purposes = [
     "Business",
     "Education",
@@ -22,39 +21,17 @@
     "Overall"
   ];  
 
-  let indexes = [0, 1, 2, 3, 4, 5];
-
   let longitude = null;
   let latitude = null;
   let easting = null;
   let northing = null;
-  let squareID = null
+  let squareID = null;
+  let freeForRequest = true;
+  let lastRequestTime = 0;
 
-  // map.on("mousemove", async function (e) {
-  //   longitude = e.lngLat.lng
-  //   latitude = e.lngLat.lat
-
-  //   // convert latitude/longitude to easting/northing
-  //   let eastingNorthing = proj4(wgs84,osgb,[longitude,latitude]);
-  //   // round down to nearest 100 and add 50 for centroid of 
-  //   easting = (Math.floor(eastingNorthing[0] / 100) * 100) + 50;
-  //   northing = (Math.floor(eastingNorthing[1] / 100) * 100) + 50;
-
-  //   squareID = easting.toString() + "_" + northing.toString()
-
-  //   if (squareID in squareScores) {
-  //   } else {
-  //     let response = await getHoverScores(squareID)
-  //     console.log(response)
-  //     if (response == "not_in_square") {
-  //     } else {
-  //       squareScores = { ...squareScores, ...response };
-  //     }
-  //   }
-  // });
-  let lastRequestTime = 0; // Variable to store the timestamp of the last request
-  if (true) {
+  if (freeForRequest) {
     map.on("mousemove", async function (e) {
+      freeForRequest = false
       let currentTime = Date.now();
       let timeSinceLastRequest = currentTime - lastRequestTime;
 
@@ -72,8 +49,8 @@
       if (squareID in squareScores) {
         // Request already made for this squareID, do nothing
       } else {
-        // fix the request limit to just 
-        if (timeSinceLastRequest >= 1000) {
+        // TODO: optimise the request limit 
+        if (timeSinceLastRequest >= 2000) {
           lastRequestTime = currentTime;
           let response = await getHoverScores(squareID)
           console.log(response)
@@ -83,6 +60,7 @@
           }
         }
       }
+      freeForRequest = true
     });
   }
   
@@ -104,17 +82,17 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-        {#each indexes as index}
+        {#each Array(purposes.length) as _, i}
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">PT </td>
-            <td class="govuk-table__cell">{purposes[index]}</td>
-            <td class="govuk-table__cell">{squareScores[squareID][index]}</td>
+            <td class="govuk-table__cell">{purposes[i]}</td>
+            <td class="govuk-table__cell">{squareScores[squareID][i]}</td>
           </tr>
         {/each}
       </tbody>
     </table>
   {:else}
-    <p class="govuk-body">Hover on an to see scores</p>
+    <p class="govuk-body">Hover over area to see scores</p>
   {/if}
 
 </div>
