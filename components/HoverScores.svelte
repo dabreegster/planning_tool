@@ -28,7 +28,9 @@
   let squareID = null;
   let freeForRequest = true;
   let lastRequestTime = 0;
+  let zoom = map.getZoom();
 
+  
   if (freeForRequest) {
     map.on("mousemove", async function (e) {
       freeForRequest = false
@@ -50,7 +52,7 @@
         // Request already made for this squareID, do nothing
       } else {
         // TODO: optimise the request limit 
-        if (timeSinceLastRequest >= 2000) {
+        if (timeSinceLastRequest >= 2000 && zoom >= 12) {
           lastRequestTime = currentTime;
           let response = await getHoverScores(squareID)
           console.log(response)
@@ -64,36 +66,74 @@
     });
   }
   
+  // on zoom record the current zoom level
+  map.on("zoom", () => {
+    zoom = map.getZoom();
+  });
+    
+  function setZoom12() {
+    map.jumpTo({
+      zoom: 12,
+    });
+  }
+
 
 </script>
 
 <div class="whitebox">
-  {#if squareID in squareScores}
-    <br />
-    <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--s"
-        >Score</caption
-      >
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Mode</th>
-          <th scope="col" class="govuk-table__header">Purpose</th>
-          <th scope="col" class="govuk-table__header">Score</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        {#each Array(purposes.length) as _, i}
+<!-- 
+  <button
+  class="govuk-button govuk-button--start"
+  data-module="govuk-button"
+  style="  z-index: 1;"
+  on:click={setZoom12}
+  >Explore scores
+  <svg
+    class="govuk-button__start-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="17.5"
+    height="19"
+    viewBox="0 0 33 40"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+  </svg>
+</button> -->
+
+
+  {#if zoom >= 12}
+    {#if squareID in squareScores}
+      <br />
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--s"
+          >Score</caption
+        >
+        <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">PT </td>
-            <td class="govuk-table__cell">{purposes[i]}</td>
-            <td class="govuk-table__cell">{squareScores[squareID][i]}</td>
+            <th scope="col" class="govuk-table__header">Mode</th>
+            <th scope="col" class="govuk-table__header">Purpose</th>
+            <th scope="col" class="govuk-table__header">Score</th>
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="govuk-table__body">
+          {#each Array(purposes.length) as _, i}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">PT </td>
+              <td class="govuk-table__cell">{purposes[i]}</td>
+              <td class="govuk-table__cell">{squareScores[squareID][i]}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {:else}
+      <p class="govuk-body">Hover over area to see scores</p>
+    {/if}
   {:else}
-    <p class="govuk-body">Hover over area to see scores</p>
+    <p class="govuk-body">Zoom: {zoom.toFixed(2)} </p>
+    <p class="govuk-body">To explore scores, zoom must be above 12</p>
   {/if}
+
 
 </div>
 

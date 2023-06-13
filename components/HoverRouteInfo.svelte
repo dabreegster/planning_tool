@@ -35,11 +35,11 @@
 >
   {#if hoverInfo != "no_selection"}
     <b style="font-weight: bold">{hoverInfo.routeDetails.vehicle_mode}</b>
-    <br />
+    <br>
     Route: {hoverInfo.routeDetails.route_number}
-    <br />
+    <br>
     From: {hoverInfo.routeDetails.origin_stop_name}
-    <br />
+    <br>
     To: {hoverInfo.routeDetails.destination_stop_name}
   {:else if hoverInfo == "no_selection"}
     <p class="govuk-body">Hover to see route info</p>
