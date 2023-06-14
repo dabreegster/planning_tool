@@ -29,6 +29,7 @@
   let leftSidebarClassToggle;
   let loading;
   let stopLayerToggle;
+  let drawing;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -53,11 +54,11 @@
         bind:leftSidebarClassToggle
         bind:loading
       />
-      <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle />
+      <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing/>
       <StopsLayer {stopLayerToggle} />
       <OpacitySlider bind:tileOpacity />
       <TileLayer {tileOpacity} />
-      <LoadGeojson bind:squareID bind:hoverInfo />
+      <LoadGeojson {drawing} bind:squareID bind:hoverInfo />
       <PdfDownload {squareID} />
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />

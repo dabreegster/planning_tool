@@ -1,9 +1,8 @@
 <script>
   import { Accordion, AccordionItem } from "carbon-components-svelte";
-  import BuildingForm from "./interventionListComponents/BuildingForm.svelte";
   import RouteForm from "./interventionListComponents/RouteForm.svelte";
-  import AreaForm from "./interventionListComponents/AreaForm.svelte"
   import PathwayForm from "./interventionListComponents/PathwayForm.svelte";
+  import AreaForm from "./interventionListComponents/AreaForm.svelte";
   import CsvRouteForm from "./interventionListComponents/CsvRouteForm.svelte";
   import PerInterventionControls from "./interventionListComponents/PerInterventionControls.svelte";
   import { gjScheme, currentSidebarHover, currentMapHover } from "../../stores.js";
@@ -65,7 +64,6 @@
     if (feature.properties.select_area) {
       return "Untitled area";
     }
-    return "Untitled building";
   }
 
   // TODO Not sure why we can't inline this one below
@@ -112,14 +110,12 @@
         <div class="govuk-body">
           {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
             <PathwayForm bind:props={feature.properties} />
-          {:else if feature.geometry.type == "LineString"}
+          {:else}
             {#if feature.properties.from_csv}
               <CsvRouteForm bind:props={feature.properties} />
             {:else}
               <RouteForm bind:props={feature.properties} />
             {/if}
-          {:else}
-            <BuildingForm bind:props={feature.properties} />
           {/if}
           <br />
           <PerInterventionControls id={feature.id} />
@@ -131,13 +127,13 @@
 <br />
 <br />
 <div class="govuk-heading-s">
-  <span>{countFeatures($gjScheme, true)} custom areas</span>
+  <span>{countFeatures($gjScheme, true)} impact areas</span>
   <button
     type="button"
     class="govuk-button govuk-button--warning"
     style="font-size: 14px; float: right"
     on:click={clearAllAreas}
-    disabled={$gjScheme.features.length == 0}>Clear custom areas</button
+    disabled={$gjScheme.features.length == 0}>Clear impact areas</button
   >
 </div>
 <br />

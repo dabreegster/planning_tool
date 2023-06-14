@@ -15,7 +15,8 @@
   import { lookupPathway, lookupPTRoute } from "../api.js";
 
   import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
-  let area_toggle = "new_building";
+  // potentially redundant with only 1 draw polygon purpose
+  let area_toggle = "select_area";
   let line_toggle = "new_pt_route";
 
   const { getMap } = getContext("map");
@@ -32,6 +33,7 @@
   const lineWidth = 4;
   export let leftSidebarClassToggle;
   export let stopLayerToggle;
+  export let drawing = false;
   const styles = [
     {
       id: "draggable-points",
@@ -95,6 +97,7 @@
       } else {
         addGeometricProperties(feature);
       }
+      drawing = false;
       gjScheme.update((gj) => {
         gj.features.push(feature);
         return gj;
@@ -174,29 +177,30 @@
   }
 
   function addNewBus() {
+    drawing = true;
     stopLayerToggle = "bus";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewTrain() {
+    drawing = true;
     stopLayerToggle = "rail";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewFerry() {
+    drawing = true;
     stopLayerToggle = "ferry";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewFootpath() {
+    drawing = true;
     line_toggle = "new_pathway";
     drawControls.changeMode("draw_line_string");
   }
-  function addNewBuilding() {
-    area_toggle = "new_building";
-    drawControls.changeMode("draw_polygon");
-  }
   function addNewSelectedArea() {
+    drawing = true;
     area_toggle = "select_area";
     drawControls.changeMode("draw_polygon");
   }
@@ -245,17 +249,6 @@
 <button
   class={leftSidebarClassToggle}
   style="top: 260px;"
-  on:click={addNewBuilding}
->
-  <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/building-icon.png"
-    style="height: 32; width: 32px;"
-  />
-</button>
-
-<button
-  class={leftSidebarClassToggle}
-  style="top: 320px;"
   on:click={addNewSelectedArea}
 >
   <img
