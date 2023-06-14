@@ -48,7 +48,6 @@
     }
   });
 
-
   map.on("click", async function (e) {
     if (isProcessingClick) {
       console.log("Click is already being processed");
@@ -111,7 +110,7 @@
     map.getSource(source).setData(gj);
 
     setSquareLayer();
-    return gj
+    return gj;
   }
 
   function setSquareLayer() {
@@ -131,7 +130,6 @@
   }
 
   function dataChanged(resp, gj) {
-
     console.time("Build GJ data");
     // Circles for destinations
     for (let [purpose, top3] of resp.key_destinations_per_purpose.entries()) {
@@ -350,8 +348,8 @@
   .purposeBox {
     z-index: 1;
     position: absolute;
-    top: 68px;
-    left: 10px;
+    top: 327px;
+    right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;
@@ -365,8 +363,8 @@
   .startTimeSelection {
     z-index: 1;
     position: absolute;
-    top: 131px;
-    left: 10px;
+    top: 392px;
+    right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;

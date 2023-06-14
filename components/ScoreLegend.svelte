@@ -226,8 +226,6 @@
   </div>
 </div>
 
-
-
 <style>
   .legendtitle {
     font-size: 1.2rem;

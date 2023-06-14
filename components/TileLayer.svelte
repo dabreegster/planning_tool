@@ -15,23 +15,34 @@
   onMount(async () => {
     map.addSource("Business", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_nipy_spectral.pmtiles",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_nipy_spectral.pmtiles",
     });
     map.addSource("Entertainment", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Entertainment_nipy_spectral.pmtiles",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Entertainment_nipy_spectral.pmtiles",
     });
     map.addSource("Education", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Education_nipy_spectral.pmtiles",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Education_nipy_spectral.pmtiles",
     });
     map.addSource("Shopping", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_nipy_spectral.pmtiles",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_nipy_spectral.pmtiles",
     });
     map.addSource("Residential", {
       type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "ew_Residential_nipy_spectral.pmtiles",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Residential_nipy_spectral.pmtiles",
     });
     setLayer();
   });
@@ -98,8 +109,8 @@
   div {
     z-index: 1;
     position: absolute;
-    top: 5px;
-    left: 10px;
+    top: 260px;
+    right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;

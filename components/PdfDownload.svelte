@@ -19,8 +19,8 @@
 <style>
   .pdfDownloadButton {
     position: absolute;
-    top: 186px;
-    left: 10px;
+    top: 448px;
+    right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;

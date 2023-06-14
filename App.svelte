@@ -14,14 +14,21 @@
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
   import HoverScores from "./components/HoverScores.svelte";
+  import SidebarLeft from "./components/SidebarLeft.svelte";
+  import DrawControls from "./components/DrawControls.svelte";
+  import StopsLayer from "./components/StopsLayer.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let login_password = "password";
+  let login_password = "connect";
   let squareID;
   let tileOpacity;
   let hoverInfo;
+  let responseJson;
+  let leftSidebarClassToggle;
+  let loading;
+  let stopLayerToggle;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -39,6 +46,15 @@
   </div>
   <div>
     <Map {innerHeight}>
+      <SidebarLeft
+        {innerWidth}
+        {login_username}
+        bind:responseJson
+        bind:leftSidebarClassToggle
+        bind:loading
+      />
+      <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle />
+      <StopsLayer {stopLayerToggle} />
       <OpacitySlider bind:tileOpacity />
       <TileLayer {tileOpacity} />
       <LoadGeojson bind:squareID bind:hoverInfo />

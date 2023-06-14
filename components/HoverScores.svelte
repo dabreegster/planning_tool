@@ -1,5 +1,5 @@
 <script>
-  import proj4 from 'proj4';
+  import proj4 from "proj4";
   import { getContext } from "svelte";
   import { getHoverScores } from "../api.js";
 
@@ -8,7 +8,8 @@
   const map = getMap();
 
   // configuration for lat/long -> OSGB easting northing conversion
-  var osgb = "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
+  var osgb =
+    "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
   var wgs84 = "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs";
 
   let squareScores = {};
@@ -18,8 +19,8 @@
     "Entertainment",
     "Shopping",
     "Residential",
-    "Overall"
-  ];  
+    "Overall",
+  ];
 
   let longitude = null;
   let latitude = null;
@@ -30,10 +31,9 @@
   let lastRequestTime = 0;
   let zoom = map.getZoom();
 
-  
   if (freeForRequest) {
     map.on("mousemove", async function (e) {
-      freeForRequest = false
+      freeForRequest = false;
       let currentTime = Date.now();
       let timeSinceLastRequest = currentTime - lastRequestTime;
 
@@ -41,47 +41,45 @@
       latitude = e.lngLat.lat;
 
       // convert latitude/longitude to easting/northing
-      let eastingNorthing = proj4(wgs84,osgb,[longitude,latitude]);
-      // round down to nearest 100 and add 50 for centroid of 
-      easting = (Math.floor(eastingNorthing[0] / 100) * 100) + 50;
-      northing = (Math.floor(eastingNorthing[1] / 100) * 100) + 50;
+      let eastingNorthing = proj4(wgs84, osgb, [longitude, latitude]);
+      // round down to nearest 100 and add 50 for centroid of
+      easting = Math.floor(eastingNorthing[0] / 100) * 100 + 50;
+      northing = Math.floor(eastingNorthing[1] / 100) * 100 + 50;
 
-      squareID = easting.toString() + "_" + northing.toString()
+      squareID = easting.toString() + "_" + northing.toString();
 
       if (squareID in squareScores) {
         // Request already made for this squareID, do nothing
       } else {
-        // TODO: optimise the request limit 
+        // TODO: optimise the request limit
         if (timeSinceLastRequest >= 2000 && zoom >= 12) {
           lastRequestTime = currentTime;
-          let response = await getHoverScores(squareID)
-          console.log(response)
+          let response = await getHoverScores(squareID);
+          console.log(response);
           if (response == "not_in_square") {
           } else {
             squareScores = { ...squareScores, ...response };
           }
         }
       }
-      freeForRequest = true
+      freeForRequest = true;
     });
   }
-  
+
   // on zoom record the current zoom level
   map.on("zoom", () => {
     zoom = map.getZoom();
   });
-    
+
   function setZoom12() {
     map.jumpTo({
       zoom: 12,
     });
   }
-
-
 </script>
 
 <div class="whitebox">
-<!-- 
+  <!-- 
   <button
   class="govuk-button govuk-button--start"
   data-module="govuk-button"
@@ -100,7 +98,6 @@
     <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
   </svg>
 </button> -->
-
 
   {#if zoom >= 12}
     {#if squareID in squareScores}
@@ -130,21 +127,19 @@
       <p class="govuk-body">Hover over area to see scores</p>
     {/if}
   {:else}
-    <p class="govuk-body">Zoom: {zoom.toFixed(2)} </p>
+    <p class="govuk-body">Zoom: {zoom.toFixed(2)}</p>
     <p class="govuk-body">To explore scores, zoom must be above 12</p>
   {/if}
-
-
 </div>
 
 <style>
- .whitebox {
+  .whitebox {
     background-color: white;
     position: absolute;
     padding: 16px;
     border-radius: 10px;
     right: 10px;
-    top: 260px;
+    top: 500px;
     width: 300px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
