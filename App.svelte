@@ -17,11 +17,12 @@
   import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
   import StopsLayer from "./components/StopsLayer.svelte";
+  import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let login_password = "connect";
+  let login_password = "password";
   let squareID;
   let tileOpacity;
   let hoverInfo;
@@ -54,7 +55,11 @@
         bind:leftSidebarClassToggle
         bind:loading
       />
-      <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing/>
+      <DrawControls
+        {leftSidebarClassToggle}
+        bind:stopLayerToggle
+        bind:drawing
+      />
       <StopsLayer {stopLayerToggle} />
       <OpacitySlider bind:tileOpacity />
       <TileLayer {tileOpacity} />
@@ -63,6 +68,7 @@
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />
       <HoverRouteInfo {hoverInfo} />
+      <CurrentInterventionLayer {responseJson} />
       <HoverScores />
     </Map>
   </div>

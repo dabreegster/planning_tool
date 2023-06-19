@@ -1,5 +1,5 @@
 <script>
-  import { gjScheme, clearCurrentlyEditing } from "../../../stores.js"
+  import { gjScheme, clearCurrentlyEditing } from "../../../stores.js";
 
   export let id;
 

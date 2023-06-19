@@ -5,7 +5,11 @@
   import AreaForm from "./interventionListComponents/AreaForm.svelte";
   import CsvRouteForm from "./interventionListComponents/CsvRouteForm.svelte";
   import PerInterventionControls from "./interventionListComponents/PerInterventionControls.svelte";
-  import { gjScheme, currentSidebarHover, currentMapHover } from "../../stores.js";
+  import {
+    gjScheme,
+    currentSidebarHover,
+    currentMapHover,
+  } from "../../stores.js";
 
   const prefix = "dft_connectivity";
 
@@ -110,12 +114,10 @@
         <div class="govuk-body">
           {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
             <PathwayForm bind:props={feature.properties} />
+          {:else if feature.properties.from_csv}
+            <CsvRouteForm bind:props={feature.properties} />
           {:else}
-            {#if feature.properties.from_csv}
-              <CsvRouteForm bind:props={feature.properties} />
-            {:else}
-              <RouteForm bind:props={feature.properties} />
-            {/if}
+            <RouteForm bind:props={feature.properties} />
           {/if}
           <br />
           <PerInterventionControls id={feature.id} />

@@ -1,7 +1,7 @@
 const squareInfoEndpt = "https://815d-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://11af-35-189-123-220.ngrok-free.app";
 const hoverScoresEndpt = "https://00dc-34-89-73-233.ngrok-free.app";
-const scoreCalculationEndpt = "https://96c2-34-89-73-233.eu.ngrok.io";
+const scoreCalculationEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
 
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
 
@@ -64,28 +64,17 @@ export async function geojsonToApiPayload(features, login_username) {
   let req = {
     username: login_username,
     new_routes_dict: new_routes,
-    new_buildings: [],
-    selected_areas: [],
-    new_pathways: [],
+    square_ids: [],
   };
 
   // Add stored features to payload
   for (let feature of features) {
-    if (feature.properties.select_area) {
-      req.selected_areas.push([feature.properties.name, feature.geometry]);
-    } else if (feature.geometry.type == "Polygon") {
-      let value = feature.properties.areaSquareMeters;
-      if (feature.properties.purpose == "Visit friends at private home") {
-        value = feature.properties.num_people;
-      } else if (feature.properties.purpose == "Business") {
-        value = feature.properties.num_jobs;
+    if (feature.geometry.type == "Polygon") {
+      // polygon
+      for (var i = 0; i < feature.properties.squareIDs.length; i++) {
+        let squareIDs = feature.properties.squareIDs;
+        req.square_ids.push(squareIDs[i]);
       }
-
-      req.new_buildings.push([
-        feature.properties.purpose,
-        feature.properties.centroid.geometry.coordinates,
-        value,
-      ]);
     } else if (feature.properties.from_csv) {
       let rows = feature.properties.rows;
       for (var i = 0; i < rows.length; i++) {
@@ -104,8 +93,6 @@ export async function geojsonToApiPayload(features, login_username) {
         key += 1;
       }
       route_number += 1;
-    } else if (feature.properties.new_pathway) {
-      req.new_pathways.push([feature.properties.name, feature.geometry]);
     } else {
       let {
         fullatcoCodes,
@@ -130,6 +117,63 @@ export async function geojsonToApiPayload(features, login_username) {
   return req;
 }
 
+function findArrivalAndDepartureTimes(feature) {
+  let dailyTrips = feature.properties.dailyTrips;
+  let timeBetweenTrips = feature.properties.frequency * 60;
+  let number_of_stops = feature.geometry.coordinates.length;
+  let atcoCodes = feature.properties.ATCO;
+  let departureTimes = feature.properties.departureTime;
+  let arrivalTimes = feature.properties.arrivalTime;
+
+  let fullArrivalTimes = [];
+  let fullDepartureTimes = [];
+  let fullatcoCodes = [];
+
+  if (dailyTrips == null) {
+    dailyTrips = 1;
+  }
+
+  for (var trip = 0; trip < dailyTrips; trip++) {
+    for (var stop = 0; stop < number_of_stops; stop++) {
+      fullatcoCodes.push(atcoCodes[stop]);
+      if (arrivalTimes[stop] == "First stop") {
+        fullArrivalTimes.push(
+          covertTimeStringToSPM(departureTimes[stop]) + timeBetweenTrips * trip
+        );
+        fullDepartureTimes.push(
+          covertTimeStringToSPM(departureTimes[stop]) + timeBetweenTrips * trip
+        );
+      } else if (departureTimes[stop] == "Last stop") {
+        fullArrivalTimes.push(
+          covertTimeStringToSPM(arrivalTimes[stop]) + timeBetweenTrips * trip
+        );
+        fullDepartureTimes.push(
+          covertTimeStringToSPM(arrivalTimes[stop]) + timeBetweenTrips * trip
+        );
+      } else {
+        fullArrivalTimes.push(
+          covertTimeStringToSPM(arrivalTimes[stop]) + timeBetweenTrips * trip
+        );
+        fullDepartureTimes.push(
+          covertTimeStringToSPM(departureTimes[stop]) + timeBetweenTrips * trip
+        );
+      }
+    }
+  }
+  return {
+    fullatcoCodes,
+    fullArrivalTimes,
+    fullDepartureTimes,
+    number_of_stops,
+  };
+}
+function covertTimeStringToSPM(timeString) {
+  let secondsPastMidnight = 0;
+  secondsPastMidnight += parseInt(timeString.split(":")[0]) * 3600;
+  secondsPastMidnight += parseInt(timeString.split(":")[1]) * 60;
+  secondsPastMidnight += parseInt(timeString.split(":")[2]);
+  return secondsPastMidnight;
+}
 // Takes a payload from geojsonToApiPayload and returns the response
 export async function callApi(req) {
   const resp = await fetch(scoreCalculationEndpt, {

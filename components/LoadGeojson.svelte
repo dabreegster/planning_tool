@@ -51,7 +51,7 @@
 
   map.on("click", async function (e) {
     if (drawing == false) {
-      console.log(drawing)
+      console.log(drawing);
       if (isProcessingClick) {
         console.log("Click is already being processed");
         return;

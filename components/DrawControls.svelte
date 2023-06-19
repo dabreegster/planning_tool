@@ -1,8 +1,7 @@
 <script>
   import MapboxDraw from "@mapbox/mapbox-gl-draw";
-  import length from "@turf/length";
-  import centroid from "@turf/centroid";
-  import area from "@turf/area";
+  import * as turf from "@turf/turf";
+  import proj4 from "proj4";
   import {
     isPoint,
     drawCircle,
@@ -18,6 +17,11 @@
   // potentially redundant with only 1 draw polygon purpose
   let area_toggle = "select_area";
   let line_toggle = "new_pt_route";
+
+  // configuration for lat/long -> OSGB easting northing conversion
+  var osgb =
+    "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
+  var wgs84 = "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs";
 
   const { getMap } = getContext("map");
   import {
@@ -80,7 +84,18 @@
       // Assume there's exactly 1 feature
       const feature = e.features[0];
       if (feature.geometry.type == "Polygon" && area_toggle == "select_area") {
-        feature.properties.select_area = true;
+        // TODO add check if over certain area total
+        console.log(turf.area(feature.geometry));
+        if (turf.area(feature.geometry) < 10000000) {
+          feature.properties.select_area = true;
+          addGeometricProperties(feature);
+
+          let squareIDsWithinArea = findsquareIDsWithinArea(feature);
+          feature.properties["squareIDs"] = squareIDsWithinArea;
+          console.log(squareIDsWithinArea);
+        } else {
+          return 0;
+        }
       } else if (
         feature.geometry.type == "LineString" &&
         line_toggle == "new_pathway"
@@ -169,10 +184,10 @@
 
   function addGeometricProperties(feature) {
     if (feature.geometry.type == "LineString") {
-      feature.properties.lengthKm = length(feature.geometry);
+      feature.properties.lengthKm = turf.length(feature.geometry);
     } else {
-      feature.properties.centroid = centroid(feature.geometry);
-      feature.properties.areaSquareMeters = area(feature.geometry);
+      feature.properties.centroid = turf.centroid(feature.geometry);
+      feature.properties.areaSquareMeters = turf.area(feature.geometry);
     }
   }
 
@@ -203,6 +218,118 @@
     drawing = true;
     area_toggle = "select_area";
     drawControls.changeMode("draw_polygon");
+  }
+
+  // find the min and max x and y coordinates of an area
+  function findMinMaxes(coords) {
+    // Initialize the maximum and minimum values with the first coordinate
+    let maxX = coords[0][0];
+    let minX = coords[0][0];
+    let maxY = coords[0][1];
+    let minY = coords[0][1];
+
+    // Iterate over the remaining coordinates
+    for (let i = 1; i < coords.length; i++) {
+      const [x, y] = coords[i];
+
+      // Update the maximum and minimum x values
+      if (x > maxX) {
+        maxX = x;
+      } else if (x < minX) {
+        minX = x;
+      }
+
+      // Update the maximum and minimum y values
+      if (y > maxY) {
+        maxY = y;
+      } else if (y < minY) {
+        minY = y;
+      }
+    }
+
+    // Return an object containing the maximum and minimum values
+    return { maxX, minX, maxY, minY };
+  }
+
+  function createListOfPossibleCentroids(minMaxes) {
+    // Convert latitude/longitude to easting/northing
+    let eastingNorthingMin = proj4(wgs84, osgb, [minMaxes.minX, minMaxes.minY]);
+    let eastingNorthingMax = proj4(wgs84, osgb, [minMaxes.maxX, minMaxes.maxY]);
+
+    // Round maxes up and mins down to nearest 100 to find the full boundaries
+    let eMin = Math.floor(eastingNorthingMin[0] / 100);
+    let nMin = Math.floor(eastingNorthingMin[1] / 100);
+    let eMax = Math.ceil(eastingNorthingMax[0] / 100);
+    let nMax = Math.ceil(eastingNorthingMax[1] / 100);
+
+    let possibleCentroids = [];
+    for (let e = eMin; e < eMax; e++) {
+      for (let n = nMin; n < nMax; n++) {
+        possibleCentroids.push([e * 100 + 50, n * 100 + 50]);
+      }
+    }
+
+    return possibleCentroids;
+  }
+
+  function findCentroidsWithinArea(coords, possibleCentroids) {
+    // convert coords to easting/northing
+    let eastingNorthingCoords = [];
+    for (let i = 0; i < coords.length; i++) {
+      eastingNorthingCoords.push(
+        proj4(wgs84, osgb, [coords[i][0], coords[i][1]])
+      );
+    }
+
+    // create polygon of feature
+    let areaFeature = turf.polygon([eastingNorthingCoords]);
+
+    let squareIDsWithinArea = [];
+
+    // Iterate over the list of possible Centroids
+    for (let i = 0; i < possibleCentroids.length; i++) {
+      let centroid = possibleCentroids[i];
+
+      // Create a Turf.js point feature for each coordinate
+      let centroidFeature = turf.point(centroid);
+
+      // Check if the point is within the polygon
+      let isWithinArea = turf.booleanPointInPolygon(
+        centroidFeature,
+        areaFeature
+      );
+      // If the point is within the polygon, do something
+      if (isWithinArea) {
+        // Convert to string to become squareID
+        let squareID = centroid[0].toString() + "_" + centroid[1].toString();
+        squareIDsWithinArea.push(squareID);
+      }
+    }
+    return squareIDsWithinArea;
+  }
+
+  function findsquareIDsWithinArea(feature) {
+    let coords = feature.geometry.coordinates[0];
+    let minMaxes = findMinMaxes(coords);
+    let possibleCentroids = createListOfPossibleCentroids(minMaxes);
+
+    let squareIDsWithinArea = findCentroidsWithinArea(
+      coords,
+      possibleCentroids
+    );
+    return squareIDsWithinArea;
+  }
+
+  function findCurrentTotalSquareIDs(gj) {
+    let allSqaureIDs = [];
+
+    for (let i = 0; i < gj.features.length; i++) {
+      let squareIDs = gj.features[i].properties["squareIDs"];
+      for (let x = 0; x < squareIDs.length; x++) {
+        allSqaureIDs.push(squareIDs[x]);
+      }
+    }
+    return new Set(allSqaureIDs);
   }
 </script>
 

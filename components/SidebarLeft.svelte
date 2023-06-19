@@ -59,11 +59,11 @@
   <br />
   <InterventionList />
   <br />
-  <Results bind:responseJson bind:areaChanges bind:loading {login_username} />
+  <Results bind:responseJson bind:loading {login_username} />
   <br />
-  <CsvDownload {responseJson} {areaChanges} />
+  <CsvDownload {responseJson} />
   <br />
-  <InterventionScoreLegend {hoveredInterventionScores} {responseJson} />
+  <!-- <InterventionScoreLegend {hoveredInterventionScores} {responseJson} /> -->
 </div>
 
 <style>
