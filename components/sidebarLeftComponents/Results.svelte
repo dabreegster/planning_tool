@@ -8,9 +8,8 @@
   let requestJson;
   export let responseJson;
   export let login_username;
-  // export let estimatedCostOfProcess;
-
   export let loading = false;
+
   async function recalculate() {
     // assert that there are some squares selected before
     let totalSquares = 0
@@ -38,7 +37,6 @@
         );
       } else {
         console.log(responseJson);
-        // estimatedCostOfProcess = responseJson.estimated_cost_of_process;
         loading = false;
       }
     } else {
