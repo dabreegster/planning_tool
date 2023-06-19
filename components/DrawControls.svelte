@@ -12,6 +12,7 @@
   } from "../style.js";
   import { onMount, getContext } from "svelte";
   import { lookupPathway, lookupPTRoute } from "../api.js";
+  import { get } from "svelte/store";
 
   import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
   // potentially redundant with only 1 draw polygon purpose
@@ -35,6 +36,8 @@
   const color = "black";
   const circleRadius = 5.5;
   const lineWidth = 4;
+  // allow if total < 10_000_000m^2 ~ 1000 squares
+  const maxAreaSize = 10_000_000;
   export let leftSidebarClassToggle;
   export let stopLayerToggle;
   export let drawing = false;
@@ -84,16 +87,34 @@
       // Assume there's exactly 1 feature
       const feature = e.features[0];
       if (feature.geometry.type == "Polygon" && area_toggle == "select_area") {
-        // TODO add check if over certain area total
-        console.log(turf.area(feature.geometry));
-        if (turf.area(feature.geometry) < 10000000) {
+        // check if over X area total (set below)
+        let currentTotalArea = 0;
+        for (var i = 0; i < get(gjScheme).features.length; i++) {
+          let feat = get(gjScheme).features[i];
+          if (feat.geometry.type == "Polygon" && feat.properties.select_area) {
+            currentTotalArea += feat.properties.areaSquareMeters;
+          }
+        }
+        // allow only if total of areas < maxAreaSize
+        if (turf.area(feature.geometry) + currentTotalArea < maxAreaSize) {
           feature.properties.select_area = true;
           addGeometricProperties(feature);
-
           let squareIDsWithinArea = findsquareIDsWithinArea(feature);
           feature.properties["squareIDs"] = squareIDsWithinArea;
-          console.log(squareIDsWithinArea);
         } else {
+          // if too large return nothing and alert customer of limitations
+          let totalArea = (
+            (turf.area(feature.geometry) + currentTotalArea) /
+            1_000_000
+          ).toFixed(2);
+          alert(
+            "Total area too large: \n\nCurrent: " +
+              totalArea +
+              "km\u00B2" +
+              "\nMax " +
+              maxAreaSize / 1_000_000 +
+              "km\u00B2 \n\nPlease select a smaller area"
+          );
           return 0;
         }
       } else if (
@@ -268,7 +289,6 @@
         possibleCentroids.push([e * 100 + 50, n * 100 + 50]);
       }
     }
-
     return possibleCentroids;
   }
 

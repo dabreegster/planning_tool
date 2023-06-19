@@ -28,7 +28,6 @@
       loadInterventionScores().then((geojsonData) => {
         map.getSource(source).setData(geojsonData);
         setLayer();
-        console.log('DONE')
       });
     }
   }
@@ -62,7 +61,6 @@
     for (let i = 0; i <= 9; i++) {
       thresholds.push(i * 0.1 * maxValue);
     }
-    console.log(thresholds)
     return thresholds;
   }
 
@@ -168,18 +166,31 @@
     let geojson = emptyGeojson();
     // add scores
     for (var i = 0; i < n; i++) {
-      let feature = {"geometry": {"type":"Polygon"}};
+      let feature = { geometry: { type: "Polygon" } };
       let new_properties = {};
-      new_properties["Business"] = parseFloat(responseJson.tile_diff_scores["Business"][i].toFixed(10));
-      new_properties["Education"] = parseFloat(responseJson.tile_diff_scores["Education"][i].toFixed(10));
-      new_properties["Entertainment"] = parseFloat(responseJson.tile_diff_scores["Entertain / public activity"][i].toFixed(10));
-      new_properties["Shopping"] = parseFloat(responseJson.tile_diff_scores["Shopping"][i].toFixed(10));
-      new_properties["Residential"] = parseFloat(responseJson.tile_diff_scores["Visit friends at private home"][i].toFixed(10));
+      new_properties["Business"] = parseFloat(
+        responseJson.tile_diff_scores["Business"][i].toFixed(10)
+      );
+      new_properties["Education"] = parseFloat(
+        responseJson.tile_diff_scores["Education"][i].toFixed(10)
+      );
+      new_properties["Entertainment"] = parseFloat(
+        responseJson.tile_diff_scores["Entertain / public activity"][i].toFixed(
+          10
+        )
+      );
+      new_properties["Shopping"] = parseFloat(
+        responseJson.tile_diff_scores["Shopping"][i].toFixed(10)
+      );
+      new_properties["Residential"] = parseFloat(
+        responseJson.tile_diff_scores["Visit friends at private home"][
+          i
+        ].toFixed(10)
+      );
       feature.geometry["coordinates"] = [squareLLCoordinates[i]];
       feature["properties"] = new_properties;
-      geojson.features.push(feature)
+      geojson.features.push(feature);
     }
-    console.log(geojson)
     return geojson;
   }
 </script>
