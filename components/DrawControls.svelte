@@ -95,6 +95,7 @@
             currentTotalArea += feat.properties.areaSquareMeters;
           }
         }
+        console.log(get(gjScheme))
         // allow only if total of areas < maxAreaSize
         if (turf.area(feature.geometry) + currentTotalArea < maxAreaSize) {
           feature.properties.select_area = true;
@@ -115,7 +116,7 @@
               maxAreaSize / 1_000_000 +
               "km\u00B2 \n\nPlease select a smaller area"
           );
-          return 0;
+          return;
         }
       } else if (
         feature.geometry.type == "LineString" &&
