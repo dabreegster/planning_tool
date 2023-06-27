@@ -64,7 +64,7 @@
   <br />
   <CsvDownload {responseJson} />
   <br />
-  <InterventionScoreLegend {hoveredInterventionScores} {responseJson} />
+  <!-- <InterventionScoreLegend {hoveredInterventionScores} {responseJson} /> -->
 </div>
 
 <style>
