@@ -113,7 +113,6 @@
   function scoreTypes() {
     let purposes = [
       "Hide",
-      "Overall",
       "Business",
       "Education",
       "Entertainment",
