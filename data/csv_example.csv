@@ -1,0 +1,10 @@
+route_number,trip_id,ATCO,stop_sequence,arrival_times,departure_times
+0,0,9100BRADIN,0,28800,28800
+0,0,9100NPUD,1,29200,29260
+0,0,9100BRMLYSR,2,29520,29580
+0,0,9100LEEDS,3,30100,30100
+0,1,9100BRADIN,0,32400,32400
+0,1,9100NPUD,1,32800,32860
+0,1,9100BRMLYSR,2,33120,33180
+0,1,9100LEEDS,3,33700,33700
+Unqiue routes,Unique trips on each route,ATCO codes for stops,Order of stops (starting with 0),In seconds past midnight,In seconds past midnight

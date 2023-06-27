@@ -22,6 +22,7 @@
   "dependencies": {
     "@mapbox/geojson-extent": "^1.0.1",
     "@mapbox/mapbox-gl-draw": "^1.4.0",
+    "@turf/turf": "^6.5.0",
     "carbon-components-svelte": "^0.70.13",
     "fs": "^0.0.1-security",
     "govuk-frontend": "^4.5.0",
@@ -30,6 +31,7 @@
     "proj4": "^2.9.0",
     "sass": "^1.58.0",
     "svelte": "^3.54.0",
+    "svelte-spinner": "^2.0.2",
     "svelte-use-form": "^2.6.1"
   }
 }
