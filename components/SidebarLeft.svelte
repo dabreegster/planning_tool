@@ -31,7 +31,7 @@
   data-module="govuk-button"
   style="  z-index: 1; position: absolute; top: 25px; left: 300px;"
   on:click={getSidebarClass}
-  >Add Scheme
+  >Add scheme
   <svg
     class="govuk-button__start-icon"
     xmlns="http://www.w3.org/2000/svg"
