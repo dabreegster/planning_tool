@@ -19,10 +19,12 @@
 
   // TODO import findThresholds function from CurrentInterventionLayer.svelte
   function findThresholds(responseJson) {
-    results_table = responseJson.results_table.OA11CD;
+    let results_table = null;
+    results_table = responseJson.tile_diff_scores;
     let maxValue = 0;
     for (const key in results_table) {
-      if (key == "OA11CD") {
+      // TODO: change backend to rename return square_ID instead of lsoa_name
+      if (key == "lsoa_name") {
       } else {
         const values = Object.values(results_table[key]);
         for (const value of values) {
@@ -32,13 +34,9 @@
         }
       }
     }
-    thresholds = [];
-    for (let i = 0; i <= 20; i++) {
-      if ([0, 5, 10, 15, 20].includes(i)) {
-        thresholds.push((i * 0.05 * maxValue).toFixed(3));
-      } else {
-        thresholds.push(" ");
-      }
+    let thresholds = [];
+    for (let i = 0; i <= 9; i++) {
+      thresholds.push(i * 0.1 * maxValue);
     }
     return thresholds;
   }

@@ -13,36 +13,154 @@
   const layer = "tiles";
 
   onMount(async () => {
-    map.addSource("Business", {
+    map.addSource("Business by PT", {
       type: "raster",
       url:
         "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_nipy_spectral.pmtiles",
     });
-    map.addSource("Entertainment", {
+    map.addSource("Entertainment by PT", {
       type: "raster",
       url:
         "pmtiles://" +
         PMTILES_BUCKET_URL +
         "ew_Entertainment_nipy_spectral.pmtiles",
     });
-    map.addSource("Education", {
+    map.addSource("Education by PT", {
       type: "raster",
       url:
         "pmtiles://" +
         PMTILES_BUCKET_URL +
         "ew_Education_nipy_spectral.pmtiles",
     });
-    map.addSource("Shopping", {
+    map.addSource("Shopping by PT", {
       type: "raster",
       url:
         "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_nipy_spectral.pmtiles",
     });
-    map.addSource("Residential", {
+    map.addSource("Residential by PT", {
       type: "raster",
       url:
         "pmtiles://" +
         PMTILES_BUCKET_URL +
         "ew_Residential_nipy_spectral.pmtiles",
+    });
+
+    map.addSource("Business by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_car_nipy_spectral.pmtiles",
+    });
+    map.addSource("Entertainment by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Entertainment_car_nipy_spectral.pmtiles",
+    });
+    map.addSource("Education by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Education_car_nipy_spectral.pmtiles",
+    });
+    map.addSource("Shopping by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_car_nipy_spectral.pmtiles",
+    });
+    map.addSource("Residential by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Residential_car_nipy_spectral.pmtiles",
+    });
+    map.addSource("Health by driving", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Health_car_nipy_spectral.pmtiles",
+    });
+
+    map.addSource("Business by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_walk_nipy_spectral.pmtiles",
+    });
+    map.addSource("Entertainment by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Entertainment_walk_nipy_spectral.pmtiles",
+    });
+    map.addSource("Education by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Education_walk_nipy_spectral.pmtiles",
+    });
+    map.addSource("Shopping by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_walk_nipy_spectral.pmtiles",
+    });
+    map.addSource("Residential by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Residential_walk_nipy_spectral.pmtiles",
+    });
+
+    map.addSource("Health by walking", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Health_walk_nipy_spectral.pmtiles",
+    });
+
+    map.addSource("Business by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_cycling_nipy_spectral.pmtiles",
+    });
+    map.addSource("Entertainment by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Entertainment_cycling_nipy_spectral.pmtiles",
+    });
+    map.addSource("Education by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Education_cycling_nipy_spectral.pmtiles",
+    });
+    map.addSource("Shopping by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_cycling_nipy_spectral.pmtiles",
+    });
+    map.addSource("Residential by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Residential_cycling_nipy_spectral.pmtiles",
+    });
+    map.addSource("Health by cycling", {
+      type: "raster",
+      url:
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Health_cycling_nipy_spectral.pmtiles",
     });
     setLayer();
   });
@@ -73,11 +191,33 @@
   function scoreTypes() {
     let purposes = [
       "Hide",
-      "Business",
-      "Education",
-      "Shopping",
-      "Residential",
-      "Entertainment",
+
+      "Business by PT",
+      "Education by PT",
+      "Shopping by PT",
+      "Residential by PT",
+      "Entertainment by PT",
+
+      "Business by walking",
+      "Education by walking",
+      "Shopping by walking",
+      "Residential by walking",
+      "Entertainment by walking",
+      "Health by walking",
+
+      "Business by driving",
+      "Education by driving",
+      "Shopping by driving",
+      "Residential by driving",
+      "Entertainment by driving",
+      "Health by driving",
+
+      "Business by cycling",
+      "Education by cycling",
+      "Shopping by cycling",
+      "Residential by cycling",
+      "Entertainment by cycling",
+      "Health by cycling",
       // "Overall"
     ];
     return purposes;

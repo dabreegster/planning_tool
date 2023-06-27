@@ -18,11 +18,12 @@
   import DrawControls from "./components/DrawControls.svelte";
   import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
+  import PurposeWeightSliders from "./components/PurposeWeightSliders.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let login_password = "password";
+  let login_password = "connect";
   let squareID;
   let tileOpacity;
   let hoverInfo;
@@ -31,6 +32,9 @@
   let loading;
   let stopLayerToggle;
   let drawing;
+  let hoveredInterventionScores;
+  let weights;
+  let squareScores;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -51,6 +55,7 @@
       <SidebarLeft
         {innerWidth}
         {login_username}
+        {hoveredInterventionScores}
         bind:responseJson
         bind:leftSidebarClassToggle
         bind:loading
@@ -68,8 +73,9 @@
       <ScoreLegend {tileOpacity} />
       <SnapToPostcode />
       <HoverRouteInfo {hoverInfo} />
-      <CurrentInterventionLayer {responseJson} />
-      <HoverScores />
+      <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
+      <PurposeWeightSliders bind:weights {squareScores}/>
+      <HoverScores {weights} bind:squareScores/>
     </Map>
   </div>
 {/if}

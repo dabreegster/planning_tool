@@ -1,6 +1,6 @@
 const squareInfoEndpt = "https://815d-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://11af-35-189-123-220.ngrok-free.app";
-const hoverScoresEndpt = "https://00dc-34-89-73-233.ngrok-free.app";
+const hoverScoresEndpt = "https://2d21-34-89-73-233.ngrok-free.app";
 const scoreCalculationEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
 
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
@@ -34,12 +34,12 @@ export async function lookupPostcode(postcode) {
   return await resp.json();
 }
 
-export async function getHoverScores(squareID) {
+export async function getHoverScores(squareID, mode) {
   let resp;
   resp = await fetch(hoverScoresEndpt, {
     method: "POST",
     headers: jsonRequestHeaders(),
-    body: JSON.stringify({ square_ID: squareID }),
+    body: JSON.stringify({ square_ID: squareID, modeType:mode }),
   });
   return await resp.json();
 }
