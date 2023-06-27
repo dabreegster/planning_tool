@@ -26,7 +26,7 @@
     "Entertainment",
     "Shopping",
     "Residential",
-    "Weighted Overall",
+    "Custom Weighting",
   ];
 
   let longitude = null;
@@ -206,10 +206,10 @@
     position: absolute;
     padding: 16px;
     border-radius: 10px;
-    right: 10px;
-    top: 500px;
-    width: 300px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+    /* right: 10px; */
+    top: 370px;
+    width: 450px;
+    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
     font-size: 1.2rem;
   }
 </style>

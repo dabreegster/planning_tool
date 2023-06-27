@@ -39,6 +39,9 @@
 </script>
 
 <div class="whitebox">
+  <h2>
+    Custom weights
+  </h2>
   <h3>
     Business: {weights["business"]}
   </h3>
@@ -106,15 +109,20 @@
     text-align: center;
     font-size: 1.2rem;
   }
+  h2 {
+    text-align: left;
+    font-size: 1.4rem;
+
+  }
   .whitebox {
     background-color: white;
     position: absolute;
-    width: 377px;
+    width: 450px;
     padding: 16px;
-    border-radius: 10px;
-    left: 10px;
-    top: 310px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+    /* border-radius: 10px; */
+    /* left: 10px; */
+    /* top: 310px; */
+    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
     overflow-y: auto;
     scrollbar-width: none;
   }

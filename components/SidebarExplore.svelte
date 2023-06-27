@@ -1,36 +1,34 @@
 <script>
-  import EntireScheme from "./sidebarLeftComponents/EntireScheme.svelte";
-  import InterventionList from "./sidebarLeftComponents/InterventionList.svelte";
-  import InterventionScoreLegend from "./sidebarLeftComponents/InterventionScoreLegend.svelte";
-  import CsvUpload from "./sidebarLeftComponents/CsvUpload.svelte";
-  import CsvDownload from "./sidebarLeftComponents/CsvDownload.svelte";
-  import Results from "./sidebarLeftComponents/Results.svelte";
+  import HoverScores from "./HoverScores.svelte";
+  import PurposeWeightSliders from "./PurposeWeightSliders.svelte";
 
-  export let responseJson;
-  export let hoveredInterventionScores;
   export let leftSidebarClassToggle = "blank";
-  export let login_username;
-  export let innerWidth;
-  export let areaChanges;
-  export let loading;
+  export let exploreSidebarClassToggle = "blank";
+
+  let weights;
+  let squareScores;
 
   function getSidebarClass() {
-    if (leftSidebarClassToggle == "sidebar") {
+    if (exploreSidebarClassToggle == "blank") {
       leftSidebarClassToggle = "blank";
-      return "blank";
-    } else {
-      leftSidebarClassToggle = "sidebar";
+      exploreSidebarClassToggle = "sidebar"
       return "sidebar";
+    } else {
+      exploreSidebarClassToggle = "blank";
+      return "blank";
     }
+  }
+  $: {
+    getSidebarClass();
   }
 </script>
 
 <button
   class="govuk-button govuk-button--start"
   data-module="govuk-button"
-  style="  z-index: 1; position: absolute; top: 25px; left: 30px;"
+  style="  z-index: 1; position: absolute; top: 25px; left: 40px;"
   on:click={getSidebarClass}
-  >Add Scheme
+  > Explore scores
   <svg
     class="govuk-button__start-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -45,36 +43,28 @@
 </button>
 
 <!-- TODO fix this budget fix-->
-<div class={leftSidebarClassToggle} style="height: 90px; top: 5px;">
+<div class={exploreSidebarClassToggle} style="height: 90px; top: 5px;">
   <br />
 </div>
 
 <div
-  class={leftSidebarClassToggle}
+  class={exploreSidebarClassToggle}
   style="height: calc(100% - 115px); top: 73px;"
 >
-  <CsvUpload {innerWidth} />
-  <br />
-  <EntireScheme {innerWidth} />
-  <br />
-  <InterventionList />
-  <br />
-  <Results bind:responseJson bind:loading {login_username} />
-  <br />
-  <CsvDownload {responseJson} />
-  <br />
-  <!-- <InterventionScoreLegend {hoveredInterventionScores} {responseJson} /> -->
+  <PurposeWeightSliders bind:weights {squareScores}/>
+  <br/>
+  <HoverScores {weights} bind:squareScores/>
 </div>
 
 <style>
   .sidebar {
     background-color: white;
     position: absolute;
-    width: 25%;
+    width: 15%;
     /* height: calc(100% - 45px); */
     padding: 20px;
     border-radius: 10px;
-    left: 15px;
+    left: 30px;
     /* top: 5px; */
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     overflow-y: auto;

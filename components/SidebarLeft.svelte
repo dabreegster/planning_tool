@@ -11,16 +11,17 @@
   export let leftSidebarClassToggle = "blank";
   export let login_username;
   export let innerWidth;
-  export let areaChanges;
   export let loading;
+  export let exploreSidebarClassToggle = "blank";
 
   function getSidebarClass() {
-    if (leftSidebarClassToggle == "sidebar") {
+    if (leftSidebarClassToggle == "blank") {
+      exploreSidebarClassToggle = "blank";
+      leftSidebarClassToggle = "sidebar"
+      return "sidebar";
+    } else {
       leftSidebarClassToggle = "blank";
       return "blank";
-    } else {
-      leftSidebarClassToggle = "sidebar";
-      return "sidebar";
     }
   }
 </script>
@@ -28,7 +29,7 @@
 <button
   class="govuk-button govuk-button--start"
   data-module="govuk-button"
-  style="  z-index: 1; position: absolute; top: 25px; left: 30px;"
+  style="  z-index: 1; position: absolute; top: 25px; left: 300px;"
   on:click={getSidebarClass}
   >Add Scheme
   <svg
@@ -63,7 +64,7 @@
   <br />
   <CsvDownload {responseJson} />
   <br />
-  <!-- <InterventionScoreLegend {hoveredInterventionScores} {responseJson} /> -->
+  <InterventionScoreLegend {hoveredInterventionScores} {responseJson} />
 </div>
 
 <style>
