@@ -15,13 +15,8 @@
   onMount(async () => {
     map.addSource("APGBtest", {
       type: "raster",
-      url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "APGBtest.pmtiles",
+      url: "pmtiles://" + PMTILES_BUCKET_URL + "APGBtest.pmtiles",
     });
-
-
-
-
 
     map.addSource("Business by PT", {
       type: "raster",
@@ -58,7 +53,9 @@
     map.addSource("Business by driving", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_car_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Business_car_nipy_spectral.pmtiles",
     });
     map.addSource("Entertainment by driving", {
       type: "raster",
@@ -77,7 +74,9 @@
     map.addSource("Shopping by driving", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_car_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Shopping_car_nipy_spectral.pmtiles",
     });
     map.addSource("Residential by driving", {
       type: "raster",
@@ -97,7 +96,9 @@
     map.addSource("Business by walking", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_walk_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Business_walk_nipy_spectral.pmtiles",
     });
     map.addSource("Entertainment by walking", {
       type: "raster",
@@ -116,7 +117,9 @@
     map.addSource("Shopping by walking", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_walk_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Shopping_walk_nipy_spectral.pmtiles",
     });
     map.addSource("Residential by walking", {
       type: "raster",
@@ -137,7 +140,9 @@
     map.addSource("Business by cycling", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_cycling_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Business_cycling_nipy_spectral.pmtiles",
     });
     map.addSource("Entertainment by cycling", {
       type: "raster",
@@ -156,7 +161,9 @@
     map.addSource("Shopping by cycling", {
       type: "raster",
       url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_cycling_nipy_spectral.pmtiles",
+        "pmtiles://" +
+        PMTILES_BUCKET_URL +
+        "ew_Shopping_cycling_nipy_spectral.pmtiles",
     });
     map.addSource("Residential by cycling", {
       type: "raster",

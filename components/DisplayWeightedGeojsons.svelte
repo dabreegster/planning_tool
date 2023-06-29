@@ -14,7 +14,7 @@
   const source = "weightedSquares";
   const layer = "weightedSquaresLayer";
 
-  let hoverInfo = "no_selection";
+  // let hoverInfo = "no_selection";
   let weightedScoreLayer = "Show"; // TODO: change this
   export let weights;
   export let squareScores;
@@ -42,20 +42,22 @@
   });
 
   $: {
-    if (squaresFound && map.getSource(source)) {
-      createSquareGeojson().then((geojsonData) => {
-        map.getSource(source).setData(geojsonData);
-        setLayer();
+    if (weights && squareScores && squaresFound && map.getSource(source)) {
+      console.log("running")
+      createSquareGeojson().then((gjData) => {
+        map.getSource(source).setData(gjData);
+        // setLayer();
       });
     }
   }
-
 
   function createLLCoords(squareScores, mode) {
     // create longlat coordinates from the squareID
     let squareENCoordinates = [];
     Object.entries(squareScores[mode]).forEach(([squareCentroid, scores]) => {
-      let [centroidEasting, centroidNorthing] = squareCentroid.split("_").map(Number);
+      let [centroidEasting, centroidNorthing] = squareCentroid
+        .split("_")
+        .map(Number);
       squareENCoordinates.push([
         [centroidEasting - 50, centroidNorthing - 50],
         [centroidEasting + 50, centroidNorthing - 50],
@@ -75,7 +77,7 @@
       let LLCoordinates = flatSquareLLCoordinates.slice(i, i + 4);
       squareLLCoordinates.push(LLCoordinates);
     }
-    return squareLLCoordinates
+    return squareLLCoordinates;
   }
 
   function findWeightedScore(squareScores, mode, weights) {
@@ -96,14 +98,17 @@
       let weightedOverall = 0;
       // loop over each purpose and apply weighting
       for (let i = 0; i < 6; i++) {
-        weightedOverall += Math.round(scores[i] * (weightsArray[i]/ combinedWeight))
-      };
-      weightedScores.push(weightedOverall)
+        weightedOverall += Math.round(
+          scores[i] * (weightsArray[i] / combinedWeight)
+        );
+      }
+      weightedScores.push(weightedOverall);
     });
-    return weightedScores
+    return weightedScores;
   }
 
   async function createSquareGeojson() {
+    // TODO: Add check so doesn't rerun on on already calculated scores
     // find square coords in LL format and custom weighted scores
     let squareLLCoordinates = createLLCoords(squareScores, mode);
     let weightedScores = findWeightedScore(squareScores, mode, weights);
@@ -120,14 +125,15 @@
             coordinates: squareLLCoordinates[i],
           },
           properties: {
-            weightedScore: weightedScores[i]
+            mode: mode,
+            weightedScore: weightedScores[i],
           },
         });
       }
     } else {
-      console.log("Uneven lengths of coordinates and weighted scores")
+      console.log("Uneven lengths of coordinates and weighted scores");
     }
-    console.log(geojson)
+    console.log(geojson);
     return geojson;
   }
 
@@ -136,8 +142,6 @@
       map.removeLayer(layer);
     }
     if (weightedScoreLayer !== "Hide") {
-      // let opacity = [0.1, 0.18, 0.26, 0.33, 0.41, 0.49, 0.57, 0.64, 0.72, 0.8];
-      // let thresholds = findThresholds(responseJson);
       map.addLayer({
         id: layer,
         source: source,
@@ -145,40 +149,15 @@
         paint: {
           "fill-color": "#0062ff",
           "fill-outline-color": "rgba(0, 0, 0, 0.2)",
-          // "fill-opacity": [
-          //   "interpolate",
-          //   ["linear"],
-          //   ["get", scoreLayer],
-          //   thresholds[0],
-          //   0,
-          //   0.000001,
-          //   opacity[0],
-          //   thresholds[1],
-          //   opacity[1],
-          //   thresholds[2],
-          //   opacity[2],
-          //   thresholds[3],
-          //   opacity[3],
-          //   thresholds[4],
-          //   opacity[4],
-          //   thresholds[5],
-          //   opacity[5],
-          //   thresholds[6],
-          //   opacity[6],
-          //   thresholds[7],
-          //   opacity[7],
-          //   thresholds[8],
-          //   opacity[8],
-          //   thresholds[9],
-          //   opacity[9],
-          // ],
         },
       });
+      console.log("set layer");
     }
   }
 
 
 </script>
+
 <!-- 
 <div class="purposeBox" style="display: flex;">
   <label

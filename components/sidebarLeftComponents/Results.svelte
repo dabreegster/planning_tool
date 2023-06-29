@@ -12,17 +12,20 @@
 
   async function recalculate() {
     // assert that there are some squares selected before
-    let totalSquares = 0
+    let totalSquares = 0;
     for (var i = 0; i < get(gjScheme).features.length; i++) {
-          let feat = get(gjScheme).features[i];
-          if (feat.geometry.type == "Polygon" && feat.properties.select_area) {
-            totalSquares += feat.properties.squareIDs.length;
-          }
-        }
-    if (totalSquares > 0){
+      let feat = get(gjScheme).features[i];
+      if (feat.geometry.type == "Polygon" && feat.properties.select_area) {
+        totalSquares += feat.properties.squareIDs.length;
+      }
+    }
+    if (totalSquares > 0) {
       responseJson = null;
       loading = true;
-      requestJson = await geojsonToApiPayload($gjScheme.features, login_username);
+      requestJson = await geojsonToApiPayload(
+        $gjScheme.features,
+        login_username
+      );
       if (requestJson == "stop_lookup_error") {
         loading = false;
         return;
@@ -40,7 +43,7 @@
         loading = false;
       }
     } else {
-      alert("Please select the impact areas you are interested in")
+      alert("Please select the impact areas you are interested in");
       return;
     }
   }

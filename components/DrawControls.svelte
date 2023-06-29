@@ -95,7 +95,7 @@
             currentTotalArea += feat.properties.areaSquareMeters;
           }
         }
-        console.log(get(gjScheme))
+        console.log(get(gjScheme));
         // allow only if total of areas < maxAreaSize
         if (turf.area(feature.geometry) + currentTotalArea < maxAreaSize) {
           feature.properties.select_area = true;

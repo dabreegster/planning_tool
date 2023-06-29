@@ -39,7 +39,7 @@ export async function getHoverScores(squareID, mode) {
   resp = await fetch(hoverScoresEndpt, {
     method: "POST",
     headers: jsonRequestHeaders(),
-    body: JSON.stringify({ square_ID: squareID, modeType:mode }),
+    body: JSON.stringify({ square_ID: squareID, modeType: mode }),
   });
   return await resp.json();
 }

@@ -17,7 +17,7 @@
   function getSidebarClass() {
     if (leftSidebarClassToggle == "blank") {
       exploreSidebarClassToggle = "blank";
-      leftSidebarClassToggle = "sidebar"
+      leftSidebarClassToggle = "sidebar";
       return "sidebar";
     } else {
       leftSidebarClassToggle = "blank";

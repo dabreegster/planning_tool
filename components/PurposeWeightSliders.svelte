@@ -2,12 +2,12 @@
   import Range from "./Range.svelte";
 
   export let weights = {
-    "business": 70,
-    "education": 70,
-    "entertainment": 70,
-    "health": 70,
-    "shopping": 70,
-    "residential": 70,
+    business: 70,
+    education: 70,
+    entertainment: 70,
+    health: 70,
+    shopping: 70,
+    residential: 70,
   };
   export let squareScores;
 
@@ -23,32 +23,31 @@
     Object.entries(squareScores).forEach(([mode, _]) => {
       if (Object.keys(squareScores[mode]).length === 0) {
       } else {
-        Object.entries(squareScores[mode]).forEach(([squareID, scores]) => { 
+        Object.entries(squareScores[mode]).forEach(([squareID, scores]) => {
           let weightedOverall = 0;
           for (let i = 0; i < 6; i++) {
-            weightedOverall += Math.round(scores[i] * (weightsArray[i]/ combinedWeight))
-          };
-          scores[6] = weightedOverall
-          squareScores[mode][squareID] = scores
+            weightedOverall += Math.round(
+              scores[i] * (weightsArray[i] / combinedWeight)
+            );
+          }
+          scores[6] = weightedOverall;
+          squareScores[mode][squareID] = scores;
         });
       }
     });
-    return squareScores
+    return squareScores;
   }
-
 </script>
 
 <div class="whitebox">
-  <h2>
-    Custom weights
-  </h2>
+  <h2>Custom weights</h2>
   <h3>
     Business: {weights["business"]}
   </h3>
   <div>
     <Range
       on:change={(e) => (weights["business"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -58,7 +57,7 @@
   <div>
     <Range
       on:change={(e) => (weights["education"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -68,7 +67,7 @@
   <div>
     <Range
       on:change={(e) => (weights["entertainment"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -78,7 +77,7 @@
   <div>
     <Range
       on:change={(e) => (weights["health"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -88,7 +87,7 @@
   <div>
     <Range
       on:change={(e) => (weights["shopping"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -98,7 +97,7 @@
   <div>
     <Range
       on:change={(e) => (weights["residential"] = e.detail.value)}
-      on:change={squareScores = updateWithNewWeights(squareScores)}
+      on:change={(squareScores = updateWithNewWeights(squareScores))}
       id="basic-slider"
     />
   </div>
@@ -112,7 +111,6 @@
   h2 {
     text-align: left;
     font-size: 1.4rem;
-
   }
   .whitebox {
     background-color: white;

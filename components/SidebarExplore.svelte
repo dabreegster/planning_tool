@@ -14,7 +14,7 @@
   function getSidebarClass() {
     if (exploreSidebarClassToggle == "blank") {
       leftSidebarClassToggle = "blank";
-      exploreSidebarClassToggle = "sidebar"
+      exploreSidebarClassToggle = "sidebar";
       return "sidebar";
     } else {
       exploreSidebarClassToggle = "blank";
@@ -31,7 +31,8 @@
   data-module="govuk-button"
   style="  z-index: 1; position: absolute; top: 25px; left: 40px;"
   on:click={getSidebarClass}
-  > Explore scores
+>
+  Explore scores
   <svg
     class="govuk-button__start-icon"
     xmlns="http://www.w3.org/2000/svg"
@@ -54,10 +55,10 @@
   class={exploreSidebarClassToggle}
   style="height: calc(100% - 115px); top: 73px;"
 >
-  <PurposeWeightSliders bind:weights {squareScores}/>
-  <br/>
-  <HoverScores {weights} bind:squareScores bind:mode bind:squaresFound/>
-  <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound}/>
+  <PurposeWeightSliders bind:weights {squareScores} />
+  <br />
+  <HoverScores {weights} bind:squareScores bind:mode bind:squaresFound />
+  <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound} />
 </div>
 
 <style>

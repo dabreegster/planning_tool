@@ -14,9 +14,9 @@
 
   export let squareScores = {
     "Public Transport": {},
-    "Walking": {},
-    "Driving": {},
-    "Cycling": {},
+    Walking: {},
+    Driving: {},
+    Cycling: {},
   };
 
   let purposes = [
@@ -78,19 +78,21 @@
             Object.entries(response).forEach(([key, scores]) => {
               let weightedOverall = 0;
               for (let i = 0; i < 6; i++) {
-                weightedOverall += Math.round(scores[i] * (weightsArray[i]/ combinedWeight))
-              };
+                weightedOverall += Math.round(
+                  scores[i] * (weightsArray[i] / combinedWeight)
+                );
+              }
               if (scores.length > 6) {
-                scores[6] = weightedOverall
-                response[key] = scores
+                scores[6] = weightedOverall;
+                response[key] = scores;
               } else {
-                scores.push(weightedOverall)
-                response[key] = scores
+                scores.push(weightedOverall);
+                response[key] = scores;
               }
             });
             squareScores[mode] = { ...squareScores[mode], ...response };
-            console.log(squareScores)
-            squaresFound = true
+            console.log(squareScores);
+            squaresFound = true;
           }
         }
       }
@@ -103,18 +105,13 @@
     zoom = map.getZoom();
   });
 
-  function setZoom12() {
-    map.jumpTo({
-      zoom: 12,
-    });
-  }
+  // function setZoom12() {
+  //   map.jumpTo({
+  //     zoom: 12,
+  //   });
+  // }
   function modeTypes() {
-    let modes = [
-    "Public Transport",
-    "Driving",
-    "Walking",
-    "Cycling",
-    ];
+    let modes = ["Public Transport", "Driving", "Walking", "Cycling"];
     return modes;
   }
 
@@ -146,7 +143,6 @@
   //   // squareScores[mode] = { ...squareScores[mode], ...response };
   // }
 
-
   // $: {updateWithNewWeights}
 </script>
 
@@ -159,11 +155,7 @@
     >
       Mode:
     </label>
-    <select
-      class="govuk-select"
-      bind:value={mode}
-      on:change={mode}
-    >
+    <select class="govuk-select" bind:value={mode}>
       {#each modeTypes() as x}
         <option value={x}>{x}</option>
       {/each}
@@ -188,7 +180,9 @@
             <tr class="govuk-table__row">
               <!-- <td class="govuk-table__cell">PT </td> -->
               <td class="govuk-table__cell">{purposes[i]}</td>
-              <td class="govuk-table__cell">{squareScores[mode][squareID][i]}</td>
+              <td class="govuk-table__cell"
+                >{squareScores[mode][squareID][i]}</td
+              >
             </tr>
           {/each}
         </tbody>
