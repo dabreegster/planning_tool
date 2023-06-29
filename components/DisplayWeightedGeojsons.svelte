@@ -41,15 +41,15 @@
     }
   });
 
-  $: {
-    if (weights && squareScores && squaresFound && map.getSource(source)) {
-      console.log("running")
-      createSquareGeojson().then((gjData) => {
-        map.getSource(source).setData(gjData);
-        // setLayer();
-      });
-    }
-  }
+  // $: {
+  //   if (weights && squareScores && squaresFound && map.getSource(source)) {
+  //     console.log("running")
+  //     createSquareGeojson().then((gjData) => {
+  //       map.getSource(source).setData(gjData);
+  //       setLayer();
+  //     });
+  //   }
+  // }
 
   function createLLCoords(squareScores, mode) {
     // create longlat coordinates from the squareID
