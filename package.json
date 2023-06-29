@@ -10,7 +10,7 @@
     "fmt": "npx prettier --write *.html *.js *.svelte components/*",
     "lint": "npx eslint . --ignore-pattern=vite.config.js",
     "setup-govuk-assets": "rm -rf public/assets; mkdir -p public/assets; cp -R node_modules/govuk-frontend/govuk/assets/ public/assets",
-    "check": "svelte-check"
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
@@ -19,6 +19,7 @@
     "prettier": "^2.8.2",
     "prettier-plugin-svelte": "^2.9.0",
     "svelte-check": "^3.4.4",
+    "typescript": "^5.1.6",
     "vite": "^4.0.0"
   },
   "dependencies": {
