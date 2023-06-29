@@ -1,12 +1,15 @@
 <script>
   import HoverScores from "./HoverScores.svelte";
   import PurposeWeightSliders from "./PurposeWeightSliders.svelte";
+  import DisplayWeightedGeojsons from "./DisplayWeightedGeojsons.svelte";
 
   export let leftSidebarClassToggle = "blank";
   export let exploreSidebarClassToggle = "blank";
 
   let weights;
   let squareScores;
+  let mode;
+  let squaresFound;
 
   function getSidebarClass() {
     if (exploreSidebarClassToggle == "blank") {
@@ -53,14 +56,15 @@
 >
   <PurposeWeightSliders bind:weights {squareScores}/>
   <br/>
-  <HoverScores {weights} bind:squareScores/>
+  <HoverScores {weights} bind:squareScores bind:mode bind:squaresFound/>
+  <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound}/>
 </div>
 
 <style>
   .sidebar {
     background-color: white;
     position: absolute;
-    width: 15%;
+    width: 500px;
     /* height: calc(100% - 45px); */
     padding: 20px;
     border-radius: 10px;

@@ -37,7 +37,8 @@
   let freeForRequest = true;
   let lastRequestTime = 0;
   let zoom = map.getZoom();
-  let mode = "Public Transport";
+  export let squaresFound = false;
+  export let mode = "Public Transport";
   export let weights;
 
   if (freeForRequest) {
@@ -89,6 +90,7 @@
             });
             squareScores[mode] = { ...squareScores[mode], ...response };
             console.log(squareScores)
+            squaresFound = true
           }
         }
       }

@@ -80,7 +80,7 @@
       <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
       <!-- <PurposeWeightSliders bind:weights {squareScores}/>
       <HoverScores {weights} bind:squareScores/> -->
-      <SidebarExplore {leftSidebarClassToggle} bind:exploreSidebarClassToggle/>
+      <SidebarExplore {leftSidebarClassToggle} bind:exploreSidebarClassToggle />
     </Map>
   </div>
 {/if}
