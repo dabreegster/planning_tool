@@ -1,5 +1,6 @@
 <script>
-  import busUrl from "../data/stops_for_app_bus_coach.geojson?url";
+  import busUrl1 from "../data/stops_for_app_bus_coach1.geojson?url";
+  import busUrl2 from "../data/stops_for_app_bus_coach2.geojson?url";
   import railUrl from "../data/stops_for_app_national_rail.geojson?url";
   import tubeUrl from "../data/stops_for_app_tube_lightrail_metro.geojson?url";
   import tramUrl from "../data/stops_for_app_tram.geojson?url";
@@ -9,7 +10,9 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  const urls = [busUrl, railUrl, tubeUrl, tramUrl, ferryUrl];
+  // TODO: review hacky fix to having 2 busUrls
+  let combinedBusData = null;
+  const urls = [busUrl1, railUrl, tubeUrl, tramUrl, ferryUrl];
   const sources = [
     "bus_stops",
     "rail_stops",
@@ -25,28 +28,44 @@
     "ferry_layer",
   ];
   const colors = ["purple", "red", "blue", "green", "orange"];
-
   let show = [false, false, false, false, false];
   let switchStatus = [true, true, true, true, true];
 
-  onMount(() => {
-    for (let i = 0; i < 5; i++) {
-      map.addSource(sources[i], {
-        type: "geojson",
-        data: urls[i],
-      });
-      map.addLayer({
-        id: layers[i],
-        source: sources[i],
-        type: "circle",
-        paint: {
-          "circle-radius": 5,
-          "circle-color": colors[i],
-          "circle-opacity": 0.5,
-        },
-      });
+  onMount(async () => {
+    // TODO: here aswell
+    try {
+      const [busData1, busData2] = await Promise.all([
+        fetch(busUrl1).then((response) => response.json()),
+        fetch(busUrl2).then((response) => response.json()),
+      ]);
+      
+      combinedBusData = {
+        type: "FeatureCollection",
+        features: [...busData1.features, ...busData2.features],
+      };
+
+      for (let i = 0; i < 5; i++) {
+        map.addSource(sources[i], {
+          type: "geojson",
+          data: i === 0 ? combinedBusData : urls[i],
+        });
+
+        map.addLayer({
+          id: layers[i],
+          source: sources[i],
+          type: "circle",
+          paint: {
+            "circle-radius": 5,
+            "circle-color": colors[i],
+            "circle-opacity": 0.5,
+          },
+        });
+      }
+
+      toggleAll();
+    } catch (error) {
+      console.error("Error loading GeoJSON data:", error);
     }
-    toggleAll();
   });
 
   function toggle(index, draw) {
