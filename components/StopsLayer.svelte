@@ -32,40 +32,37 @@
   let switchStatus = [true, true, true, true, true];
 
   onMount(async () => {
-    // TODO: here aswell
-    try {
-      const [busData1, busData2] = await Promise.all([
-        fetch(busUrl1).then((response) => response.json()),
-        fetch(busUrl2).then((response) => response.json()),
-      ]);
-      
-      combinedBusData = {
-        type: "FeatureCollection",
-        features: [...busData1.features, ...busData2.features],
-      };
+    // TODO: here aswell as bit hacky
+    const [busData1, busData2] = await Promise.all([
+      fetch(busUrl1).then((response) => response.json()),
+      fetch(busUrl2).then((response) => response.json()),
+    ]);
+    
+    combinedBusData = {
+      type: "FeatureCollection",
+      features: [...busData1.features, ...busData2.features],
+    };
 
-      for (let i = 0; i < 5; i++) {
-        map.addSource(sources[i], {
-          type: "geojson",
-          data: i === 0 ? combinedBusData : urls[i],
-        });
+    for (let i = 0; i < 5; i++) {
+      map.addSource(sources[i], {
+        type: "geojson",
+        data: i === 0 ? combinedBusData : urls[i],
+      });
 
-        map.addLayer({
-          id: layers[i],
-          source: sources[i],
-          type: "circle",
-          paint: {
-            "circle-radius": 5,
-            "circle-color": colors[i],
-            "circle-opacity": 0.5,
-          },
-        });
-      }
-
-      toggleAll();
-    } catch (error) {
-      console.error("Error loading GeoJSON data:", error);
+      map.addLayer({
+        id: layers[i],
+        source: sources[i],
+        type: "circle",
+        paint: {
+          "circle-radius": 5,
+          "circle-color": colors[i],
+          "circle-opacity": 0.5,
+        },
+      });
     }
+
+    toggleAll();
+
   });
 
   function toggle(index, draw) {
