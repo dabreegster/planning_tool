@@ -24,7 +24,7 @@
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let login_password = "password";
+  let login_password = "connect";
   let squareID;
   let tileOpacity;
   let hoverInfo;
@@ -79,7 +79,7 @@
       <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
       <!-- <PurposeWeightSliders bind:weights {squareScores}/>
       <HoverScores {weights} bind:squareScores/> -->
-      <SidebarExplore {leftSidebarClassToggle} bind:exploreSidebarClassToggle />
+      <SidebarExplore {leftSidebarClassToggle} {tileOpacity} bind:exploreSidebarClassToggle />
     </Map>
   </div>
 {/if}
