@@ -2,7 +2,7 @@
   import "govuk-frontend/govuk/all.scss";
   import "carbon-components-svelte/css/white.css";
 
-  import LandingPage from "./components/LandingPage.svelte";
+  // import LandingPage from "./components/LandingPage.svelte";
   import Map from "./components/Map.svelte";
   import Header from "./components/Header.svelte";
   import StageBanner from "./components/StageBanner.svelte";
@@ -13,18 +13,15 @@
   import OpacitySlider from "./components/OpacitySlider.svelte";
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
-  // import HoverScores from "./components/HoverScores.svelte";
   import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
   import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
-  // import PurposeWeightSliders from "./components/PurposeWeightSliders.svelte";
   import SidebarExplore from "./components/SidebarExplore.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let login_password = "connect";
   let squareID;
   let tileOpacity;
   let hoverInfo;
@@ -34,52 +31,43 @@
   let stopLayerToggle;
   let drawing;
   let hoveredInterventionScores;
-  // let weights;
-  // let squareScores;
   let exploreSidebarClassToggle;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-{#if login_password !== "connect"}
-  <LandingPage bind:login_username bind:login_password />
-{/if}
 
-{#if login_password == "connect"}
-  <div>
-    <Header />
-  </div>
-  <div>
-    <StageBanner />
-  </div>
-  <div>
-    <Map {innerHeight}>
-      <SidebarLeft
-        {innerWidth}
-        {login_username}
-        {hoveredInterventionScores}
-        {exploreSidebarClassToggle}
-        bind:responseJson
-        bind:leftSidebarClassToggle
-        bind:loading
-      />
-      <DrawControls
-        {leftSidebarClassToggle}
-        bind:stopLayerToggle
-        bind:drawing
-      />
-      <StopsLayer {stopLayerToggle} />
-      <OpacitySlider bind:tileOpacity />
-      <TileLayer {tileOpacity} />
-      <LoadGeojson {drawing} bind:squareID bind:hoverInfo />
-      <PdfDownload {squareID} />
-      <ScoreLegend {tileOpacity} />
-      <SnapToPostcode />
-      <HoverRouteInfo {hoverInfo} />
-      <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
-      <!-- <PurposeWeightSliders bind:weights {squareScores}/>
-      <HoverScores {weights} bind:squareScores/> -->
-      <SidebarExplore {leftSidebarClassToggle} {tileOpacity} bind:exploreSidebarClassToggle />
-    </Map>
-  </div>
-{/if}
+<div>
+  <Header />
+</div>
+<div>
+  <StageBanner />
+</div>
+<div>
+  <Map {innerHeight}>
+    <SidebarLeft
+      {innerWidth}
+      {login_username}
+      {hoveredInterventionScores}
+      {exploreSidebarClassToggle}
+      bind:responseJson
+      bind:leftSidebarClassToggle
+      bind:loading
+    />
+    <DrawControls
+      {leftSidebarClassToggle}
+      bind:stopLayerToggle
+      bind:drawing
+    />
+    <StopsLayer {stopLayerToggle} />
+    <OpacitySlider bind:tileOpacity />
+    <TileLayer {tileOpacity} />
+    <LoadGeojson {drawing} bind:squareID bind:hoverInfo />
+    <PdfDownload {squareID} />
+    <ScoreLegend {tileOpacity} />
+    <SnapToPostcode />
+    <HoverRouteInfo {hoverInfo} />
+    <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
+    <SidebarExplore {leftSidebarClassToggle} {tileOpacity} bind:exploreSidebarClassToggle />
+  </Map>
+</div>
