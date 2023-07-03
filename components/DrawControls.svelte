@@ -231,11 +231,11 @@
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
-  function addNewFootpath() {
-    drawing = true;
-    line_toggle = "new_pathway";
-    drawControls.changeMode("draw_line_string");
-  }
+  // function addNewFootpath() {
+  //   drawing = true;
+  //   line_toggle = "new_pathway";
+  //   drawControls.changeMode("draw_line_string");
+  // }
   function addNewSelectedArea() {
     drawing = true;
     area_toggle = "select_area";
@@ -383,7 +383,7 @@
   />
 </button>
 
-<button
+<!-- <button
   class={leftSidebarClassToggle}
   style="top: 198px;"
   on:click={addNewFootpath}
@@ -392,11 +392,11 @@
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/footpath-icon.png"
     style="height: 32; width: 32px;"
   />
-</button>
+</button> -->
 
 <button
   class={leftSidebarClassToggle}
-  style="top: 260px;"
+  style="top: 198px;"
   on:click={addNewSelectedArea}
 >
   <img

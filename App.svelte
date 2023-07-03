@@ -2,7 +2,6 @@
   import "govuk-frontend/govuk/all.scss";
   import "carbon-components-svelte/css/white.css";
 
-  // import LandingPage from "./components/LandingPage.svelte";
   import Map from "./components/Map.svelte";
   import Header from "./components/Header.svelte";
   import StageBanner from "./components/StageBanner.svelte";

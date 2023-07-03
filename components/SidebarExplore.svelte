@@ -10,6 +10,7 @@
   let squareScores;
   let mode;
   let squaresFound;
+  export let tileOpacity;
 
   function getSidebarClass() {
     if (exploreSidebarClassToggle == "blank") {
@@ -58,7 +59,7 @@
   <PurposeWeightSliders bind:weights {squareScores} />
   <br />
   <HoverScores {weights} bind:squareScores bind:mode bind:squaresFound />
-  <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound} />
+  <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound} {tileOpacity}/>
 </div>
 
 <style>

@@ -37,7 +37,7 @@
       fetch(busUrl1).then((response) => response.json()),
       fetch(busUrl2).then((response) => response.json()),
     ]);
-    
+
     combinedBusData = {
       type: "FeatureCollection",
       features: [...busData1.features, ...busData2.features],
@@ -62,7 +62,6 @@
     }
 
     toggleAll();
-
   });
 
   function toggle(index, draw) {

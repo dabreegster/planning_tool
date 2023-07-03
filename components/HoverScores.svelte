@@ -14,9 +14,9 @@
 
   export let squareScores = {
     "Public Transport": {},
-    Walking: {},
-    Driving: {},
-    Cycling: {},
+    "Walking": {},
+    "Driving": {},
+    "Cycling": {},
   };
 
   let purposes = [
@@ -115,36 +115,28 @@
     return modes;
   }
 
-  // function updateWithNewWeights() {
-  //   let combinedWeight = 0;
-  //   let weightsArray = [];
-  //   for (let key in weights) {
-  //     if (weights.hasOwnProperty(key)) {
-  //       combinedWeight += weights[key];
-  //       weightsArray.push(weights[key]);
-  //     }
-  //   }
-  //   console.log(combinedWeight)
-  //   console.log(weightsArray)
-  //   // Object.entries(response).forEach(([key, scores]) => {
-  //   //   let weightedOverall = 0;
-  //   //   for (let i = 0; i < 6; i++) {
-  //   //     weightedOverall += Math.round(scores[i] * (weightsArray[i]/ combinedWeight))
-  //   //   };
-  //   //   if (scores.length > 6) {
-  //   //     scores[6] = weightedOverall
-  //   //     response[key] = scores
-  //   //   } else {
-  //   //     scores.push(weightedOverall)
-  //   //     response[key] = scores
-  //   //   }
-  //   // });
-  //   // console.log(response)
-  //   // squareScores[mode] = { ...squareScores[mode], ...response };
-  // }
+  function resetScores() {
+    squareScores = {
+      "Public Transport": {},
+      "Walking": {},
+      "Driving": {},
+      "Cycling": {},
+    };
 
-  // $: {updateWithNewWeights}
+    return 0;
+  }
+
 </script>
+
+<div class="govuk-heading-s">
+  <button
+    type="button"
+    class="govuk-button govuk-button--warning"
+    style="font-size: 14px; float: right"
+    on:click={resetScores}
+    >Reset scores</button
+  >
+</div>
 
 <div class="whitebox">
   <div class="govuk-form-group" style="display: flex;">
