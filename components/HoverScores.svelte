@@ -134,7 +134,7 @@
     class="govuk-button govuk-button--warning"
     style="font-size: 14px; float: right"
     on:click={resetScores}
-    >Reset scores</button
+    >Clear scores</button
   >
 </div>
 
