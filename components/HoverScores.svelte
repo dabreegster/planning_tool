@@ -40,8 +40,9 @@
   export let squaresFound = false;
   export let mode = "Public Transport";
   export let weights;
+  export let exploreSidebarClassToggle;
 
-  if (freeForRequest) {
+  if (freeForRequest && exploreSidebarClassToggle == "sidebar") {
     map.on("mousemove", async function (e) {
       freeForRequest = false;
       let currentTime = Date.now();

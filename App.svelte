@@ -17,6 +17,8 @@
   import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
   import SidebarExplore from "./components/SidebarExplore.svelte";
+  import APICallTest from "./components/APICallTest.svelte";
+
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -68,5 +70,7 @@
     <HoverRouteInfo {hoverInfo} />
     <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
     <SidebarExplore {leftSidebarClassToggle} {tileOpacity} bind:exploreSidebarClassToggle />
+
+    <APICallTest /> 
   </Map>
 </div>

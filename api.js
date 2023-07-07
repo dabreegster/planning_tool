@@ -5,6 +5,18 @@ const scoreCalculationEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
 
 export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
 
+const testEndpt = "https://example-flask-dot-dft-dst-prt-connectivitymetric.ew.r.appspot.com/";
+
+
+// Takes lat, lng and gives UserInputJSON for floodfillEndpt
+export async function testAPI() {
+  const resp = await fetch(testEndpt, {
+    method: "GET",
+    headers: jsonRequestHeaders(),
+  });
+  return await resp.json();
+}
+
 // Takes lat, lng and gives UserInputJSON for floodfillEndpt
 export async function getSquareInfo(req) {
   const resp = await fetch(squareInfoEndpt, {
