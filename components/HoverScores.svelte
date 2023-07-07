@@ -14,9 +14,9 @@
 
   export let squareScores = {
     "Public Transport": {},
-    "Walking": {},
-    "Driving": {},
-    "Cycling": {},
+    Walking: {},
+    Driving: {},
+    Cycling: {},
   };
 
   let purposes = [
@@ -119,14 +119,13 @@
   function resetScores() {
     squareScores = {
       "Public Transport": {},
-      "Walking": {},
-      "Driving": {},
-      "Cycling": {},
+      Walking: {},
+      Driving: {},
+      Cycling: {},
     };
 
     return 0;
   }
-
 </script>
 
 <div class="govuk-heading-s">
@@ -134,8 +133,7 @@
     type="button"
     class="govuk-button govuk-button--warning"
     style="font-size: 14px; float: right"
-    on:click={resetScores}
-    >Clear scores</button
+    on:click={resetScores}>Clear scores</button
   >
 </div>
 

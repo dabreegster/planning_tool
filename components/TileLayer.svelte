@@ -13,6 +13,7 @@
   const layer = "tiles";
 
   onMount(async () => {
+    // test layer remove after
     map.addSource("APGBtest", {
       type: "raster",
       url: "pmtiles://" + PMTILES_BUCKET_URL + "APGBtest.pmtiles",

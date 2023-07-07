@@ -52,19 +52,29 @@
   <br />
 </div>
 
-{#if (exploreSidebarClassToggle === "sidebar")}
+{#if exploreSidebarClassToggle === "sidebar"}
   <div
     class={exploreSidebarClassToggle}
     style="height: calc(100% - 115px); top: 73px;"
   >
     <PurposeWeightSliders bind:weights {squareScores} />
     <br />
-    <HoverScores {weights} {exploreSidebarClassToggle} bind:squareScores bind:mode bind:squaresFound />
-    <DisplayWeightedGeojsons {weights} {squareScores} {mode} {squaresFound} {tileOpacity}/>
+    <HoverScores
+      {weights}
+      {exploreSidebarClassToggle}
+      bind:squareScores
+      bind:mode
+      bind:squaresFound
+    />
+    <DisplayWeightedGeojsons
+      {weights}
+      {squareScores}
+      {mode}
+      {squaresFound}
+      {tileOpacity}
+    />
   </div>
 {/if}
-
-
 
 <style>
   .sidebar {
