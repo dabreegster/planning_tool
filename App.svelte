@@ -17,6 +17,7 @@
   import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
   import SidebarExplore from "./components/SidebarExplore.svelte";
+  import SatelliteLayer from "./components/SatelliteLayer.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -67,5 +68,6 @@
       {tileOpacity}
       bind:exploreSidebarClassToggle
     />
+    <SatelliteLayer />
   </Map>
 </div>

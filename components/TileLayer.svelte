@@ -13,12 +13,6 @@
   const layer = "tiles";
 
   onMount(async () => {
-    // test layer remove after
-    map.addSource("APGBtest", {
-      type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "APGBtest.pmtiles",
-    });
-
     map.addSource("Business by PT", {
       type: "raster",
       url:
@@ -209,7 +203,6 @@
   function scoreTypes() {
     let purposes = [
       "Hide",
-      "APGBtest",
 
       "Business by PT",
       "Education by PT",

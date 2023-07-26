@@ -65,6 +65,18 @@
     ) {
       return "Untitled ferry route";
     }
+    if (
+      feature.geometry.type == "LineString" &&
+      feature.properties.ptMode == "tube_lightrail_metro"
+    ) {
+      return "Untitled tube/lightrail/metro route";
+    }
+    if (
+      feature.geometry.type == "LineString" &&
+      feature.properties.ptMode == "tram"
+    ) {
+      return "Untitled tram route";
+    }
     if (feature.properties.select_area) {
       return "Untitled area";
     }

@@ -231,6 +231,18 @@
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
+  function addNewUnderground() {
+    drawing = true;
+    stopLayerToggle = "tube_lightrail_metro";
+    line_toggle = "new_pt_route";
+    drawControls.changeMode("draw_line_string");
+  }
+  function addNewTram() {
+    drawing = true;
+    stopLayerToggle = "tram";
+    line_toggle = "new_pt_route";
+    drawControls.changeMode("draw_line_string");
+  }
   // function addNewFootpath() {
   //   drawing = true;
   //   line_toggle = "new_pathway";
@@ -341,17 +353,17 @@
     return squareIDsWithinArea;
   }
 
-  function findCurrentTotalSquareIDs(gj) {
-    let allSqaureIDs = [];
+  // function findCurrentTotalSquareIDs(gj) {
+  //   let allSqaureIDs = [];
 
-    for (let i = 0; i < gj.features.length; i++) {
-      let squareIDs = gj.features[i].properties["squareIDs"];
-      for (let x = 0; x < squareIDs.length; x++) {
-        allSqaureIDs.push(squareIDs[x]);
-      }
-    }
-    return new Set(allSqaureIDs);
-  }
+  //   for (let i = 0; i < gj.features.length; i++) {
+  //     let squareIDs = gj.features[i].properties["squareIDs"];
+  //     for (let x = 0; x < squareIDs.length; x++) {
+  //       allSqaureIDs.push(squareIDs[x]);
+  //     }
+  //   }
+  //   return new Set(allSqaureIDs);
+  // }
 </script>
 
 <button class={leftSidebarClassToggle} style="top: 10px;" on:click={addNewBus}>
@@ -383,6 +395,28 @@
   />
 </button>
 
+<button
+  class={leftSidebarClassToggle}
+  style="top: 198px;"
+  on:click={addNewTram}
+>
+  <img
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/tram-icon.png"
+    style="height: 32; width: 32px;"
+  />
+</button>
+
+<button
+  class={leftSidebarClassToggle}
+  style="top: 260px;"
+  on:click={addNewUnderground}
+>
+  <img
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/underground-icon.png"
+    style="height: 32; width: 32px;"
+  />
+</button>
+
 <!-- <button
   class={leftSidebarClassToggle}
   style="top: 198px;"
@@ -396,7 +430,7 @@
 
 <button
   class={leftSidebarClassToggle}
-  style="top: 198px;"
+  style="top: 320px;"
   on:click={addNewSelectedArea}
 >
   <img

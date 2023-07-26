@@ -81,6 +81,7 @@
           trip_start_seconds: startTimeSeconds,
         };
         console.time("floodfill API");
+        console.log(req)
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
 

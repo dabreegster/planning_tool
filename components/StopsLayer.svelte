@@ -98,6 +98,15 @@
     } else if (stopLayerToggle == "ferry" && switchStatus[4] == false) {
       show[4] = !show[4];
       toggle(4, true);
+    } else if (
+      stopLayerToggle == "tube_lightrail_metro" &&
+      switchStatus[2] == false
+    ) {
+      show[2] = !show[2];
+      toggle(2, true);
+    } else if (stopLayerToggle == "tram" && switchStatus[3] == false) {
+      show[3] = !show[3];
+      toggle(3, true);
     } else {
       console.log("Error in toggleOnDraw function");
     }
@@ -113,7 +122,7 @@
   }
 </script>
 
-{#if stopLayerToggle == "bus" || stopLayerToggle == "rail" || stopLayerToggle == "ferry"}
+{#if stopLayerToggle == "bus" || stopLayerToggle == "rail" || stopLayerToggle == "ferry" || stopLayerToggle == "tube_lightrail_metro" || stopLayerToggle == "tram"}
   {toggleOnDraw(stopLayerToggle)}
 {/if}
 
