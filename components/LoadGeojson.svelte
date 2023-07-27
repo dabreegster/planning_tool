@@ -22,6 +22,7 @@
   let purposes = [
     "Business",
     "Education",
+    "Health",
     "Entertainment",
     "Shopping",
     "Residential",
@@ -81,9 +82,10 @@
           trip_start_seconds: startTimeSeconds,
         };
         console.time("floodfill API");
-        console.log(req)
+        console.log(req);
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
+        console.log(resp);
 
         dataChanged(resp, gj);
         isProcessingClick = false;
@@ -153,7 +155,7 @@
     }
 
     // Lines for links
-    maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
+    maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     for (let [linkID, link] of Object.entries(resp.link_coordinates)) {
       let scorePerPurpose = resp.per_link_score_per_purpose[linkID];
       for (let [i, score] of scorePerPurpose.entries()) {
@@ -174,9 +176,10 @@
         properties: {
           Business: scorePerPurpose[0],
           Education: scorePerPurpose[1],
-          Entertainment: scorePerPurpose[2],
-          Shopping: scorePerPurpose[3],
-          Residential: scorePerPurpose[4],
+          Health: scorePerPurpose[2],
+          Entertainment: scorePerPurpose[3],
+          Shopping: scorePerPurpose[4],
+          Residential: scorePerPurpose[5],
           link_type: resp.link_is_pt[linkID],
           routeDetails: resp.link_route_details[linkID],
           name: "link",
