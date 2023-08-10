@@ -5,25 +5,21 @@
   import Map from "./components/Map.svelte";
   import Header from "./components/Header.svelte";
   import StageBanner from "./components/StageBanner.svelte";
-  import TileLayer from "./components/TileLayer.svelte";
   import LoadGeojson from "./components/LoadGeojson.svelte";
   import ScoreLegend from "./components/ScoreLegend.svelte";
-  import PdfDownload from "./components/PdfDownload.svelte";
-  import OpacitySlider from "./components/OpacitySlider.svelte";
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
   import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
-  import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
   import SidebarExplore from "./components/SidebarExplore.svelte";
-  import ApgbLayer from "./components/APGBLayer.svelte";
+  import Settings from "./components/Settings.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
   let squareID;
-  let tileOpacity;
+  let tileOpacity = [70];
   let hoverInfo;
   let responseJson;
   let leftSidebarClassToggle;
@@ -32,6 +28,10 @@
   let drawing;
   let hoveredInterventionScores;
   let exploreSidebarClassToggle;
+  let purpose;
+  let startTimeSeconds;
+
+
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -53,12 +53,21 @@
       bind:leftSidebarClassToggle
       bind:loading
     />
+    <Settings 
+      {squareID}
+      {stopLayerToggle}
+      bind:tileOpacity
+      bind:purpose
+      bind:startTimeSeconds
+      />
     <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
-    <StopsLayer {stopLayerToggle} />
-    <OpacitySlider bind:tileOpacity />
-    <TileLayer {tileOpacity} />
-    <LoadGeojson {drawing} bind:squareID bind:hoverInfo />
-    <PdfDownload {squareID} />
+    <LoadGeojson
+     {drawing}
+     {purpose}
+     {startTimeSeconds} 
+     bind:squareID 
+     bind:hoverInfo 
+     />
     <ScoreLegend {tileOpacity} />
     <SnapToPostcode />
     <HoverRouteInfo {hoverInfo} />
@@ -68,6 +77,5 @@
       {tileOpacity}
       bind:exploreSidebarClassToggle
     />
-    <ApgbLayer />
   </Map>
 </div>

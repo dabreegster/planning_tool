@@ -130,27 +130,31 @@
   {toggleOffDrawing()}
 {/if}
 
-<div class="govuk-label govuk-text--s" style="font-size: 1rem;">
+<div class="govuk-label govuk-text--s" style="font-size: 1.1rem;">
   Bus/Coach stops:<input
     type="checkbox"
     bind:checked={show[0]}
     on:change={() => toggle(0, false)}
   />
+  <br/>
   National Rail stops:<input
     type="checkbox"
     bind:checked={show[1]}
     on:change={() => toggle(1, false)}
   />
+  <br/>
   Tube/Metro/LightRail stops:<input
     type="checkbox"
     bind:checked={show[2]}
     on:change={() => toggle(2, false)}
   />
+  <br/>
   Tram stops:<input
     type="checkbox"
     bind:checked={show[3]}
     on:change={() => toggle(3, false)}
   />
+  <br/>
   Ferry stops:<input
     type="checkbox"
     bind:checked={show[4]}
@@ -159,7 +163,7 @@
 </div>
 
 <style>
-  div {
+  /* div {
     z-index: 1;
     position: absolute;
     bottom: 30px;
@@ -168,5 +172,5 @@
     padding: 7px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
+  } */
 </style>

@@ -10,11 +10,11 @@
   const pointLayer = "floodPoints";
   const lineLayer = "floodLines";
   const squareLayer = "squareOutline";
-  let startTimeSeconds = 28800;
+  export let startTimeSeconds = 28800;
 
   export let squareID;
   let maxPerPurpose;
-  let purpose = "Business";
+  export let purpose = "Business";
   export let hoverInfo = "no_selection";
   export let drawing;
   let isProcessingClick = false;
@@ -296,51 +296,25 @@
     }
   });
 
-  function updateStartTime(timeString) {
-    let [hours, minutes] = timeString.target.value.split(":");
-    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
+  // event listener for when purpose changes to set layers again
+  $: {
+    // uses purpose here just as a listener
+    if (purpose) {
+      // uses maxPerPurpose to only be able to toggle when data has come in
+      // as will only be set after data has arrived
+      if (maxPerPurpose) {
+      setLayers()
+      }
+    }
   }
+
 </script>
 
-<div class="purposeBox" style="display: flex;">
-  <label
-    class="govuk-label"
-    for="purpose"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
-  >
-    Displayed route purpose:
-  </label>
-  <select
-    class="govuk-select"
-    id="purpose"
-    name="purpose"
-    bind:value={purpose}
-    on:change={setLayers}
-  >
-    {#each purposes as x}
-      <option value={x}>{x}</option>
-    {/each}
-  </select>
-</div>
-
+<!-- 
 <button class="govuk-label" style="font-size: 1.2rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
-</button>
+</button> -->
 
-<div class="startTimeSelection">
-  <label for="start-time-input">Start Time:</label>
-  <input
-    id="start-time-input"
-    type="time"
-    name="start-time-input"
-    value="08:00"
-    min="06:00"
-    max="22:00"
-    style="font-size: 15px; padding:5px"
-    on:change={(e) => updateStartTime(e)}
-  />
-  <span class="validity" />
-</div>
 
 <style>
   button {
@@ -373,28 +347,12 @@
   .startTimeSelection {
     z-index: 1;
     position: absolute;
-    top: 392px;
+    top: 222px;
     right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
-  }
-
-  input + span {
-    padding-right: 30px;
-  }
-
-  input:invalid + span::after {
-    position: absolute;
-    content: "✖";
-    padding-left: 5px;
-  }
-
-  input:valid + span::after {
-    position: absolute;
-    content: "✓";
-    padding-left: 5px;
   }
 </style>

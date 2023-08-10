@@ -6,7 +6,7 @@
 
 <div class="whitebox">
   <h3>
-    Tile opacity: {tileOpacity[0]} %
+    Tile opacity: {tileOpacity} %
   </h3>
   <Slider bind:value={tileOpacity}/>
 </div>
@@ -17,7 +17,7 @@
     text-align: center;
     font-size: 1.2rem;
   }
-  .whitebox {
+  /* .whitebox {
     background-color: white;
     position: absolute;
     width: 377px;
@@ -28,5 +28,5 @@
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     scrollbar-width: none;
-  }
+  } */
 </style>
