@@ -258,7 +258,7 @@
 </div>
 
 <style>
-  div {
+  /* div {
     z-index: 1;
     position: absolute;
     top: 260px;
@@ -267,7 +267,7 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
+  } */
 
   select {
     font-size: 1.1rem;

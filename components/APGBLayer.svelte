@@ -4,25 +4,6 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  // onMount(async () => {
-  //   map.addSource("25cm", {
-  //     type: "raster",
-  //     tiles: [
-  //       "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-25CM-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
-  //     ],
-  //     minZoom: 0,
-  //     maxZoom: 22,
-  //   });
-  //   map.addLayer(
-  //         {
-  //           id: "25cm",
-  //           type: "raster",
-  //           source: "25cm",
-  //           paint: {},
-  //         },
-  //         "aeroway_fill"
-  //        );
-  // });
   let APGBLayer = "Hide";
 
   onMount(async () => {
@@ -111,7 +92,7 @@
 </div>
 
 <style>
-  div {
+  /* div {
     z-index: 1;
     position: absolute;
     top: 497px;
@@ -120,7 +101,7 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
+  } */
 
   select {
     font-size: 1.1rem;

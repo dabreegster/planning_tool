@@ -18,13 +18,13 @@
 
 <style>
   .pdfDownloadButton {
-    position: absolute;
-    top: 448px;
-    right: 10px;
+    /* position: absolute; */
+    /* top: 448px;
+    right: 10px; */
     background: white;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
     font-size: 1.2rem;
   }
 </style>
