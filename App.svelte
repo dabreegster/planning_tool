@@ -44,7 +44,7 @@
 </div>
 <div>
   <Map {innerHeight}>
-    <SidebarLeft
+    <!-- <SidebarLeft
       {innerWidth}
       {login_username}
       {hoveredInterventionScores}
@@ -52,7 +52,7 @@
       bind:responseJson
       bind:leftSidebarClassToggle
       bind:loading
-    />
+    /> -->
     <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
     <StopsLayer {stopLayerToggle} />
     <OpacitySlider bind:tileOpacity />
