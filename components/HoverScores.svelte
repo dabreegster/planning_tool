@@ -132,12 +132,12 @@
   <button
     type="button"
     class="govuk-button govuk-button--warning"
-    style="font-size: 14px; float: right"
+    style="font-size: 14px; float: left"
     on:click={resetScores}>Clear scores</button
   >
 </div>
-
-<div class="whitebox">
+<br/>
+<div >
   <div class="govuk-form-group" style="display: flex;">
     <label
       class="govuk-label"
@@ -187,7 +187,7 @@
   {/if}
 </div>
 
-<style>
+<!-- <style>
   .whitebox {
     background-color: white;
     position: absolute;
@@ -199,4 +199,4 @@
     /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
     font-size: 1.2rem;
   }
-</style>
+</style> -->
