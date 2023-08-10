@@ -366,7 +366,11 @@
   // }
 </script>
 
-<button class={leftSidebarClassToggle} style="top: 10px;" on:click={addNewBus}>
+<button 
+  class={leftSidebarClassToggle}
+  title="Add new bus route"
+  style="top: 10px;"
+  on:click={addNewBus}>
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/bus-icon.png"
     style="height: 32; width: 32px;"
@@ -375,6 +379,7 @@
 
 <button
   class={leftSidebarClassToggle}
+  title="Add new national rail route"
   style="top: 75px;"
   on:click={addNewTrain}
 >
@@ -386,6 +391,7 @@
 
 <button
   class={leftSidebarClassToggle}
+  title="Add new ferry route"
   style="top: 136px;"
   on:click={addNewFerry}
 >
@@ -397,6 +403,7 @@
 
 <button
   class={leftSidebarClassToggle}
+  title="Add new tram route"
   style="top: 198px;"
   on:click={addNewTram}
 >
@@ -408,6 +415,7 @@
 
 <button
   class={leftSidebarClassToggle}
+  title="Add new underground/metro/light rail route"
   style="top: 260px;"
   on:click={addNewUnderground}
 >
@@ -430,6 +438,7 @@
 
 <button
   class={leftSidebarClassToggle}
+  title="Select area of interest"
   style="top: 320px;"
   on:click={addNewSelectedArea}
 >
