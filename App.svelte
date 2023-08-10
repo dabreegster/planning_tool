@@ -17,7 +17,7 @@
   import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
   import SidebarExplore from "./components/SidebarExplore.svelte";
-  import SatelliteLayer from "./components/SatelliteLayer.svelte";
+  import ApgbLayer from "./components/APGBLayer.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -44,7 +44,7 @@
 </div>
 <div>
   <Map {innerHeight}>
-    <!-- <SidebarLeft
+    <SidebarLeft
       {innerWidth}
       {login_username}
       {hoveredInterventionScores}
@@ -52,7 +52,7 @@
       bind:responseJson
       bind:leftSidebarClassToggle
       bind:loading
-    /> -->
+    />
     <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
     <StopsLayer {stopLayerToggle} />
     <OpacitySlider bind:tileOpacity />
@@ -68,6 +68,6 @@
       {tileOpacity}
       bind:exploreSidebarClassToggle
     />
-    <SatelliteLayer />
+    <ApgbLayer />
   </Map>
 </div>
