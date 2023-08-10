@@ -1,19 +1,16 @@
 <script>
-  import Range from "./Range.svelte";
-  export let tileOpacity = 70;
+  import Slider from '@bulatdashiev/svelte-slider';
+
+  export let tileOpacity = [70];
 </script>
 
 <div class="whitebox">
   <h3>
-    Tile opacity: {tileOpacity} %
+    Tile opacity: {tileOpacity[0]} %
   </h3>
-  <div>
-    <Range
-      on:change={(e) => (tileOpacity = e.detail.value)}
-      id="basic-slider"
-    />
-  </div>
+  <Slider bind:value={tileOpacity}/>
 </div>
+
 
 <style>
   h3 {
