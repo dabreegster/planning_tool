@@ -8,6 +8,8 @@
   import LoadGeojson from "./components/LoadGeojson.svelte";
   import ScoreLegend from "./components/ScoreLegend.svelte";
   import SnapToPostcode from "./components/SnapToPostcode.svelte";
+  import SnapToLongLat from "./components/SnapToLongLat.svelte";
+  import SnapToEastingNorthing from "./components/SnapToEastingNorthing.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
   import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
@@ -70,6 +72,8 @@
      />
     <ScoreLegend {tileOpacity} />
     <SnapToPostcode />
+    <SnapToLongLat />
+    <SnapToEastingNorthing />
     <HoverRouteInfo {hoverInfo} />
     <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
     <SidebarExplore
