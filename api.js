@@ -1,7 +1,6 @@
 // const endpt = "https://cloundfunc-to-apis-y3gbqriuaq-nw.a.run.app";
 // // const endpt = "https://flask-app-cors-test-y3gbqriuaq-nw.a.run.app"
 
-
 // // Takes lat, lng and gives UserInputJSON for floodfillEndpt
 // export async function getSquareInfo(req) {
 //   const resp = await fetch(endpt, {
@@ -226,9 +225,9 @@
 const squareInfoEndpt = "https://83dd-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://52fc-35-189-123-220.ngrok-free.app";
 const hoverScoresEndpt = "https://cb89-34-147-152-157.ngrok-free.app";
-const scoreCalculationEndpt = "https://917a-34-89-73-233.eu.ngrok.io";
+const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
 
-export const snapAPIEndpt = "https://7480-34-89-73-233.eu.ngrok.io";
+export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
 // Takes lat, lng and gives UserInputJSON for floodfillEndpt
 export async function getSquareInfo(req) {
@@ -450,17 +449,17 @@ export async function lookupPathway(feature) {
 // }
 
 function jsonRequestHeaders(APIcode) {
-  console.log("###########")
+  console.log("###########");
   let headers = {
     "Bypass-Tunnel-Reminder": "haha",
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
-    "Authtoken": "TOKEN",
-    "API": APIcode,
+    Authtoken: "TOKEN",
+    API: APIcode,
   };
-  console.log(headers)
-  return headers
+  console.log(headers);
+  return headers;
 }
 
 // function jsonRequestHeaders(APIcode) {
