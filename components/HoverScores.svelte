@@ -136,8 +136,8 @@
     on:click={resetScores}>Clear scores</button
   >
 </div>
-<br/>
-<div >
+<br />
+<div>
   <div class="govuk-form-group" style="display: flex;">
     <label
       class="govuk-label"

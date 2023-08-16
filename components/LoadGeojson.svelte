@@ -303,19 +303,16 @@
       // uses maxPerPurpose to only be able to toggle when data has come in
       // as will only be set after data has arrived
       if (maxPerPurpose) {
-      setLayers()
+        setLayers();
       }
     }
   }
-
 </script>
 
 <!-- 
 <button class="govuk-label" style="font-size: 1.2rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
 </button> -->
-
-
 <style>
   button {
     display: false;

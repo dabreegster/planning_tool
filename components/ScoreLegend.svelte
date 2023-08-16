@@ -234,7 +234,7 @@
     display: flex;
   }
   .square {
-    width: 3.5px;
+    width: 4.9px;
     height: 40px;
   }
   .numbers {
@@ -246,15 +246,15 @@
   }
 
   .box {
-    background-color: white;
+    /* background-color: white;
     position: absolute;
-    width: 380px;
+    width: 530px;
     padding: 16px;
     border-radius: 10px;
     right: 10px;
     top: 5px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
-    scrollbar-width: none;
+    scrollbar-width: none; */
   }
 </style>

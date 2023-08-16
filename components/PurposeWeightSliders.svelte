@@ -1,5 +1,5 @@
 <script>
-  import Slider from '@bulatdashiev/svelte-slider';
+  import Slider from "@bulatdashiev/svelte-slider";
 
   export let weights = {
     business: 70,
@@ -46,36 +46,49 @@
   let health = [3];
   let shopping = [27];
   let residential = [8];
-  
-  function updateWeights(business, education, entertainment, health, shopping, residential) {
+
+  function updateWeights(
+    business,
+    education,
+    entertainment,
+    health,
+    shopping,
+    residential
+  ) {
     weights["business"] = business[0];
     weights["education"] = education[0];
     weights["entertainment"] = entertainment[0];
     weights["health"] = health[0];
     weights["shopping"] = shopping[0];
     weights["residential"] = residential[0];
-    squareScores = updateWithNewWeights(squareScores)
-    return weights
-  };
+    squareScores = updateWithNewWeights(squareScores);
+    return weights;
+  }
 
   $: {
-    weights = updateWeights(business, education, entertainment, health, shopping, residential)
+    weights = updateWeights(
+      business,
+      education,
+      entertainment,
+      health,
+      shopping,
+      residential
+    );
   }
 </script>
 
 Business: {business[0]}
-<Slider bind:value={business}/>
+<Slider bind:value={business} />
 Education: {education[0]}
-<Slider bind:value={education}/>
+<Slider bind:value={education} />
 Entertainment: {entertainment[0]}
-<Slider bind:value={entertainment}/>
+<Slider bind:value={entertainment} />
 Health: {health[0]}
-<Slider bind:value={health}/>
+<Slider bind:value={health} />
 Shopping: {shopping[0]}
-<Slider bind:value={shopping}/>
+<Slider bind:value={shopping} />
 Residential: {residential[0]}
-<Slider bind:value={residential}/>
+<Slider bind:value={residential} />
 
 <style>
- 
 </style>

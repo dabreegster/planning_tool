@@ -1,5 +1,5 @@
 <script>
-  import Slider from '@bulatdashiev/svelte-slider';
+  import Slider from "@bulatdashiev/svelte-slider";
 
   export let tileOpacity = [70];
 </script>
@@ -8,9 +8,8 @@
   <h3>
     Tile opacity: {tileOpacity} %
   </h3>
-  <Slider bind:value={tileOpacity}/>
+  <Slider bind:value={tileOpacity} />
 </div>
-
 
 <style>
   h3 {

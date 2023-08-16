@@ -59,17 +59,17 @@
   }
 
   let reloadGeoJson = false;
-  let clickedOnSlider = false
+  let clickedOnSlider = false;
 
   // Event listeners for if click used to reload tiles when click off sliders
   // Add event listener for mouse down
   document.addEventListener("mousedown", (e) => {
     let clickedElement = e.target;
-    if (clickedElement.tagName !== 'DIV') {
+    if (clickedElement.tagName !== "DIV") {
       return;
     }
     // checks if the click is on slider
-    if (clickedElement.getAttribute('class') === "thumb svelte-1q9yxz9") {
+    if (clickedElement.getAttribute("class") === "thumb svelte-1q9yxz9") {
       clickedOnSlider = true;
     }
     reloadGeoJson = false;
@@ -84,14 +84,14 @@
   });
 
   $: {
-      if (geoJson !== null) {
-        if (reloadGeoJson) {
-          geoJson = updateWeightingInGeoJson(geoJson);
-          map.getSource(source).setData(geoJson);
-          setLayer();
-        }
+    if (geoJson !== null) {
+      if (reloadGeoJson) {
+        geoJson = updateWeightingInGeoJson(geoJson);
+        map.getSource(source).setData(geoJson);
+        setLayer();
       }
     }
+  }
 
   function createLLCoords(squareScores, mode) {
     // create longlat coordinates from the squareID
@@ -182,7 +182,7 @@
     return geojson;
   }
   function updateWeightingInGeoJson(geoJson) {
-    console.time('updateWeights');
+    console.time("updateWeights");
     let combinedWeight = 0;
     let weightsArray = [];
     for (let key in weights) {
@@ -191,8 +191,8 @@
         weightsArray.push(weights[key]);
       }
     }
-    console.timeEnd('updateWeights');
-    console.time('updateWeighting');
+    console.timeEnd("updateWeights");
+    console.time("updateWeighting");
     geoJson.features.forEach((feature) => {
       // const scores = feature.properties.scores;
       let weightedOverall = 0;
@@ -203,7 +203,7 @@
       }
       feature.properties.weightedScore = weightedOverall;
     });
-    console.timeEnd('updateWeighting');
+    console.timeEnd("updateWeighting");
     return geoJson;
   }
 

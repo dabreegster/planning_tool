@@ -6,10 +6,6 @@
   import Header from "./components/Header.svelte";
   import StageBanner from "./components/StageBanner.svelte";
   import LoadGeojson from "./components/LoadGeojson.svelte";
-  import ScoreLegend from "./components/ScoreLegend.svelte";
-  import SnapToPostcode from "./components/SnapToPostcode.svelte";
-  import SnapToLongLat from "./components/SnapToLongLat.svelte";
-  import SnapToEastingNorthing from "./components/SnapToEastingNorthing.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
   import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
@@ -32,8 +28,6 @@
   let exploreSidebarClassToggle;
   let purpose;
   let startTimeSeconds;
-
-
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -55,25 +49,21 @@
       bind:leftSidebarClassToggle
       bind:loading
     />
-    <Settings 
+    <Settings
       {squareID}
       {stopLayerToggle}
       bind:tileOpacity
       bind:purpose
       bind:startTimeSeconds
-      />
+    />
     <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
     <LoadGeojson
-     {drawing}
-     {purpose}
-     {startTimeSeconds} 
-     bind:squareID 
-     bind:hoverInfo 
-     />
-    <ScoreLegend {tileOpacity} />
-    <SnapToPostcode />
-    <SnapToLongLat />
-    <SnapToEastingNorthing />
+      {drawing}
+      {purpose}
+      {startTimeSeconds}
+      bind:squareID
+      bind:hoverInfo
+    />
     <HoverRouteInfo {hoverInfo} />
     <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
     <SidebarExplore

@@ -1,5 +1,4 @@
 <script>
-
   export let startTimeSeconds = 28800;
   export let purpose = "Business";
 
@@ -12,13 +11,10 @@
     "Residential",
   ];
 
-
-
-
   function updateStartTime(timeString) {
-      let [hours, minutes] = timeString.target.value.split(":");
-      startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
-    }
+    let [hours, minutes] = timeString.target.value.split(":");
+    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
+  }
 </script>
 
 <div class="purposeBox" style="display: flex;">
@@ -29,12 +25,7 @@
   >
     Displayed route purpose:
   </label>
-  <select
-    class="govuk-select"
-    id="purpose"
-    name="purpose"
-    bind:value={purpose}
-  >
+  <select class="govuk-select" id="purpose" name="purpose" bind:value={purpose}>
     {#each purposes as x}
       <option value={x}>{x}</option>
     {/each}
@@ -44,7 +35,7 @@
 <!-- <button class="govuk-label" style="font-size: 1.2rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
 </button> -->
-<br/>
+<br />
 <div class="startTimeSelection">
   <label for="start-time-input" style="font-size: 1.1rem;">Start Time:</label>
   <input
@@ -59,17 +50,12 @@
   />
   <span class="validity" />
 </div>
-<br/>
+<br />
 <div>
-  <p style="font-size: 1.1rem;">
-    Right click to remove routes
-  </p>
+  <p style="font-size: 1.1rem;">Right click to remove routes</p>
 </div>
 
-
-
 <style>
-
   input + span {
     padding-right: 30px;
   }

@@ -366,11 +366,12 @@
   // }
 </script>
 
-<button 
+<button
   class={leftSidebarClassToggle}
   title="Add new bus route"
   style="top: 10px;"
-  on:click={addNewBus}>
+  on:click={addNewBus}
+>
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/bus-icon.png"
     style="height: 32; width: 32px;"
