@@ -44,23 +44,25 @@
     };
 
     for (let i = 0; i < 5; i++) {
-      map.addSource(sources[i], {
-        type: "geojson",
-        data: i === 0 ? combinedBusData : urls[i],
-      });
+      if (map.getSource(sources[i])) {
+      } else {
+        map.addSource(sources[i], {
+          type: "geojson",
+          data: i === 0 ? combinedBusData : urls[i],
+        });
 
-      map.addLayer({
-        id: layers[i],
-        source: sources[i],
-        type: "circle",
-        paint: {
-          "circle-radius": 5,
-          "circle-color": colors[i],
-          "circle-opacity": 0.5,
-        },
-      });
+        map.addLayer({
+          id: layers[i],
+          source: sources[i],
+          type: "circle",
+          paint: {
+            "circle-radius": 5,
+            "circle-color": colors[i],
+            "circle-opacity": 0.5,
+          },
+        });
+      }
     }
-
     toggleAll();
   });
 

@@ -7,22 +7,28 @@
   let APGBLayer = "Hide";
 
   onMount(async () => {
-    map.addSource("25cm", {
-      type: "raster",
-      tiles: [
-        "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-25CM-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
-      ],
-      minZoom: 0,
-      maxZoom: 22,
-    });
-    map.addSource("12.5cm", {
-      type: "raster",
-      tiles: [
-        "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-12CM5-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
-      ],
-      minZoom: 0,
-      maxZoom: 22,
-    });
+    if (map.getSource("25cm")) {
+    } else {
+      map.addSource("25cm", {
+        type: "raster",
+        tiles: [
+          "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-25CM-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
+        ],
+        minZoom: 0,
+        maxZoom: 22,
+      });
+    }
+    if (map.getSource("12.5cm")) {
+    } else {
+      map.addSource("12.5cm", {
+        type: "raster",
+        tiles: [
+          "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-12CM5-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
+        ],
+        minZoom: 0,
+        maxZoom: 22,
+      });
+    }
   });
 
   function setLayer() {
