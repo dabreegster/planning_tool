@@ -16,7 +16,7 @@
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let squareID;
+  let infoForPDF;
   let tileOpacity = [70];
   let hoverInfo;
   let responseJson;
@@ -50,7 +50,7 @@
       bind:loading
     />
     <Settings
-      {squareID}
+      {infoForPDF}
       {stopLayerToggle}
       bind:tileOpacity
       bind:purpose
@@ -61,7 +61,7 @@
       {drawing}
       {purpose}
       {startTimeSeconds}
-      bind:squareID
+      bind:infoForPDF
       bind:hoverInfo
     />
     <HoverRouteInfo {hoverInfo} />

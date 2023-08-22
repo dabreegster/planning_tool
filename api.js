@@ -224,8 +224,9 @@
 
 const squareInfoEndpt = "https://83dd-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://52fc-35-189-123-220.ngrok-free.app";
-const hoverScoresEndpt = "https://cb89-34-147-152-157.ngrok-free.app";
+const hoverScoresEndpt = "https://2e4a-34-147-152-157.ngrok-free.app";
 const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
+const PDFEndpt = "https://674a-34-147-152-157.ngrok-free.app"
 
 export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
@@ -438,18 +439,17 @@ export async function lookupPathway(feature) {
   feature.geometry.coordinates = result.geometry.coordinates;
 }
 
-// function jsonRequestHeaders() {
-//   console.log("###########")
-//   return {
-//     "Bypass-Tunnel-Reminder": "haha",
-//     Accept: "application/json",
-//     "Access-Control-Allow-Origin": "*",
-//     "Content-Type": "application/json",
-//   };
-// }
+
+export async function callPDFDownload(infoForPDF) {
+  const resp = await fetch(PDFEndpt, {
+    method: "POST",
+    headers: jsonRequestHeaders("PDF"),
+    body: JSON.stringify(infoForPDF),
+  });
+  return await resp;
+}
 
 function jsonRequestHeaders(APIcode) {
-  console.log("###########");
   let headers = {
     "Bypass-Tunnel-Reminder": "haha",
     Accept: "application/json",

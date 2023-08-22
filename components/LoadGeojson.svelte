@@ -12,7 +12,7 @@
   const squareLayer = "squareOutline";
   export let startTimeSeconds = 28800;
 
-  export let squareID;
+  export let infoForPDF;
   let maxPerPurpose;
   export let purpose = "Business";
   export let hoverInfo = "no_selection";
@@ -63,13 +63,14 @@
         console.log(`Lookup square for ${e.lngLat}`);
         console.time("square API");
         let info = await getSquareInfo(e.lngLat);
+        console.log("info")
+        console.log(info)
         console.timeEnd("square API");
         if (info == "click_not_on_square") {
           console.log("Click not on square");
           isProcessingClick = false;
           return;
         }
-        squareID = info.name;
         // set square coords to make square in question
         let squareCoords = info["square_coords"];
         // display the square whilst loading
@@ -86,6 +87,12 @@
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
         console.log(resp);
+
+        infoForPDF = {
+          ...resp,
+          squareCoords,
+          startTimeSeconds,
+        }
 
         dataChanged(resp, gj);
         isProcessingClick = false;
@@ -280,8 +287,8 @@
     });
   }
 
-  function resetMapAndID() {
-    squareID = null;
+  function resetMapAndPDFInfo() {
+    infoForPDF = null;
     for (let layer of [pointLayer, lineLayer, squareLayer]) {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
@@ -292,7 +299,7 @@
   // on right click clear map
   map.on("contextmenu", function () {
     if (drawing == false) {
-      resetMapAndID();
+      resetMapAndPDFInfo();
     }
   });
 

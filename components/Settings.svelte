@@ -12,7 +12,7 @@
   import ScoreLegend from "./ScoreLegend.svelte";
 
   export let tileOpacity;
-  export let squareID;
+  export let infoForPDF;
   export let stopLayerToggle;
   export let purpose;
   export let startTimeSeconds = 28800;
@@ -44,7 +44,7 @@
       <br />
       <TileLayer {tileOpacity} />
       <ApgbLayer />
-      <PdfDownload {squareID} />
+      <PdfDownload {infoForPDF} />
       <br />
       <StopsLayer {stopLayerToggle} />
       <p />
