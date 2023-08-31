@@ -130,26 +130,24 @@
     <input type="file" id="upload_csv" on:change={loadFile} />
     <button
       class="govuk-button"
-      data-module="govuk-button"
       type="button"
       on:click={downloadCsvExampleAndTemplate}
-      style="float: left; width: calc({scaleButtonWidth(
+      style="float: right; width: calc({scaleButtonWidth(
         innerWidth,
         265,
         0.51
       )}px); font-size: 1rem"
     >
-      Download Example+Template CSV
+      Download Example/Template CSV
     </button>
   </label>
   <label>
     <input type="file" id="upload_csv" on:change={loadFile} />
     <button
       class="govuk-button"
-      data-module="govuk-button"
       type="button"
       onclick="document.getElementById('upload_csv').click();"
-      style="float: right; width: calc({scaleButtonWidth(
+      style="float: left; width: calc({scaleButtonWidth(
         innerWidth,
         185,
         0.34
@@ -173,5 +171,9 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+  }
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
   }
 </style>

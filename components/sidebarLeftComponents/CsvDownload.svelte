@@ -82,3 +82,10 @@
     </button>
   {/if}
 </div>
+
+<style>
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+</style>

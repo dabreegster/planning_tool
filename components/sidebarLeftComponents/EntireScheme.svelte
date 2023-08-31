@@ -168,4 +168,8 @@
     position: absolute;
     z-index: -1;
   }
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
 </style>

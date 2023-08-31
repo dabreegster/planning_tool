@@ -193,16 +193,9 @@
   {/if}
 </div>
 
-<!-- <style>
-  .whitebox {
-    background-color: white;
-    position: absolute;
-    padding: 16px;
-    border-radius: 10px;
-    /* right: 10px; */
-    top: 370px;
-    width: 450px;
-    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
-    font-size: 1.2rem;
+<style>
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
   }
-</style> -->
+</style>

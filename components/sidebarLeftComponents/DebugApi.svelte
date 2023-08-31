@@ -48,3 +48,10 @@
   on:click={toggleRequest}
   disabled={requestJson == null}>API request</button
 >
+
+<style>
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+</style>
