@@ -40,9 +40,9 @@
   export let squaresFound = false;
   export let mode = "Public Transport";
   export let weights;
-  export let exploreSidebarClassToggle;
+  export let open;
 
-  if (freeForRequest && exploreSidebarClassToggle == "sidebar") {
+  if (freeForRequest && open["headLeft"]) {
     map.on("mousemove", async function (e) {
       freeForRequest = false;
       let currentTime = Date.now();
@@ -125,6 +125,12 @@
     };
 
     return 0;
+  }
+  $: {
+    // if hover scores toggle is turned off then clear and reset scores
+    if (open) {
+      resetScores();
+    }
   }
 </script>
 

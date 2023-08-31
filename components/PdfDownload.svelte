@@ -9,18 +9,18 @@
 
     const pdfResponse = await callPDFDownload(infoForPDF);
     const blob = await pdfResponse.blob();
-    
+
     // Create a download link
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = "report.pdf";
     link.style.display = "none";
-    
+
     // Append the link to the body and click it to initiate download
     document.body.appendChild(link);
     link.click();
-    
+
     // Clean up by revoking the URL object after the download
     URL.revokeObjectURL(url);
   }

@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, getContext } from "svelte";
-  import { getSquareInfo, callFloodfillApi } from "../api.js";
+  import { getSquareInfo, callFloodfillApi, getSquareScore } from "../api.js";
 
   const { getMap } = getContext("map");
 
@@ -63,8 +63,8 @@
         console.log(`Lookup square for ${e.lngLat}`);
         console.time("square API");
         let info = await getSquareInfo(e.lngLat);
-        console.log("info")
-        console.log(info)
+        console.log("info");
+        console.log(info);
         console.timeEnd("square API");
         if (info == "click_not_on_square") {
           console.log("Click not on square");
@@ -75,7 +75,9 @@
         let squareCoords = info["square_coords"];
         // display the square whilst loading
         let gj = createSquareGeojson(squareCoords);
+        let squareID = info["square_ID"];
         delete info["square_coords"];
+        delete info["square_ID"];
 
         // Now make the floodfill request
         let req = {
@@ -88,11 +90,15 @@
         console.timeEnd("floodfill API");
         console.log(resp);
 
+        let squareScores = await getSquareScore(squareID);
         infoForPDF = {
           ...resp,
           squareCoords,
           startTimeSeconds,
-        }
+          squareScores,
+        };
+        console.log("##########");
+        console.log(infoForPDF);
 
         dataChanged(resp, gj);
         isProcessingClick = false;

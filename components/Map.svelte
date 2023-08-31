@@ -20,7 +20,6 @@
 
   // TODO Supposed to use a phantom type, not a string, as the key
   setContext("map", { getMap: () => map });
-  
 
   onMount(() => {
     // Before creating the map, check if there's a hash, because one will get set below

@@ -38,9 +38,17 @@
   const lineWidth = 4;
   // allow if total < 10_000_000m^2 ~ 1000 squares
   const maxAreaSize = 10_000_000;
-  export let leftSidebarClassToggle;
+  let drawControlsToggle;
+  export let open = false;
   export let stopLayerToggle;
   export let drawing = false;
+  $: {
+    if (open["headRight"]) {
+      drawControlsToggle = "on";
+    } else {
+      drawControlsToggle = "off";
+    }
+  }
   const styles = [
     {
       id: "draggable-points",
@@ -367,7 +375,7 @@
 </script>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Add new bus route"
   style="top: 10px;"
   on:click={addNewBus}
@@ -379,7 +387,7 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Add new national rail route"
   style="top: 75px;"
   on:click={addNewTrain}
@@ -391,7 +399,7 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Add new ferry route"
   style="top: 136px;"
   on:click={addNewFerry}
@@ -403,7 +411,7 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Add new tram route"
   style="top: 198px;"
   on:click={addNewTram}
@@ -415,7 +423,7 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Add new underground/metro/light rail route"
   style="top: 260px;"
   on:click={addNewUnderground}
@@ -427,7 +435,7 @@
 </button>
 
 <!-- <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   style="top: 198px;"
   on:click={addNewFootpath}
 >
@@ -438,7 +446,7 @@
 </button> -->
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   title="Select area of interest"
   style="top: 320px;"
   on:click={addNewSelectedArea}
@@ -459,7 +467,7 @@
     display: none !important;
   }
 
-  .sidebar {
+  .on {
     z-index: 1;
     position: absolute;
     left: calc(25% + 20px);
@@ -468,7 +476,7 @@
     background: white;
     padding: 10px;
   }
-  .blank {
+  .off {
     display: none;
   }
 </style>

@@ -7,11 +7,12 @@
   import StageBanner from "./components/StageBanner.svelte";
   import LoadGeojson from "./components/LoadGeojson.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
-  import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
-  import SidebarExplore from "./components/SidebarExplore.svelte";
   import Settings from "./components/Settings.svelte";
+  import LandingPage from "./components/LandingPage.svelte";
+  import StopsLayer from "./components/StopsLayer.svelte";
+  import LeftAccordion from "./components/LeftAccordion.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -20,14 +21,17 @@
   let tileOpacity = [70];
   let hoverInfo;
   let responseJson;
-  let leftSidebarClassToggle;
   let loading;
   let stopLayerToggle;
   let drawing;
   let hoveredInterventionScores;
-  let exploreSidebarClassToggle;
   let purpose;
   let startTimeSeconds;
+  let open;
+  let stopStatuses;
+  // needs to be in bind:stopStatuses={stopStatuses} form
+  // npm run fmt ruins this
+  let stopCheckboxClicked;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -40,7 +44,11 @@
 </div>
 <div>
   <Map {innerHeight}>
-    <SidebarLeft
+    <StopsLayer
+     {stopLayerToggle}
+     {stopCheckboxClicked}
+     bind:stopStatuses={stopStatuses} />
+    <!-- <SidebarLeft
       {innerWidth}
       {login_username}
       {hoveredInterventionScores}
@@ -48,15 +56,15 @@
       bind:responseJson
       bind:leftSidebarClassToggle
       bind:loading
-    />
+    /> -->
     <Settings
       {infoForPDF}
-      {stopLayerToggle}
+      bind:stopStatuses={stopStatuses}
       bind:tileOpacity
       bind:purpose
       bind:startTimeSeconds
+      bind:stopCheckboxClicked
     />
-    <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
     <LoadGeojson
       {drawing}
       {purpose}
@@ -66,10 +74,21 @@
     />
     <HoverRouteInfo {hoverInfo} />
     <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
-    <SidebarExplore
+    <!-- <SidebarExplore
       {leftSidebarClassToggle}
       {tileOpacity}
       bind:exploreSidebarClassToggle
+    /> -->
+    <LandingPage />
+    <LeftAccordion
+      {tileOpacity}
+      {innerWidth}
+      {login_username}
+      {hoveredInterventionScores}
+      bind:responseJson
+      bind:open
+      bind:loading
     />
+    <DrawControls {open} bind:stopLayerToggle bind:drawing />
   </Map>
 </div>

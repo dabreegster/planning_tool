@@ -3,7 +3,7 @@
   import TileLayer from "./TileLayer.svelte";
   import PdfDownload from "./PdfDownload.svelte";
   import ApgbLayer from "./APGBLayer.svelte";
-  import StopsLayer from "./StopsLayer.svelte";
+  import StopsLayerToggles from "./StopsLayerToggles.svelte";
   import OpacitySlider from "./OpacitySlider.svelte";
   import DisplayedRouteSettings from "./DisplayedRouteSettings.svelte";
   import SnapToPostcode from "./SnapToPostcode.svelte";
@@ -13,9 +13,10 @@
 
   export let tileOpacity;
   export let infoForPDF;
-  export let stopLayerToggle;
   export let purpose;
   export let startTimeSeconds = 28800;
+  export let stopStatuses;
+  export let stopCheckboxClicked;
 </script>
 
 <div class="whitebox">
@@ -46,7 +47,7 @@
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
-      <StopsLayer {stopLayerToggle} />
+      <StopsLayerToggles bind:stopStatuses={stopStatuses} bind:stopCheckboxClicked />
       <p />
     </div>
   </Accordion>

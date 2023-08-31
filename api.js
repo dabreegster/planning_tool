@@ -41,6 +41,16 @@
 //   return await resp.json();
 // }
 
+// export async function getSquareScore(squareID) {
+//   let resp;
+//   resp = await fetch(endpt, {
+//     method: "POST",
+//     headers: jsonRequestHeaders("hoverScores"),
+//     body: JSON.stringify({ square_ID: squareID, modeType: "All" }),
+//   });
+//   return await resp.json();
+// }
+
 // // Takes the GeoJSON features and creates the API request. Has the side effect
 // // of calling the stop lookup API.
 // export async function geojsonToApiPayload(features, login_username) {
@@ -224,9 +234,9 @@
 
 const squareInfoEndpt = "https://83dd-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://52fc-35-189-123-220.ngrok-free.app";
-const hoverScoresEndpt = "https://2e4a-34-147-152-157.ngrok-free.app";
+const scoresEndpt = "https://d0ff-34-147-152-157.ngrok-free.app";
 const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
-const PDFEndpt = "https://674a-34-147-152-157.ngrok-free.app"
+const PDFEndpt = "https://8d2d-34-147-152-157.ngrok-free.app";
 
 export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
@@ -261,10 +271,20 @@ export async function lookupPostcode(postcode) {
 
 export async function getHoverScores(squareID, mode) {
   let resp;
-  resp = await fetch(hoverScoresEndpt, {
+  resp = await fetch(scoresEndpt, {
     method: "POST",
     headers: jsonRequestHeaders(),
     body: JSON.stringify({ square_ID: squareID, modeType: mode }),
+  });
+  return await resp.json();
+}
+
+export async function getSquareScore(squareID) {
+  let resp;
+  resp = await fetch(scoresEndpt, {
+    method: "POST",
+    headers: jsonRequestHeaders(),
+    body: JSON.stringify({ square_ID: squareID, modeType: "All" }),
   });
   return await resp.json();
 }
@@ -438,7 +458,6 @@ export async function lookupPathway(feature) {
   const result = await resp.json();
   feature.geometry.coordinates = result.geometry.coordinates;
 }
-
 
 export async function callPDFDownload(infoForPDF) {
   const resp = await fetch(PDFEndpt, {

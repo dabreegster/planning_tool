@@ -12,13 +12,7 @@
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
   const layer = "tiles";
 
-
-  let modes = [
-    "PT",
-    "walking",
-    "cycling",
-    "driving",
-  ]
+  let modes = ["PT", "walking", "cycling", "driving"];
 
   let purposes = [
     "Business",
@@ -34,7 +28,7 @@
     let tileModeString;
     if (map.getSource(source)) {
     } else {
-      console.log()
+      console.log();
       if (mode === "PT") {
         tileModeString = "";
       } else if (mode === "walking") {
@@ -47,24 +41,22 @@
       map.addSource(source, {
         type: "raster",
         url:
-          "pmtiles://" + 
-          PMTILES_BUCKET_URL + 
-          "ew_"+
+          "pmtiles://" +
+          PMTILES_BUCKET_URL +
+          "ew_" +
           purpose +
-          tileModeString + 
+          tileModeString +
           "_nipy_spectral.pmtiles",
       });
     }
   }
-
-
 
   onMount(async () => {
     for (let i = 0; i < modes.length; i++) {
       const mode = modes[i];
       for (let i = 0; i < purposes.length; i++) {
         const purpose = purposes[i];
-        addSource(purpose, mode)
+        addSource(purpose, mode);
       }
     }
     setLayer();
@@ -109,7 +101,6 @@
       "Health by walking",
       "Shopping by walking",
       "Residential by walking",
-
 
       "Business by driving",
       "Education by driving",
