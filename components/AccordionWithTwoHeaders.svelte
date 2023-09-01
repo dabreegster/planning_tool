@@ -33,7 +33,7 @@
       </button>
     </div>
 
-    <div class="accordion-content" style="{open.headLeft || open.headRight ? 'max-height: 95vh; overflow: auto;' : ''}">
+    <div class="accordion-content" style="{open.headLeft || open.headRight ? 'max-height: calc(85vh - 90px); overflow: auto;' : ''}">
       {#if open.headLeft}
         <div class="details" transition:slide>
           <slot name="details" />
@@ -50,8 +50,8 @@
 </div>
 
 <style>
-  /* .accordion-container {
-    max-height: 90%;
+  /* .accordion {
+    max-height: 50%;
     overflow: hidden;
   } */
 
@@ -79,9 +79,9 @@
     background: #005a31;
   }
 
-  div.accordion-content {
+  /* div.accordion-content {
     transition: max-height 0.3s ease-in-out, overflow 0.3s ease-in-out;
-  }
+  } */
 
   div.details {
     background-color: #f0f0f0;
