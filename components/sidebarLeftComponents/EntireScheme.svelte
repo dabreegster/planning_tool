@@ -150,7 +150,7 @@
   <button
     type="button"
     class="govuk-button govuk-button--warning"
-    style="font-size: 14px; float: right"
+    style="font-size: 16px; float: right "
     on:click={clearAllInterventions}
     disabled={$gjScheme.features.length == 0}>Clear interventions</button
   >

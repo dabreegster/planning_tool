@@ -76,19 +76,31 @@
     );
   }
 </script>
-
-Business: {business[0]}
-<Slider bind:value={business} />
-Education: {education[0]}
-<Slider bind:value={education} />
-Entertainment: {entertainment[0]}
-<Slider bind:value={entertainment} />
-Health: {health[0]}
-<Slider bind:value={health} />
-Shopping: {shopping[0]}
-<Slider bind:value={shopping} />
-Residential: {residential[0]}
-<Slider bind:value={residential} />
+<div style="font-size: 16px;">
+  Business: {business[0]}
+  <Slider bind:value={business} />
+</div>
+<div style="font-size: 16px;">
+  Education: {education[0]}
+  <Slider bind:value={education} />
+</div>
+<div style="font-size: 16px;">
+  Entertainment: {entertainment[0]}
+  <Slider bind:value={entertainment} />
+</div>
+<div style="font-size: 16px;">
+  Health: {health[0]}
+  <Slider bind:value={health} />
+</div>
+<div style="font-size: 16px;">
+  Shopping: {shopping[0]}
+  <Slider bind:value={shopping} />
+</div>
+<div style="font-size: 16px;">
+  Residential: {residential[0]}
+  <Slider bind:value={residential} />
+</div>
 
 <style>
+
 </style>

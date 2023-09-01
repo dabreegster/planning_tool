@@ -1,7 +1,7 @@
 <script>
   export let open = {
     headLeft: false,
-    headRight: false,
+    headRight: false
   };
 
   import { slide } from "svelte/transition";
@@ -17,42 +17,51 @@
   };
 </script>
 
-<div class="accordion">
-  <div class="header-container">
-    <button class="header" on:click={() => handleClick("headLeft")}>
-      <div class="text">
-        <slot name="headLeft" />
-      </div>
-    </button>
+<div class="accordion-container">
+  <div class="accordion">
+    <div class="header-container">
+      <button class="header" on:click={() => handleClick("headLeft")}>
+        <div class="text">
+          <slot name="headLeft" />
+        </div>
+      </button>
 
-    <button class="header" on:click={() => handleClick("headRight")}>
-      <div class="text">
-        <slot name="headRight" />
-      </div>
-    </button>
+      <button class="header" on:click={() => handleClick("headRight")}>
+        <div class="text">
+          <slot name="headRight" />
+        </div>
+      </button>
+    </div>
+
+    <div class="accordion-content" style="{open.headLeft || open.headRight ? 'max-height: 95vh; overflow: auto;' : ''}">
+      {#if open.headLeft}
+        <div class="details" transition:slide>
+          <slot name="details" />
+        </div>
+      {/if}
+
+      {#if open.headRight}
+        <div class="details" transition:slide>
+          <slot name="details2" />
+        </div>
+      {/if}
+    </div>
   </div>
-
-  {#if open.headLeft}
-    <div class="details" transition:slide>
-      <slot name="details" />
-    </div>
-  {/if}
-
-  {#if open.headRight}
-    <div class="details" transition:slide>
-      <slot name="details2" />
-    </div>
-  {/if}
 </div>
 
 <style>
+  /* .accordion-container {
+    max-height: 90%;
+    overflow: hidden;
+  } */
+
   div.accordion {
     margin: 1rem 0;
   }
 
   div.header-container {
     display: flex;
-    gap: 10px; /* Adjust the gap between headers as needed */
+    gap: 15px; 
   }
 
   button.header {
@@ -68,6 +77,10 @@
 
   button.header:hover {
     background: #005a31;
+  }
+
+  div.accordion-content {
+    transition: max-height 0.3s ease-in-out, overflow 0.3s ease-in-out;
   }
 
   div.details {

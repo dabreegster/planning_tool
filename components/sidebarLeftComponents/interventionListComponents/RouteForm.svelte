@@ -40,15 +40,15 @@
 </script>
 
 Route name
-<TextInput bind:value={props.name} style="font-size: 16px;" />
+<TextInput bind:value={props.name} style="font-size: 16px; background-color: white; border: 1px solid black;" />
 <br />
 
 Number of services on route
-<NumberInput bind:value={props.dailyTrips} style="font-size: 16px;" />
+<NumberInput hideSteppers bind:value={props.dailyTrips} style="font-size: 16px; background-color: white; border: 1px solid black;" />
 
 <br />
 Time between services (minutes)
-<NumberInput style="font-size: 16px;" bind:value={props.frequency} />
+<NumberInput hideSteppers style="font-size: 16px; background-color: white; border: 1px solid black;" bind:value={props.frequency} />
 
 <br />
 First service timetable

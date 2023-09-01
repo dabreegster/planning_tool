@@ -71,10 +71,11 @@
     top: 5px;
     left: 10px;
     background: white;
-    padding: 10px;
+    padding: 0 15px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     width: 25%;
+    max-height: 90%;
   }
   .header {
     font-size: 1.2rem;

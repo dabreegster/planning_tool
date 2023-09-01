@@ -123,7 +123,7 @@
             {interventionName(feature)}
           {/if}
         </svelte:fragment>
-        <div class="govuk-body">
+        <div class="govuk-body" >
           {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
             <PathwayForm bind:props={feature.properties} />
           {:else if feature.properties.from_csv}
