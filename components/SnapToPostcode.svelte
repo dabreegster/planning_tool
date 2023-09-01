@@ -31,12 +31,11 @@
   }
 </script>
 
-<div class="whitebox">
-  Postcode:
+<div class="postcode">
+  Move to postcode:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 380px"
-    placeholder="Find postcode..."
+    style="font-size: 16px; width: calc(100% - 180px); background-color: white; border: 1px solid black;"
     on:input={handleInput}
     on:keydown={handleKeyPress}
   />
@@ -56,14 +55,7 @@
 </div>
 
 <style>
-  .whitebox {
-    /* background-color: white;
-    position: absolute;
-    padding: 16px;
-    border-radius: 10px;
-    right: 10px;
-    top: 110px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
+  .postcode {
     font-size: 1.2rem;
   }
 </style>

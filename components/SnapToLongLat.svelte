@@ -35,7 +35,6 @@
   <input
     type="text"
     style="font-size: 1.2rem; width: 100px"
-    placeholder="longitude"
     on:input={handleLongitudeInput}
     on:keydown={handleKeyPress}
   />
@@ -43,7 +42,6 @@
   <input
     type="text"
     style="font-size: 1.2rem; width: 100px"
-    placeholder="latitude"
     on:input={handleLatitudeInput}
     on:keydown={handleKeyPress}
   />

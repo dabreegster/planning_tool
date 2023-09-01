@@ -46,7 +46,6 @@
   <input
     type="text"
     style="font-size: 1.2rem; width: 100px"
-    placeholder="easting"
     on:input={handleEastingInput}
     on:keydown={handleKeyPress}
   />
@@ -54,7 +53,6 @@
   <input
     type="text"
     style="font-size: 1.2rem; width: 100px"
-    placeholder="northing"
     on:input={handleNorthingInput}
     on:keydown={handleKeyPress}
   />

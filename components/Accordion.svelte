@@ -15,7 +15,7 @@
   </button>
 
   {#if open}
-    <div class="details" transition:slide>
+    <div class="details" transition:slide style="max-height: calc(30vh - 90px)">
       <slot name="details" />
     </div>
   {/if}
@@ -24,18 +24,33 @@
 <style>
   div.accordion {
     margin: 1rem 0;
+    max-height: calc(85vh - 90px);
   }
 
-  button.header {
+  /* button.header {
     display: flex;
     width: 100%;
     background: none;
     border: none;
     cursor: pointer;
+  } */
+  button.header {
+    flex: 1; /* Distribute available space equally between headers */
+    background: #00703c;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease-in-out;
+    /* width: 80%; */
   }
 
   div.details {
-    /* background-color: #cecece; */
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     padding: 1rem;
+    margin-top: 10px;
   }
 </style>

@@ -188,25 +188,7 @@
 </script>
 
 <div class="box">
-  <!-- <div class="legendtitle">Connectivity score</div>
-  <br />
-  <div class="legend">
-    {#each colours as colour}
-      <div
-        class="square"
-        style="background-color: {colour}; opacity: {tileOpacity / 100};"
-      />
-    {/each}
-  </div>
 
-  <div class="legend">
-    {#each paddedNumbers as number}
-      <div class="numbers">
-        {number}
-      </div>
-    {/each}
-  </div>
- <br> -->
   <div class="legendtitle">Connectivity score</div>
   <div class="legend">
     {#each nipy_spectral_100 as colour}
@@ -217,7 +199,7 @@
     {/each}
   </div>
 
-  <div class="legend">
+  <div class="numberline">
     {#each paddedNumbers as number}
       <div class="numbers">
         {number}
@@ -229,20 +211,25 @@
 <style>
   .legendtitle {
     font-size: 1.2rem;
+    padding-bottom: 10px; /* Adjust the value as needed */
   }
   .legend {
     display: flex;
+    border: 1px solid black;
+  }
+  .numberline {
+    display: flex;
   }
   .square {
-    width: 4.9px;
+    width: 5px;
     height: 40px;
   }
   .numbers {
-    width: 35px;
+    width: 37px;
     height: 10px;
     color: black;
     opacity: 1;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   .box {

@@ -21,6 +21,7 @@
   export let login_username;
   export let innerWidth;
   export let loading;
+  export let pixelReduction = 90;
 
   $: {
     console.log(open);
@@ -28,7 +29,7 @@
 </script>
 
 <div class="whitebox">
-  <AccordionWithTwoHeaders bind:open>
+  <AccordionWithTwoHeaders {pixelReduction} bind:open>
     <div slot="headLeft" class="header">Explore Scores</div>
     <div slot="details">
       <PurposeWeightSliders bind:weights {squareScores} />
