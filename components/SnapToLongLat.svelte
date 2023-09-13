@@ -34,14 +34,14 @@
   Longitude:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px"
+    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
     on:input={handleLongitudeInput}
     on:keydown={handleKeyPress}
   />
   Latitude:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px"
+    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
     on:input={handleLatitudeInput}
     on:keydown={handleKeyPress}
   />

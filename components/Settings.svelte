@@ -30,7 +30,7 @@
     <SnapToPostcode />
   </div>
   <AccordionWithTwoHeaders {pixelReduction}>
-    <div slot="headLeft" class="header">Find EN/LL</div>
+    <div slot="headLeft" class="header">Move to EN/LL</div>
     <div slot="details">
       <SnapToLongLat />
       <br />
@@ -88,7 +88,7 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    background: white;
+    background:rgba(255, 255, 255, 0.7);
     padding: 10px 15px 0 15px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
@@ -99,6 +99,7 @@
   }
   .greybox {
     background: #f0f0f0;
+    /* background: white; */
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;

@@ -187,8 +187,7 @@
   // let colours = getHexColors();
 </script>
 
-<div class="box">
-
+<div >
   <div class="legendtitle">Connectivity score</div>
   <div class="legend">
     {#each nipy_spectral_100 as colour}
@@ -223,7 +222,9 @@
   .square {
     width: 5px;
     height: 40px;
+    /* border-right: 1px solid black; */
   }
+
   .numbers {
     width: 37px;
     height: 10px;
@@ -231,17 +232,6 @@
     opacity: 1;
     font-size: 1rem;
   }
+  
 
-  .box {
-    /* background-color: white;
-    position: absolute;
-    width: 530px;
-    padding: 16px;
-    border-radius: 10px;
-    right: 10px;
-    top: 5px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
-    scrollbar-width: none; */
-  }
 </style>

@@ -45,14 +45,14 @@
   Easting:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px"
+    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
     on:input={handleEastingInput}
     on:keydown={handleKeyPress}
   />
   Northing:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px"
+    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
     on:input={handleNorthingInput}
     on:keydown={handleKeyPress}
   />

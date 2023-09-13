@@ -29,6 +29,7 @@
   let startTimeSeconds;
   let open;
   let stopStatuses;
+  let scoreLayer;
   // needs to be in bind:stopStatuses={stopStatuses} form
   // npm run fmt ruins this
   let stopCheckboxClicked;
@@ -73,7 +74,7 @@
       bind:hoverInfo
     />
     <HoverRouteInfo {hoverInfo} />
-    <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
+    <CurrentInterventionLayer {responseJson} {scoreLayer} bind:hoveredInterventionScores />
     <!-- <SidebarExplore
       {leftSidebarClassToggle}
       {tileOpacity}
@@ -88,6 +89,7 @@
       bind:responseJson
       bind:open
       bind:loading
+      bind:scoreLayer
     />
     <DrawControls {open} bind:stopLayerToggle bind:drawing />
   </Map>

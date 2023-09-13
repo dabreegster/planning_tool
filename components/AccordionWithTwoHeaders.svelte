@@ -89,6 +89,6 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 1rem;
-    margin-top: 10px;
+    margin-top: 15px;
   }
 </style>

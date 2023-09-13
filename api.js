@@ -1,4 +1,4 @@
-// const endpt = "https://cloundfunc-to-apis-y3gbqriuaq-nw.a.run.app";
+// const endpt = "https://cloudfunc-to-apis-y3gbqriuaq-nw.a.run.app";
 // // const endpt = "https://flask-app-cors-test-y3gbqriuaq-nw.a.run.app"
 
 // // Takes lat, lng and gives UserInputJSON for floodfillEndpt
@@ -221,6 +221,16 @@
 //   feature.geometry.coordinates = result.geometry.coordinates;
 // }
 
+// export async function callPDFDownload(infoForPDF) {
+//   const resp = await fetch(endpt, {
+//     method: "POST",
+//     headers: jsonRequestHeaders("PDF"),
+//     body: JSON.stringify(infoForPDF),
+//   });
+//   return await resp;
+// }
+
+
 // function jsonRequestHeaders(APIcode) {
 //   return {
 //     "Bypass-Tunnel-Reminder": "haha",
@@ -234,9 +244,9 @@
 
 const squareInfoEndpt = "https://83dd-35-189-123-220.ngrok-free.app";
 const floodfillEndpt = "https://52fc-35-189-123-220.ngrok-free.app";
-const scoresEndpt = "https://d0ff-34-147-152-157.ngrok-free.app";
+const scoresEndpt = "https://cc16-34-147-152-157.ngrok-free.app";
 const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
-const PDFEndpt = "https://8d2d-34-147-152-157.ngrok-free.app";
+const PDFEndpt = "https://172e-34-147-152-157.ngrok-free.app";
 
 export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
@@ -477,7 +487,6 @@ function jsonRequestHeaders(APIcode) {
     Authtoken: "TOKEN",
     API: APIcode,
   };
-  console.log(headers);
   return headers;
 }
 

@@ -9,6 +9,7 @@
   import CsvUpload from "./sidebarLeftComponents/CsvUpload.svelte";
   import CsvDownload from "./sidebarLeftComponents/CsvDownload.svelte";
   import Results from "./sidebarLeftComponents/Results.svelte";
+  import CurrentInterventionLayerToggle from "./CurrentInterventionLayerToggle.svelte";
 
   let weights;
   let squareScores;
@@ -22,6 +23,7 @@
   export let innerWidth;
   export let loading;
   export let pixelReduction = 90;
+  export let scoreLayer;
 
   $: {
     console.log(open);
@@ -61,6 +63,8 @@
       <br />
       <!-- <CsvDownload {responseJson} /> -->
       <br />
+      <CurrentInterventionLayerToggle {responseJson} bind:scoreLayer/>
+      <br />
       <!-- <InterventionScoreLegend {hoveredInterventionScores} {responseJson} /> -->
     </div>
   </AccordionWithTwoHeaders>
@@ -71,7 +75,7 @@
     position: absolute;
     top: 5px;
     left: 10px;
-    background: white;
+    background:rgba(255, 255, 255, 0.7);
     padding: 0 15px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
