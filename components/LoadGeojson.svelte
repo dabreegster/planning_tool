@@ -28,6 +28,15 @@
     "Residential",
   ];
 
+  $: {
+    if (isProcessingClick) {
+      setTimeout(() => {
+        isProcessingClick = false;
+      }, 8000);
+    }
+    console.log(isProcessingClick)
+  }
+
   function emptyGeojson() {
     return {
       type: "FeatureCollection",
@@ -97,7 +106,6 @@
           startTimeSeconds,
           squareScores,
         };
-        console.log("##########");
         console.log(infoForPDF);
 
         dataChanged(resp, gj);
@@ -152,20 +160,25 @@
   function dataChanged(resp, gj) {
     console.time("Build GJ data");
     // Circles for destinations
-    for (let [purpose, top3] of resp.key_destinations_per_purpose.entries()) {
-      for (let pt of top3) {
-        gj.features.push({
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: pt,
-          },
-          properties: {
-            purpose,
-          },
-        });
+    for (let [purpose, top10] of resp.key_destinations_per_purpose.entries()) {
+      for (let pt of top10) {
+        if (pt[1] === 0) {
+          // do nothing as this is not in UK at point [0, 0]
+        } else {
+          gj.features.push({
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: pt,
+            },
+            properties: {
+              purpose,
+            },
+          });
+        }
       }
     }
+  
 
     // Lines for links
     maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
