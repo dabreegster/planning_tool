@@ -37,7 +37,7 @@
 </button> -->
 <br />
 <div class="startTimeSelection">
-  <label for="start-time-input" style="font-size: 1.1rem;">Start Time:</label>
+  <label for="start-time-input" style="font-size: 1.1rem;">Start time for displayed routes:</label>
   <input
     id="start-time-input"
     type="time"
