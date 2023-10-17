@@ -12,6 +12,7 @@
   import ScoreLegend from "./ScoreLegend.svelte";
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
   import LaLevelScoresToggle from "./LALevelScoresToggle.svelte";
+  import LaLevelColourLegend from "./LALevelColourLegend.svelte";
 
   export let tileOpacity;
   export let infoForPDF;
@@ -38,7 +39,10 @@
       <br />
       <SnapToEastingNorthing />
       <br />
-      <LaLevelScoresToggle bind:LASelected/>
+      <div class="lightgreybox">
+        <LaLevelScoresToggle bind:LASelected/>
+        <LaLevelColourLegend />
+      </div>
     </div>
     <div slot="headRight" class="header">Settings</div>
     <div slot="details2">
@@ -107,5 +111,12 @@
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
+  }
+  .lightgreybox {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-top: 10px;
   }
 </style>

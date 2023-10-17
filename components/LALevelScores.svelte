@@ -22,6 +22,20 @@
 
   let geoJson = null;
 
+  let hexlookup = [
+    "#eeeeee",
+    "#9594c7",
+    "#bccff5",
+    "#8ef4f5",
+    "#94fa94",
+    "#f9fa94",
+    "#f6bca8",
+    "#f48f8e",
+    "#c69494",
+    "#614a4a",
+  ];
+
+
   function emptyGeojson() {
     return {
       type: "FeatureCollection",
@@ -169,19 +183,6 @@
       console.log("set layer");
     }
   }
-  let hexlookup = [
-    "#eeeeee",
-    "#9594c7",
-    "#bccff5",
-    "#8ef4f5",
-    "#94fa94",
-    "#f9fa94",
-    "#f6bca8",
-    "#f48f8e",
-    "#c69494",
-    "#614a4a",
-  ];
-
 
 </script>
 
