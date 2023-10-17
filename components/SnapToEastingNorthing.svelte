@@ -41,32 +41,24 @@
   }
 </script>
 
-<div class="whitebox">
+<div style="font-size: 0.9rem;">
   Easting:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
+    style="width: 98px; background-color: white; border: 1px solid black;"
     on:input={handleEastingInput}
     on:keydown={handleKeyPress}
   />
-  Northing:
-  <input
-    type="text"
-    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
-    on:input={handleNorthingInput}
-    on:keydown={handleKeyPress}
-  />
+  <div style="float: right; font-size: 0.9rem;">
+    Northing:
+    <input
+      type="text"
+      style="width: 98px; background-color: white; border: 1px solid black;"
+      on:input={handleNorthingInput}
+      on:keydown={handleKeyPress}
+    />
+  </div>
 </div>
 
 <style>
-  .whitebox {
-    /* background-color: white;
-    position: absolute;
-    padding: 16px;
-    border-radius: 10px;
-    right: 10px;
-    top: 410px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
-    font-size: 1.2rem;
-  }
 </style>

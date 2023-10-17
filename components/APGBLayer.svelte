@@ -1,10 +1,14 @@
 <script>
+  import APGB_key from "../data/APGB_key.json";
+
   import { onMount, getContext } from "svelte";
 
   const { getMap } = getContext("map");
   const map = getMap();
 
   let APGBLayer = "Hide";
+  const APGBKEY = APGB_key["APGB_KEY"]
+  console.log(APGBKEY)
 
   onMount(async () => {
     if (map.getSource("25cm")) {
@@ -12,7 +16,7 @@
       map.addSource("25cm", {
         type: "raster",
         tiles: [
-          "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-25CM-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
+          `https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-25CM-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=${APGBKEY}&format=image/png&TRANSPARENT=FALSE`,
         ],
         minZoom: 0,
         maxZoom: 22,
@@ -23,7 +27,7 @@
       map.addSource("12.5cm", {
         type: "raster",
         tiles: [
-          "https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-12CM5-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=d60ac1f5-a3c0-49a6-9df1-439b7ce0229c&format=image/png&TRANSPARENT=FALSE",
+          `https://ogc.apps.midgard.airbusds-cint.com/apgb/wmts/rest/apgb:AP-12CM5-GB-LATEST/default/EPSG-3857/EPSG:3857:{z}/{y}/{x}?GUID=${APGBKEY}&format=image/png&TRANSPARENT=FALSE`,
         ],
         minZoom: 0,
         maxZoom: 22,

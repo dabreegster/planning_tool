@@ -30,25 +30,24 @@
   }
 </script>
 
-<div class="whitebox">
+<div style="font-size: 0.9rem;">
   Longitude:
   <input
     type="text"
-    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
+    style="width: 90px; background-color: white; border: 1px solid black;"
     on:input={handleLongitudeInput}
     on:keydown={handleKeyPress}
   />
-  Latitude:
-  <input
-    type="text"
-    style="font-size: 1.2rem; width: 100px; background-color: white; border: 1px solid black;"
-    on:input={handleLatitudeInput}
-    on:keydown={handleKeyPress}
-  />
+  <div style="float: right; font-size: 0.9rem;">
+    Latitude:
+    <input
+      type="text"
+      style="width: 90px; background-color: white; border: 1px solid black; "
+      on:input={handleLatitudeInput}
+      on:keydown={handleKeyPress}
+    />
+  </div>
 </div>
 
 <style>
-  .whitebox {
-    font-size: 1.2rem;
-  }
 </style>

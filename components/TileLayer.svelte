@@ -4,7 +4,7 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  export let tileOpacity = 70;
+  export let tileOpacity = 50;
   // TODO Revert, this is nicer for development
   let scoreLayer = "Hide";
 

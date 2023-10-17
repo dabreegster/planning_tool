@@ -65,16 +65,14 @@
 <div>
   {#if responseJson}
     <button
-      class="govuk-button"
-      data-module="govuk-button"
+      class="white_button"
       style="font-size:medium"
       on:click={() => downloadAreaChangesTable(areaChanges)}
     >
       Download area change table as CSV
     </button>
     <button
-      class="govuk-button"
-      data-module="govuk-button"
+      class="white_button"
       style="font-size:medium"
       on:click={() => downloadResultsTable(responseJson)}
     >
@@ -87,5 +85,15 @@
   button {
     border-radius: 5px;
     transition: background-color 0.3s ease-in-out;
+  }
+  .white_button {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
   }
 </style>

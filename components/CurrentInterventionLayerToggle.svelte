@@ -27,13 +27,16 @@
       ? 0.15
       : 1}"
   >
+  <div style="font-size: 1rem">
     Intervention scores:
+  </div>
+  
   </label>
   <select
     class="govuk-select"
     id="scoreLayer"
     name="scoreLayer"
-    style="opacity: {responseJson == null ? 0.15 : 1}"
+    style="opacity: {responseJson == null ? 0.15 : 1}; height: 35px;"
     bind:value={scoreLayer}
     disabled={responseJson == null}
   >
@@ -44,11 +47,8 @@
 </div>
 
 <style>
-  div {
-  }
-
   select {
-    font-size: 16px;
+    font-size: 14px;
     padding: 4px 8px;
   }
 </style>

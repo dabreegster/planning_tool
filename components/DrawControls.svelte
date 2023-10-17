@@ -17,7 +17,7 @@
   import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
   // potentially redundant with only 1 draw polygon purpose
   let area_toggle = "select_area";
-  let line_toggle = "new_pt_route";
+  export let line_toggle = "new_pt_route";
 
   // configuration for lat/long -> OSGB easting northing conversion
   var osgb =
@@ -47,6 +47,13 @@
       drawControlsToggle = "on";
     } else {
       drawControlsToggle = "off";
+    }
+  }
+  $: {
+    if (drawing) {
+      if (line_toggle == "new_pt_route") {
+        drawControls.changeMode("draw_line_string");
+      }
     }
   }
   const styles = [
@@ -373,7 +380,7 @@
   //   return new Set(allSqaureIDs);
   // }
 </script>
-
+<!-- 
 <button
   class={drawControlsToggle}
   title="Add new bus route"
@@ -432,7 +439,7 @@
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/underground-icon.png"
     style="height: 32; width: 32px;"
   />
-</button>
+</button> -->
 
 <!-- <button
   class={drawControlsToggle}

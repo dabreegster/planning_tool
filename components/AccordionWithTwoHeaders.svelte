@@ -57,12 +57,12 @@
   } */
 
   div.accordion {
-    margin: 1rem 0;
+    margin: 10px 0;
   }
 
   div.header-container {
     display: flex;
-    gap: 15px; 
+    gap: 10px; 
   }
 
   button.header {
@@ -72,7 +72,7 @@
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    padding: 10px 15px;
+    padding: 8px 10px;
     transition: background-color 0.3s ease-in-out;
   }
 
@@ -89,6 +89,9 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 1rem;
-    margin-top: 15px;
+    margin-top: 10px;
+  }
+  .text {
+    font-size: 16px;
   }
 </style>

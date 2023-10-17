@@ -10,6 +10,7 @@
   async function snapToPostcode() {
     let response = await lookupPostcode(postcode);
     if (response == "no_match") {
+      alert("Please enter a valid postcode");
       // TODO return no postcode found for none
     } else {
       let coords = response["postcodeMatch"];
@@ -35,27 +36,28 @@
   Move to postcode:
   <input
     type="text"
-    style="font-size: 16px; width: calc(100% - 180px); background-color: white; border: 1px solid black;"
+    style="font-size: 14px; width: calc(100% - 180px); background-color: white; border: 1px solid black;"
     on:input={handleInput}
     on:keydown={handleKeyPress}
   />
-  <!-- <svg
-    fill="none"
-    viewBox="0 0 24 24"
-    height="24"
-    width="24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      xmlns="http://www.w3.org/2000/svg"
-      d="M10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4ZM2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10C18 11.8487 17.3729 13.551 16.3199 14.9056L21.7071 20.2929C22.0976 20.6834 22.0976 21.3166 21.7071 21.7071C21.3166 22.0976 20.6834 22.0976 20.2929 21.7071L14.9056 16.3199C13.551 17.3729 11.8487 18 10 18C5.58172 18 2 14.4183 2 10Z"
-      fill="#0D0D0D"
-    />
-  </svg> -->
+  <button 
+  class="white_button"
+  on:click={snapToPostcode}>Go</button>
 </div>
 
 <style>
   .postcode {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+  .white_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
   }
 </style>

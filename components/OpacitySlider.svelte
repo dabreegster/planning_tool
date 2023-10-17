@@ -1,7 +1,7 @@
 <script>
   import Slider from "@bulatdashiev/svelte-slider";
 
-  export let tileOpacity = [70];
+  export let tileOpacity = [50];
 </script>
 
 <div class="whitebox">

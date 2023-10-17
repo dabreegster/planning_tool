@@ -10,6 +10,8 @@
   import CsvDownload from "./sidebarLeftComponents/CsvDownload.svelte";
   import Results from "./sidebarLeftComponents/Results.svelte";
   import CurrentInterventionLayerToggle from "./CurrentInterventionLayerToggle.svelte";
+  import Accordion from "./Accordion.svelte";
+  import AddScheme from "./AddScheme.svelte";
 
   let weights;
   let squareScores;
@@ -24,6 +26,9 @@
   export let loading;
   export let pixelReduction = 90;
   export let scoreLayer;
+  export let drawing = false;
+  export let line_toggle = "new_pt_route";
+  export let stopLayerToggle;
 
   $: {
     console.log(open);
@@ -51,11 +56,21 @@
         {tileOpacity}
       />
     </div>
-    <div slot="headRight" class="header">Add Scheme</div>
+    <div slot="headRight" class="header">New Scheme</div>
     <div slot="details2">
       <CsvUpload {innerWidth} />
       <br />
       <EntireScheme {innerWidth} />
+      <Accordion>
+        <span slot="head" class="header" title="Add new public transport route">Add route 
+      </span>
+        <div slot="details">
+          <AddScheme
+            bind:stopLayerToggle
+            bind:drawing
+            bind:line_toggle/>
+        </div>
+      </Accordion>
       <br />
       <InterventionList />
       <br />
@@ -80,8 +95,5 @@
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     width: 25%;
-  }
-  .header {
-    font-size: 1.2rem;
   }
 </style>

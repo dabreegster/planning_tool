@@ -36,14 +36,17 @@
   } */
   button.header {
     flex: 1; /* Distribute available space equally between headers */
-    background: #00703c;
-    border: none;
-    border-radius: 5px;
-    color: white;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: black;
     cursor: pointer;
-    padding: 10px 15px;
+    padding: 8px;
     transition: background-color 0.3s ease-in-out;
     /* width: 80%; */
+  }
+  button.header:hover {
+    background: #dfdfdf;
   }
 
   div.details {
@@ -53,4 +56,8 @@
     padding: 1rem;
     margin-top: 10px;
   }
+  .text {
+    font-size: 14px;
+  }
+
 </style>

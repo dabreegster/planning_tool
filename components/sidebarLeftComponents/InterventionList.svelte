@@ -105,6 +105,10 @@
     });
     return count;
   }
+
+  $: {
+    console.log(gjScheme)
+  }
 </script>
 
 <Accordion class="govuk-accordion" data-module="govuk-accordion">
@@ -141,11 +145,11 @@
 <br />
 <br />
 <div class="govuk-heading-s">
-  <span>{countFeatures($gjScheme, true)} impact areas</span>
+  <span style="font-size: 1.1rem">{countFeatures($gjScheme, true)} impact areas</span>
   <button
     type="button"
-    class="govuk-button govuk-button--warning"
-    style="font-size: 14px; float: right"
+    class="red_button"
+    style="float: right"
     on:click={clearAllAreas}
     disabled={$gjScheme.features.length == 0}>Clear impact areas</button
   >
@@ -161,7 +165,7 @@
         on:mouseenter={currentSidebarHover.set(feature.id)}
         on:mouseleave={reset}
       >
-        <svelte:fragment slot="title">
+        <svelte:fragment slot="title" >
           {#if feature.id == $currentMapHover}
             <strong>{interventionName(feature)}</strong>
           {:else}
@@ -180,7 +184,17 @@
 
 <style>
   button {
-    border-radius: 5px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    padding: 8px;
     transition: background-color 0.3s ease-in-out;
+  }
+  .red_button {
+    background: #d4361b;
+    border: 1px solid #ccc;
+    color: white;
+  }
+  .red_button:hover {
+    background: #aa2a16;
   }
 </style>

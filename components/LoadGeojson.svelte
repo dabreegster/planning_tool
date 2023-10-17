@@ -106,8 +106,6 @@
           startTimeSeconds,
           squareScores,
         };
-        console.log(infoForPDF);
-
         dataChanged(resp, gj);
         isProcessingClick = false;
       } else {

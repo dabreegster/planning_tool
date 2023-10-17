@@ -1,6 +1,6 @@
 <script>
   import Spinner from "svelte-spinner";
-  import DebugApi from "./DebugApi.svelte";
+  // import DebugApi from "./DebugApi.svelte";
   import { gjScheme } from "../../stores.js";
   import { geojsonToApiPayload, callApi } from "../../api.js";
   import { get } from "svelte/store";
@@ -51,24 +51,34 @@
 
 <button
   type="button"
-  class="govuk-button"
-  data-module="govuk-button"
+  title="Calculate impact of new scheme on impact areas"
   disabled={$gjScheme.features.length == 0 || loading}
-  style="font-size: 1rem"
   on:click={recalculate}
-  >Recalculate scores
+  >Calculate impact
 </button>
 
 {#if loading}
   <Spinner class="spinner" />
 {/if}
 
-<DebugApi {requestJson} {responseJson} />
+<!-- <DebugApi {requestJson} {responseJson} /> -->
 
 
 <style>
+
   button {
+    flex: 1; /* Distribute available space equally between headers */
+    background: #00703c;
+    border: none;
     border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    padding: 8px 10px;
     transition: background-color 0.3s ease-in-out;
+    font-size: 1rem;
+  }
+
+  button:hover {
+    background: #005a31;
   }
 </style>

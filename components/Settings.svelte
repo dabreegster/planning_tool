@@ -11,6 +11,7 @@
   import SnapToEastingNorthing from "./SnapToEastingNorthing.svelte";
   import ScoreLegend from "./ScoreLegend.svelte";
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
+  import LaLevelScoresToggle from "./LALevelScoresToggle.svelte";
 
   export let tileOpacity;
   export let infoForPDF;
@@ -19,6 +20,7 @@
   export let stopStatuses;
   export let stopCheckboxClicked;
   export let pixelReduction = 210;
+  export let LASelected;
 </script>
 
 <div class="whitebox">
@@ -35,6 +37,8 @@
       <SnapToLongLat />
       <br />
       <SnapToEastingNorthing />
+      <br />
+      <LaLevelScoresToggle bind:LASelected/>
     </div>
     <div slot="headRight" class="header">Settings</div>
     <div slot="details2">
@@ -92,10 +96,10 @@
     padding: 10px 15px 0 15px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-    width: 530px;
+    width: 400px;
   }
   .header {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   .greybox {
     background: #f0f0f0;

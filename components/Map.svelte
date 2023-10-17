@@ -56,7 +56,7 @@
   });
 </script>
 
-<div style="height: {innerHeight - 113}px" bind:this={mapContainer}>
+<div style="height: {innerHeight - 96}px" bind:this={mapContainer}>
   {#if loaded}
     <slot />
   {/if}

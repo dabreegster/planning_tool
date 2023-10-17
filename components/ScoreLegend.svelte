@@ -209,8 +209,8 @@
 
 <style>
   .legendtitle {
-    font-size: 1.2rem;
-    padding-bottom: 10px; /* Adjust the value as needed */
+    font-size: 1rem;
+    padding-bottom: 5px; /* Adjust the value as needed */
   }
   .legend {
     display: flex;
@@ -221,7 +221,7 @@
   }
   .square {
     width: 5px;
-    height: 40px;
+    height: 32px;
     /* border-right: 1px solid black; */
   }
 
@@ -230,7 +230,7 @@
     height: 10px;
     color: black;
     opacity: 1;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   
 

@@ -83,7 +83,7 @@
 
   function scaleButtonWidth(innerWidth, minWidth, widthFraction) {
     let sideBarWidth = innerWidth * 0.25;
-    if (sideBarWidth < 370) {
+    if (sideBarWidth < 490) {
       return sideBarWidth * widthFraction;
     } else {
       return minWidth;
@@ -94,7 +94,7 @@
 <div class="govuk-form-group">
   <h1 class="govuk-label-wrapper">
     <label
-      class="govuk-label govuk-label--m"
+      class="govuk-label govuk-label--s"
       for="event-name"
       style="float: left"
     >
@@ -106,6 +106,8 @@
     id="event-name"
     name="event-name"
     type="text"
+    title="Name your scheme"
+    style="height: 35px; font-size: 16px"
     bind:value={$gjScheme.scheme_name}
   />
 </div>
@@ -115,42 +117,45 @@
   <label>
     <input type="file" id="load_geojson" on:change={loadFile} />
     <button
-      class="govuk-button"
       type="button"
+      class="white_button"
+      title=""
       onclick="document.getElementById('load_geojson').click();"
-      style="font-size: 1rem; width: calc({scaleButtonWidth(
+      style="width: calc({scaleButtonWidth(
         innerWidth,
-        165,
-        0.41
+        145,
+        0.38
       )}px);"
     >
-      Load from GeoJSON
+      Upload scheme from GeoJSON
     </button>
   </label>
 
   <button
     type="button"
-    class="govuk-button"
-    style="float: right; font-size: 1rem; width: calc({scaleButtonWidth(
+    class="white_button"
+    title="Download your current scheme as a GeoJson"
+    style="float: right; width: calc({scaleButtonWidth(
       innerWidth,
-      165,
-      0.41
+      145,
+      0.38
     )}px);"
     on:click={exportToGeojson}
     disabled={$gjScheme.features.length == 0}
   >
-    Export to GeoJSON
+    Download scheme as GeoJSON
   </button>
 </div>
 
 <br />
 
 <div class="govuk-heading-s">
-  <span>{countFeatures($gjScheme, true)} interventions </span>
+  <span style="font-size: 1.1rem">{countFeatures($gjScheme, true)} interventions </span>
   <button
     type="button"
-    class="govuk-button govuk-button--warning"
-    style="font-size: 16px; float: right "
+    class="red_button"
+    title="Clear all routes and distinations in the scheme"
+    style="float: right; "
     on:click={clearAllInterventions}
     disabled={$gjScheme.features.length == 0}>Clear interventions</button
   >
@@ -169,7 +174,26 @@
     z-index: -1;
   }
   button {
-    border-radius: 5px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    padding: 7px;
     transition: background-color 0.3s ease-in-out;
   }
+  .white_button {
+    background: white;
+    border: 1px solid #ccc;
+    color: black;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
+  }
+  .red_button {
+    background: #d4361b;
+    border: 1px solid #ccc;
+    color: white;
+  }
+  .red_button:hover {
+    background: #aa2a16;
+  }
+
 </style>

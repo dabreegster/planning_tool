@@ -13,12 +13,13 @@
   import LandingPage from "./components/LandingPage.svelte";
   import StopsLayer from "./components/StopsLayer.svelte";
   import LeftAccordion from "./components/LeftAccordion.svelte";
+  import LaLevelScores from "./components/LALevelScores.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
   let infoForPDF;
-  let tileOpacity = [70];
+  let tileOpacity = [50];
   let hoverInfo;
   let responseJson;
   let loading;
@@ -33,6 +34,8 @@
   // needs to be in bind:stopStatuses={stopStatuses} form
   // npm run fmt ruins this
   let stopCheckboxClicked;
+  let line_toggle;
+  let LASelected;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -65,6 +68,7 @@
       bind:purpose
       bind:startTimeSeconds
       bind:stopCheckboxClicked
+      bind:LASelected
     />
     <LoadGeojson
       {drawing}
@@ -90,7 +94,16 @@
       bind:open
       bind:loading
       bind:scoreLayer
+      bind:stopLayerToggle
+      bind:drawing 
+      bind:line_toggle
     />
-    <DrawControls {open} bind:stopLayerToggle bind:drawing />
+    <DrawControls 
+     {open}
+     bind:stopLayerToggle
+     bind:drawing
+     bind:line_toggle
+     />
+     <LaLevelScores {LASelected} {tileOpacity}/>
   </Map>
 </div>

@@ -242,11 +242,12 @@
 //   };
 // }
 
-const squareInfoEndpt = "https://83dd-35-189-123-220.ngrok-free.app";
-const floodfillEndpt = "https://52fc-35-189-123-220.ngrok-free.app";
-const scoresEndpt = "https://cc16-34-147-152-157.ngrok-free.app";
+const squareInfoEndpt = "https://a147-35-242-177-130.ngrok-free.app";
+const floodfillEndpt = "https://cec0-35-242-177-130.ngrok-free.app";
+const scoresEndpt = "https://cacb-35-246-77-214.ngrok-free.app";
 const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
-const PDFEndpt = "https://172e-34-147-152-157.ngrok-free.app";
+const PDFEndpt = "https://6925-35-246-77-214.ngrok-free.app";
+const LAEndpt = "https://d21c-35-246-77-214.ngrok-free.app";
 
 export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
@@ -295,6 +296,16 @@ export async function getSquareScore(squareID) {
     method: "POST",
     headers: jsonRequestHeaders(),
     body: JSON.stringify({ square_ID: squareID, modeType: "All" }),
+  });
+  return await resp.json();
+}
+
+export async function getLABinnedScores(LA_name) {
+  let resp;
+  resp = await fetch(LAEndpt, {
+    method: "POST",
+    headers: jsonRequestHeaders(),
+    body: JSON.stringify({ LA_name: LA_name }),
   });
   return await resp.json();
 }

@@ -67,7 +67,7 @@
   }
 
   input:valid + span::after {
-    position: absolute;
+    /* position: absolute; */
     content: "✓";
     padding-left: 5px;
   }
