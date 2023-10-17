@@ -19,7 +19,7 @@
     <div class="column">
       <div class="box" style="background-color: {hexlookup[0]}" />
       <div class="description">0-10</div>
-      <div class="box ten_to_twenty" style="background-color: {hexlookup[5]}" />
+      <div class="box " style="background-color: {hexlookup[5]}" />
       <div class="description">50-60</div>
     </div>
     <div class="column">
