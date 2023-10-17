@@ -345,7 +345,7 @@
 </script>
 
 <div class="govuk-form-group">
-  <label class="govuk-label" for="scoreLayer"> Select LA: </label>
+  <label class="govuk-label" for="scoreLayer"> Local Authority: </label>
   <select
     class="govuk-select"
     id="scoreLayer"

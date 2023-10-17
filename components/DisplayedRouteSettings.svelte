@@ -21,7 +21,7 @@
   <label
     class="govuk-label"
     for="purpose"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
+    style="margin-right: 10px; margin-top: 5px; font-size: 0.9rem;"
   >
     Displayed route purpose:
   </label>
@@ -37,8 +37,8 @@
 </button> -->
 <br />
 <div class="startTimeSelection">
-  <label for="start-time-input" style="font-size: 1.1rem;"
-    >Start time for displayed routes:</label
+  <label for="start-time-input" style="font-size: 0.9rem;"
+    >Displayed route start time:</label
   >
   <input
     id="start-time-input"
@@ -47,14 +47,14 @@
     value="08:00"
     min="06:00"
     max="22:00"
-    style="font-size: 1.1rem; padding:5px"
+    style="font-size: 0.9rem; padding:5px; border: 1px solid;"
     on:change={(e) => updateStartTime(e)}
   />
   <span class="validity" />
 </div>
 <br />
 <div>
-  <p style="font-size: 1.1rem;">Right click to remove routes</p>
+  <b style="font-size: 0.9rem;">Right click to remove routes</b>
 </div>
 
 <style>
@@ -69,8 +69,13 @@
   }
 
   input:valid + span::after {
-    /* position: absolute; */
     content: "✓";
     padding-left: 5px;
+  }
+  select {
+    font-size: 0.9rem;
+    height: 30px;
+    float: right;
+    border: 1px solid rgb(0, 0, 0);
   }
 </style>
