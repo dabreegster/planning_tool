@@ -18,11 +18,6 @@
   let mapContainer;
   let loaded = false;
 
-  let PMTILES_URL =
-    "https://storage.googleapis.com/very-nice-tiles-bucket/blackpool_scores.pmtiles";
-  const p = new pmtiles.PMTiles(PMTILES_URL);
-  protocol.add(p);
-
   // TODO Supposed to use a phantom type, not a string, as the key
   setContext("map", { getMap: () => map });
 
@@ -61,7 +56,7 @@
   });
 </script>
 
-<div style="height: {innerHeight - 113}px" bind:this={mapContainer}>
+<div style="height: {innerHeight - 96}px" bind:this={mapContainer}>
   {#if loaded}
     <slot />
   {/if}

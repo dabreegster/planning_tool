@@ -14,8 +14,8 @@
           <img
             aria-label="DfT logo"
             src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/dft-logo-white.png"
-            height="32"
-            style="width:230px"
+            height="26"
+            style="width:auto"
           />
         </span>
       </a>

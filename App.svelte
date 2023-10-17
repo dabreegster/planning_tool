@@ -5,32 +5,37 @@
   import Map from "./components/Map.svelte";
   import Header from "./components/Header.svelte";
   import StageBanner from "./components/StageBanner.svelte";
-  import TileLayer from "./components/TileLayer.svelte";
   import LoadGeojson from "./components/LoadGeojson.svelte";
-  import ScoreLegend from "./components/ScoreLegend.svelte";
-  import PdfDownload from "./components/PdfDownload.svelte";
-  import OpacitySlider from "./components/OpacitySlider.svelte";
-  import SnapToPostcode from "./components/SnapToPostcode.svelte";
   import HoverRouteInfo from "./components/HoverRouteInfo.svelte";
-  import SidebarLeft from "./components/SidebarLeft.svelte";
   import DrawControls from "./components/DrawControls.svelte";
-  import StopsLayer from "./components/StopsLayer.svelte";
   import CurrentInterventionLayer from "./components/CurrentInterventionLayer.svelte";
-  import SidebarExplore from "./components/SidebarExplore.svelte";
+  import Settings from "./components/Settings.svelte";
+  import LandingPage from "./components/LandingPage.svelte";
+  import StopsLayer from "./components/StopsLayer.svelte";
+  import LeftAccordion from "./components/LeftAccordion.svelte";
+  import LaLevelScores from "./components/LALevelScores.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
-  let squareID;
-  let tileOpacity;
+  let infoForPDF;
+  let tileOpacity = [50];
   let hoverInfo;
   let responseJson;
-  let leftSidebarClassToggle;
   let loading;
   let stopLayerToggle;
   let drawing;
   let hoveredInterventionScores;
-  let exploreSidebarClassToggle;
+  let purpose;
+  let startTimeSeconds;
+  let open;
+  let stopStatuses;
+  let scoreLayer;
+  // needs to be in bind:stopStatuses={stopStatuses} form
+  // npm run fmt ruins this
+  let stopCheckboxClicked;
+  let line_toggle;
+  let LASelected;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -43,7 +48,11 @@
 </div>
 <div>
   <Map {innerHeight}>
-    <SidebarLeft
+    <StopsLayer
+     {stopLayerToggle}
+     {stopCheckboxClicked}
+     bind:stopStatuses={stopStatuses} />
+    <!-- <SidebarLeft
       {innerWidth}
       {login_username}
       {hoveredInterventionScores}
@@ -51,21 +60,50 @@
       bind:responseJson
       bind:leftSidebarClassToggle
       bind:loading
+    /> -->
+    <Settings
+      {infoForPDF}
+      bind:stopStatuses={stopStatuses}
+      bind:tileOpacity
+      bind:purpose
+      bind:startTimeSeconds
+      bind:stopCheckboxClicked
+      bind:LASelected
     />
-    <DrawControls {leftSidebarClassToggle} bind:stopLayerToggle bind:drawing />
-    <StopsLayer {stopLayerToggle} />
-    <OpacitySlider bind:tileOpacity />
-    <TileLayer {tileOpacity} />
-    <LoadGeojson {drawing} bind:squareID bind:hoverInfo />
-    <PdfDownload {squareID} />
-    <ScoreLegend {tileOpacity} />
-    <SnapToPostcode />
+    <LoadGeojson
+      {drawing}
+      {purpose}
+      {startTimeSeconds}
+      bind:infoForPDF
+      bind:hoverInfo
+    />
     <HoverRouteInfo {hoverInfo} />
-    <CurrentInterventionLayer {responseJson} bind:hoveredInterventionScores />
-    <SidebarExplore
+    <CurrentInterventionLayer {responseJson} {scoreLayer} bind:hoveredInterventionScores />
+    <!-- <SidebarExplore
       {leftSidebarClassToggle}
       {tileOpacity}
       bind:exploreSidebarClassToggle
+    /> -->
+    <LandingPage />
+    <LeftAccordion
+      {tileOpacity}
+      {innerWidth}
+      {login_username}
+      {hoveredInterventionScores}
+      bind:responseJson
+      bind:open
+      bind:loading
+      bind:scoreLayer
+      bind:stopLayerToggle
+      bind:drawing 
+      bind:line_toggle
     />
+    <DrawControls 
+     {open}
+     bind:stopLayerToggle
+     bind:drawing
+     bind:line_toggle
+     />
+     <LaLevelScores {LASelected} {tileOpacity}/>
   </Map>
 </div>

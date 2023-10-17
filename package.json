@@ -13,6 +13,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
+    "@bulatdashiev/svelte-slider": "^1.0.3",
     "@sveltejs/vite-plugin-svelte": "^2.0.0",
     "eslint": "^8.31.0",
     "eslint-plugin-svelte": "^2.14.1",
@@ -34,6 +35,7 @@
     "proj4": "^2.9.0",
     "sass": "^1.58.0",
     "svelte": "^3.54.0",
+    "svelte-collapsible": "^0.2.2",
     "svelte-spinner": "^2.0.2",
     "svelte-use-form": "^2.6.1"
   }

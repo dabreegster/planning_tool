@@ -28,8 +28,17 @@
     "ferry_layer",
   ];
   const colors = ["purple", "red", "blue", "green", "orange"];
-  let show = [false, false, false, false, false];
-  let switchStatus = [true, true, true, true, true];
+
+  export let stopStatuses = {
+    show: [false, false, false, false, false],
+    switchStatus: [true, true, true, true, true],
+  };
+  export let stopCheckboxClicked = [true, 0];
+
+  // event listener for when the checkboxes are clicked
+  $: {
+    toggle(stopCheckboxClicked[1], false);
+  }
 
   onMount(async () => {
     // TODO: here aswell as bit hacky
@@ -44,23 +53,25 @@
     };
 
     for (let i = 0; i < 5; i++) {
-      map.addSource(sources[i], {
-        type: "geojson",
-        data: i === 0 ? combinedBusData : urls[i],
-      });
+      if (map.getSource(sources[i])) {
+      } else {
+        map.addSource(sources[i], {
+          type: "geojson",
+          data: i === 0 ? combinedBusData : urls[i],
+        });
 
-      map.addLayer({
-        id: layers[i],
-        source: sources[i],
-        type: "circle",
-        paint: {
-          "circle-radius": 5,
-          "circle-color": colors[i],
-          "circle-opacity": 0.5,
-        },
-      });
+        map.addLayer({
+          id: layers[i],
+          source: sources[i],
+          type: "circle",
+          paint: {
+            "circle-radius": 5,
+            "circle-color": colors[i],
+            "circle-opacity": 0.5,
+          },
+        });
+      }
     }
-
     toggleAll();
   });
 
@@ -68,14 +79,17 @@
     map.setLayoutProperty(
       layers[index],
       "visibility",
-      show[index] ? "visible" : "none"
+      stopStatuses["show"][index] ? "visible" : "none"
     );
     if (draw) {
       // TODO add ...&& switchStatus[index]
-      switchStatus[index] = switchStatus[index];
-    } else if (switchStatus[index] == show[index]) {
+      stopStatuses["switchStatus"][index] = stopStatuses["switchStatus"][index];
+    } else if (
+      stopStatuses["switchStatus"][index] == stopStatuses["show"][index]
+    ) {
     } else {
-      switchStatus[index] = !switchStatus[index];
+      stopStatuses["switchStatus"][index] =
+        !stopStatuses["switchStatus"][index];
     }
   }
 
@@ -89,75 +103,52 @@
   function toggleOnDraw(stopLayerToggle) {
     toggleOffDrawing();
 
-    if (stopLayerToggle == "bus" && switchStatus[0] == false) {
-      show[0] = !show[0];
+    if (stopLayerToggle == "bus" && stopStatuses["switchStatus"][0] == false) {
+      stopStatuses["show"][0] = !stopStatuses["show"][0];
       toggle(0, true);
-    } else if (stopLayerToggle == "rail" && switchStatus[1] == false) {
-      show[1] = !show[1];
+    } else if (
+      stopLayerToggle == "rail" &&
+      stopStatuses["switchStatus"][1] == false
+    ) {
+      stopStatuses["show"][1] = !stopStatuses["show"][1];
       toggle(1, true);
-    } else if (stopLayerToggle == "ferry" && switchStatus[4] == false) {
-      show[4] = !show[4];
+    } else if (
+      stopLayerToggle == "ferry" &&
+      stopStatuses["switchStatus"][4] == false
+    ) {
+      stopStatuses["show"][4] = !stopStatuses["show"][4];
       toggle(4, true);
+    } else if (
+      stopLayerToggle == "tube_lightrail_metro" &&
+      stopStatuses["switchStatus"][2] == false
+    ) {
+      stopStatuses["show"][2] = !stopStatuses["show"][2];
+      toggle(2, true);
+    } else if (
+      stopLayerToggle == "tram" &&
+      stopStatuses["switchStatus"][3] == false
+    ) {
+      stopStatuses["show"][3] = !stopStatuses["show"][3];
+      toggle(3, true);
     } else {
       console.log("Error in toggleOnDraw function");
     }
   }
 
   function toggleOffDrawing() {
-    for (let i = 0; i < show.length; i++) {
-      if (show[i] && !switchStatus[i]) {
-        show[i] = !show[i];
+    for (let i = 0; i < stopStatuses["show"].length; i++) {
+      if (stopStatuses["show"][i] && !stopStatuses["switchStatus"][i]) {
+        stopStatuses["show"][i] = !stopStatuses["show"][i];
         toggle(i, true);
       }
     }
   }
 </script>
 
-{#if stopLayerToggle == "bus" || stopLayerToggle == "rail" || stopLayerToggle == "ferry"}
+{#if stopLayerToggle == "bus" || stopLayerToggle == "rail" || stopLayerToggle == "ferry" || stopLayerToggle == "tube_lightrail_metro" || stopLayerToggle == "tram"}
   {toggleOnDraw(stopLayerToggle)}
 {/if}
 
 {#if stopLayerToggle == "toggle_drawing_off"}
   {toggleOffDrawing()}
 {/if}
-
-<div class="govuk-label govuk-text--s" style="font-size: 1rem;">
-  Bus/Coach stops:<input
-    type="checkbox"
-    bind:checked={show[0]}
-    on:change={() => toggle(0, false)}
-  />
-  National Rail stops:<input
-    type="checkbox"
-    bind:checked={show[1]}
-    on:change={() => toggle(1, false)}
-  />
-  Tube/Metro/LightRail stops:<input
-    type="checkbox"
-    bind:checked={show[2]}
-    on:change={() => toggle(2, false)}
-  />
-  Tram stops:<input
-    type="checkbox"
-    bind:checked={show[3]}
-    on:change={() => toggle(3, false)}
-  />
-  Ferry stops:<input
-    type="checkbox"
-    bind:checked={show[4]}
-    on:change={() => toggle(4, false)}
-  />
-</div>
-
-<style>
-  div {
-    z-index: 1;
-    position: absolute;
-    bottom: 30px;
-    right: 65px;
-    background: white;
-    padding: 7px;
-    border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
-</style>

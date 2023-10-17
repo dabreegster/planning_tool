@@ -1,5 +1,5 @@
 <script>
-  import Range from "./Range.svelte";
+  import Slider from "@bulatdashiev/svelte-slider";
 
   export let weights = {
     business: 70,
@@ -9,9 +9,12 @@
     shopping: 70,
     residential: 70,
   };
-  export let squareScores;
+  export let squareScores = null;
 
   function updateWithNewWeights(squareScores) {
+    if (squareScores === null) {
+      return squareScores;
+    }
     let combinedWeight = 0;
     let weightsArray = [];
     for (let key in weights) {
@@ -37,91 +40,67 @@
     });
     return squareScores;
   }
-</script>
+  let business = [32];
+  let education = [19];
+  let entertainment = [11];
+  let health = [3];
+  let shopping = [27];
+  let residential = [8];
 
-<div class="whitebox">
-  <h2>Custom weights</h2>
-  <h3>
-    Business: {weights["business"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["business"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
-  <h3>
-    Education: {weights["education"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["education"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
-  <h3>
-    Entertainment: {weights["entertainment"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["entertainment"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
-  <h3>
-    Health: {weights["health"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["health"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
-  <h3>
-    Shopping: {weights["shopping"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["shopping"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
-  <h3>
-    Residential: {weights["residential"]}
-  </h3>
-  <div>
-    <Range
-      on:change={(e) => (weights["residential"] = e.detail.value)}
-      on:change={(squareScores = updateWithNewWeights(squareScores))}
-      id="basic-slider"
-    />
-  </div>
+  function updateWeights(
+    business,
+    education,
+    entertainment,
+    health,
+    shopping,
+    residential
+  ) {
+    weights["business"] = business[0];
+    weights["education"] = education[0];
+    weights["entertainment"] = entertainment[0];
+    weights["health"] = health[0];
+    weights["shopping"] = shopping[0];
+    weights["residential"] = residential[0];
+    squareScores = updateWithNewWeights(squareScores);
+    return weights;
+  }
+
+  $: {
+    weights = updateWeights(
+      business,
+      education,
+      entertainment,
+      health,
+      shopping,
+      residential
+    );
+  }
+</script>
+<div style="font-size: 16px;">
+  Business: {business[0]}
+  <Slider bind:value={business} />
+</div>
+<div style="font-size: 16px;">
+  Education: {education[0]}
+  <Slider bind:value={education} />
+</div>
+<div style="font-size: 16px;">
+  Entertainment: {entertainment[0]}
+  <Slider bind:value={entertainment} />
+</div>
+<div style="font-size: 16px;">
+  Health: {health[0]}
+  <Slider bind:value={health} />
+</div>
+<div style="font-size: 16px;">
+  Shopping: {shopping[0]}
+  <Slider bind:value={shopping} />
+</div>
+<div style="font-size: 16px;">
+  Residential: {residential[0]}
+  <Slider bind:value={residential} />
 </div>
 
 <style>
-  h3 {
-    text-align: center;
-    font-size: 1.2rem;
-  }
-  h2 {
-    text-align: left;
-    font-size: 1.4rem;
-  }
-  .whitebox {
-    background-color: white;
-    position: absolute;
-    width: 450px;
-    padding: 16px;
-    /* border-radius: 10px; */
-    /* left: 10px; */
-    /* top: 310px; */
-    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
-    overflow-y: auto;
-    scrollbar-width: none;
-  }
+
 </style>

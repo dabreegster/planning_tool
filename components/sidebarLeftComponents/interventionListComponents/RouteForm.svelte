@@ -14,44 +14,52 @@
     }
   }
 
-  let headers = [
+  export let headers = [
     { key: "id", value: "Stop ATCO" },
     { key: "arrivalTime", value: "Arrival time" },
     { key: "departureTime", value: "Departure time" },
   ];
 
-  function updateArrivalTime(e, row) {
+  export function updateArrivalTime(e, row) {
     let indexToChange = props.ATCO.indexOf(row["id"]);
     // TODO add check that arrival time is after departure time of last stop
     props.arrivalTime[indexToChange] = e.target.value;
   }
-  function updateDepartureTime(e, row) {
+  export function updateDepartureTime(e, row) {
     let indexToChange = props.ATCO.indexOf(row["id"]);
     props.departureTime[indexToChange] = e.target.value;
   }
-  function currentArrivalTime(row) {
+  export function currentArrivalTime(row) {
     let currentIndex = props.ATCO.indexOf(row["id"]);
     return props.arrivalTime[currentIndex];
   }
-  function currentDepartureTime(row) {
+  export function currentDepartureTime(row) {
     let currentIndex = props.ATCO.indexOf(row["id"]);
     return props.departureTime[currentIndex];
   }
 </script>
 
-Route name
-<TextInput bind:value={props.name} style="font-size: 16px;" />
+<div style="font-size: 1rem">
+  Route name:
+</div>
+<TextInput bind:value={props.name} style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" />
 <br />
 
-Number of services on route
-<NumberInput bind:value={props.dailyTrips} style="font-size: 16px;" />
+<div style="font-size: 1rem">
+  Number of services on route:
+</div>
+<NumberInput hideSteppers bind:value={props.dailyTrips} style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" />
 
 <br />
-Time between services (minutes)
-<NumberInput style="font-size: 16px;" bind:value={props.frequency} />
+<div style="font-size: 1rem">
+  Time between services (minutes):
+</div>
+<NumberInput hideSteppers style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" bind:value={props.frequency} />
 
 <br />
-First service timetable
+<div style="font-size: 1rem">
+  First service timetable:
+</div>
 <DataTable bind:rows {headers}>
   <svelte:fragment slot="cell" let:cell let:row>
     {#if cell.key == "departureTime" && row.departureTime != "Last stop"}

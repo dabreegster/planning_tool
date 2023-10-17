@@ -17,7 +17,7 @@
   import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
   // potentially redundant with only 1 draw polygon purpose
   let area_toggle = "select_area";
-  let line_toggle = "new_pt_route";
+  export let line_toggle = "new_pt_route";
 
   // configuration for lat/long -> OSGB easting northing conversion
   var osgb =
@@ -38,9 +38,24 @@
   const lineWidth = 4;
   // allow if total < 10_000_000m^2 ~ 1000 squares
   const maxAreaSize = 10_000_000;
-  export let leftSidebarClassToggle;
+  let drawControlsToggle;
+  export let open = false;
   export let stopLayerToggle;
   export let drawing = false;
+  $: {
+    if (open["headRight"]) {
+      drawControlsToggle = "on";
+    } else {
+      drawControlsToggle = "off";
+    }
+  }
+  $: {
+    if (drawing) {
+      if (line_toggle == "new_pt_route") {
+        drawControls.changeMode("draw_line_string");
+      }
+    }
+  }
   const styles = [
     {
       id: "draggable-points",
@@ -231,6 +246,18 @@
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
+  function addNewUnderground() {
+    drawing = true;
+    stopLayerToggle = "tube_lightrail_metro";
+    line_toggle = "new_pt_route";
+    drawControls.changeMode("draw_line_string");
+  }
+  function addNewTram() {
+    drawing = true;
+    stopLayerToggle = "tram";
+    line_toggle = "new_pt_route";
+    drawControls.changeMode("draw_line_string");
+  }
   // function addNewFootpath() {
   //   drawing = true;
   //   line_toggle = "new_pathway";
@@ -341,20 +368,25 @@
     return squareIDsWithinArea;
   }
 
-  function findCurrentTotalSquareIDs(gj) {
-    let allSqaureIDs = [];
+  // function findCurrentTotalSquareIDs(gj) {
+  //   let allSqaureIDs = [];
 
-    for (let i = 0; i < gj.features.length; i++) {
-      let squareIDs = gj.features[i].properties["squareIDs"];
-      for (let x = 0; x < squareIDs.length; x++) {
-        allSqaureIDs.push(squareIDs[x]);
-      }
-    }
-    return new Set(allSqaureIDs);
-  }
+  //   for (let i = 0; i < gj.features.length; i++) {
+  //     let squareIDs = gj.features[i].properties["squareIDs"];
+  //     for (let x = 0; x < squareIDs.length; x++) {
+  //       allSqaureIDs.push(squareIDs[x]);
+  //     }
+  //   }
+  //   return new Set(allSqaureIDs);
+  // }
 </script>
-
-<button class={leftSidebarClassToggle} style="top: 10px;" on:click={addNewBus}>
+<!-- 
+<button
+  class={drawControlsToggle}
+  title="Add new bus route"
+  style="top: 10px;"
+  on:click={addNewBus}
+>
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/bus-icon.png"
     style="height: 32; width: 32px;"
@@ -362,7 +394,8 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
+  title="Add new national rail route"
   style="top: 75px;"
   on:click={addNewTrain}
 >
@@ -373,7 +406,8 @@
 </button>
 
 <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
+  title="Add new ferry route"
   style="top: 136px;"
   on:click={addNewFerry}
 >
@@ -383,8 +417,32 @@
   />
 </button>
 
+<button
+  class={drawControlsToggle}
+  title="Add new tram route"
+  style="top: 198px;"
+  on:click={addNewTram}
+>
+  <img
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/tram-icon.png"
+    style="height: 32; width: 32px;"
+  />
+</button>
+
+<button
+  class={drawControlsToggle}
+  title="Add new underground/metro/light rail route"
+  style="top: 260px;"
+  on:click={addNewUnderground}
+>
+  <img
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/underground-icon.png"
+    style="height: 32; width: 32px;"
+  />
+</button> -->
+
 <!-- <button
-  class={leftSidebarClassToggle}
+  class={drawControlsToggle}
   style="top: 198px;"
   on:click={addNewFootpath}
 >
@@ -395,8 +453,9 @@
 </button> -->
 
 <button
-  class={leftSidebarClassToggle}
-  style="top: 198px;"
+  class={drawControlsToggle}
+  title="Select area of interest"
+  style="top: 320px;"
   on:click={addNewSelectedArea}
 >
   <img
@@ -415,7 +474,7 @@
     display: none !important;
   }
 
-  .sidebar {
+  .on {
     z-index: 1;
     position: absolute;
     left: calc(25% + 20px);
@@ -424,7 +483,7 @@
     background: white;
     padding: 10px;
   }
-  .blank {
+  .off {
     display: none;
   }
 </style>

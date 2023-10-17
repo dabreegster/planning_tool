@@ -17,7 +17,7 @@
   export let hoveredInterventionScores;
   export let responseJson;
 
-  let scoreLayer = "Hide";
+  export let scoreLayer = "Hide";
 
   onMount(() => {
     map.addSource(source, { type: "geojson", data: emptyGeojson() });
@@ -64,7 +64,7 @@
     return thresholds;
   }
 
-  function setLayer() {
+  function setLayer(scoreLayer) {
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
@@ -108,19 +108,6 @@
         },
       });
     }
-  }
-
-  function scoreTypes() {
-    let purposes = [
-      "Hide",
-      "Business",
-      "Education",
-      "Entertainment",
-      "Health",
-      "Shopping",
-      "Residential",
-    ];
-    return purposes;
   }
 
   // Returns geojson updated with intervention scores
@@ -196,48 +183,7 @@
     }
     return geojson;
   }
+  $: {
+    setLayer(scoreLayer)
+  }
 </script>
-
-<div class="govuk-form-group" style="display: flex; ">
-  <label
-    class="govuk-label"
-    for="scoreLayer"
-    style="margin-right: 10px; margin-top: 8px; font-size: 1rem; opacity: {responseJson ==
-    null
-      ? 0.15
-      : 1}"
-  >
-    Intervention scores:
-  </label>
-  <select
-    class="govuk-select"
-    id="scoreLayer"
-    name="scoreLayer"
-    style="opacity: {responseJson == null ? 0.15 : 1}"
-    bind:value={scoreLayer}
-    on:change={setLayer}
-    disabled={responseJson == null}
-  >
-    {#each scoreTypes() as x}
-      <option value={x}>{x}</option>
-    {/each}
-  </select>
-</div>
-
-<style>
-  div {
-    z-index: 1;
-    position: absolute;
-    bottom: 44px;
-    right: 65px;
-    background: white;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
-
-  select {
-    font-size: 16px;
-    padding: 4px 8px;
-  }
-</style>

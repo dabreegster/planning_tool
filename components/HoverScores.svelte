@@ -40,9 +40,9 @@
   export let squaresFound = false;
   export let mode = "Public Transport";
   export let weights;
-  export let exploreSidebarClassToggle;
+  export let open;
 
-  if (freeForRequest && exploreSidebarClassToggle == "sidebar") {
+  if (freeForRequest && open["headLeft"]) {
     map.on("mousemove", async function (e) {
       freeForRequest = false;
       let currentTime = Date.now();
@@ -126,18 +126,24 @@
 
     return 0;
   }
+  $: {
+    // if hover scores toggle is turned off then clear and reset scores
+    if (open) {
+      resetScores();
+    }
+  }
 </script>
 
 <div class="govuk-heading-s">
   <button
     type="button"
     class="govuk-button govuk-button--warning"
-    style="font-size: 14px; float: right"
+    style="font-size: 14px; float: left"
     on:click={resetScores}>Clear scores</button
   >
 </div>
-
-<div class="whitebox">
+<br />
+<div>
   <div class="govuk-form-group" style="display: flex;">
     <label
       class="govuk-label"
@@ -188,15 +194,8 @@
 </div>
 
 <style>
-  .whitebox {
-    background-color: white;
-    position: absolute;
-    padding: 16px;
-    border-radius: 10px;
-    /* right: 10px; */
-    top: 370px;
-    width: 450px;
-    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
-    font-size: 1.2rem;
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
   }
 </style>

@@ -129,33 +129,33 @@
   <label>
     <input type="file" id="upload_csv" on:change={loadFile} />
     <button
-      class="govuk-button"
-      data-module="govuk-button"
+      class="white_button"
       type="button"
-      on:click={downloadCsvExampleAndTemplate}
+      title="Upload a CSV of your scheme in the format shown in the example"
+      onclick="document.getElementById('upload_csv').click();"
       style="float: left; width: calc({scaleButtonWidth(
         innerWidth,
-        265,
-        0.51
-      )}px); font-size: 1rem"
+        145,
+        0.38
+      )}px;"
     >
-      Download Example+Template CSV
+      Upload scheme from CSV
     </button>
   </label>
   <label>
     <input type="file" id="upload_csv" on:change={loadFile} />
     <button
-      class="govuk-button"
-      data-module="govuk-button"
+      class="white_button"
       type="button"
-      onclick="document.getElementById('upload_csv').click();"
+      title="Download an example and template CSV"
+      on:click={downloadCsvExampleAndTemplate}
       style="float: right; width: calc({scaleButtonWidth(
         innerWidth,
-        185,
-        0.34
-      )}px; font-size: 1rem"
+        145,
+        0.38
+      )}px);"
     >
-      Upload CSV of scheme
+      Download example CSV
     </button>
   </label>
 </div>
@@ -173,5 +173,16 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+  }
+  .white_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
   }
 </style>

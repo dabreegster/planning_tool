@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, getContext } from "svelte";
-  import { getSquareInfo, callFloodfillApi } from "../api.js";
+  import { getSquareInfo, callFloodfillApi, getSquareScore } from "../api.js";
 
   const { getMap } = getContext("map");
 
@@ -10,11 +10,11 @@
   const pointLayer = "floodPoints";
   const lineLayer = "floodLines";
   const squareLayer = "squareOutline";
-  let startTimeSeconds = 28800;
+  export let startTimeSeconds = 28800;
 
-  export let squareID;
+  export let infoForPDF;
   let maxPerPurpose;
-  let purpose = "Business";
+  export let purpose = "Business";
   export let hoverInfo = "no_selection";
   export let drawing;
   let isProcessingClick = false;
@@ -22,10 +22,20 @@
   let purposes = [
     "Business",
     "Education",
+    "Health",
     "Entertainment",
     "Shopping",
     "Residential",
   ];
+
+  $: {
+    if (isProcessingClick) {
+      setTimeout(() => {
+        isProcessingClick = false;
+      }, 8000);
+    }
+    console.log(isProcessingClick)
+  }
 
   function emptyGeojson() {
     return {
@@ -62,18 +72,21 @@
         console.log(`Lookup square for ${e.lngLat}`);
         console.time("square API");
         let info = await getSquareInfo(e.lngLat);
+        console.log("info");
+        console.log(info);
         console.timeEnd("square API");
         if (info == "click_not_on_square") {
           console.log("Click not on square");
           isProcessingClick = false;
           return;
         }
-        squareID = info.name;
         // set square coords to make square in question
         let squareCoords = info["square_coords"];
         // display the square whilst loading
         let gj = createSquareGeojson(squareCoords);
+        let squareID = info["square_ID"];
         delete info["square_coords"];
+        delete info["square_ID"];
 
         // Now make the floodfill request
         let req = {
@@ -81,9 +94,18 @@
           trip_start_seconds: startTimeSeconds,
         };
         console.time("floodfill API");
+        console.log(req);
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
+        console.log(resp);
 
+        let squareScores = await getSquareScore(squareID);
+        infoForPDF = {
+          ...resp,
+          squareCoords,
+          startTimeSeconds,
+          squareScores,
+        };
         dataChanged(resp, gj);
         isProcessingClick = false;
       } else {
@@ -136,23 +158,28 @@
   function dataChanged(resp, gj) {
     console.time("Build GJ data");
     // Circles for destinations
-    for (let [purpose, top3] of resp.key_destinations_per_purpose.entries()) {
-      for (let pt of top3) {
-        gj.features.push({
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: pt,
-          },
-          properties: {
-            purpose,
-          },
-        });
+    for (let [purpose, top10] of resp.key_destinations_per_purpose.entries()) {
+      for (let pt of top10) {
+        if (pt[1] === 0) {
+          // do nothing as this is not in UK at point [0, 0]
+        } else {
+          gj.features.push({
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: pt,
+            },
+            properties: {
+              purpose,
+            },
+          });
+        }
       }
     }
+  
 
     // Lines for links
-    maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0];
+    maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     for (let [linkID, link] of Object.entries(resp.link_coordinates)) {
       let scorePerPurpose = resp.per_link_score_per_purpose[linkID];
       for (let [i, score] of scorePerPurpose.entries()) {
@@ -173,9 +200,10 @@
         properties: {
           Business: scorePerPurpose[0],
           Education: scorePerPurpose[1],
-          Entertainment: scorePerPurpose[2],
-          Shopping: scorePerPurpose[3],
-          Residential: scorePerPurpose[4],
+          Health: scorePerPurpose[2],
+          Entertainment: scorePerPurpose[3],
+          Shopping: scorePerPurpose[4],
+          Residential: scorePerPurpose[5],
           link_type: resp.link_is_pt[linkID],
           routeDetails: resp.link_route_details[linkID],
           name: "link",
@@ -276,8 +304,8 @@
     });
   }
 
-  function resetMapAndID() {
-    squareID = null;
+  function resetMapAndPDFInfo() {
+    infoForPDF = null;
     for (let layer of [pointLayer, lineLayer, squareLayer]) {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
@@ -288,56 +316,27 @@
   // on right click clear map
   map.on("contextmenu", function () {
     if (drawing == false) {
-      resetMapAndID();
+      resetMapAndPDFInfo();
     }
   });
 
-  function updateStartTime(timeString) {
-    let [hours, minutes] = timeString.target.value.split(":");
-    startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
+  // event listener for when purpose changes to set layers again
+  $: {
+    // uses purpose here just as a listener
+    if (purpose) {
+      // uses maxPerPurpose to only be able to toggle when data has come in
+      // as will only be set after data has arrived
+      if (maxPerPurpose) {
+        setLayers();
+      }
+    }
   }
 </script>
 
-<div class="purposeBox" style="display: flex;">
-  <label
-    class="govuk-label"
-    for="purpose"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
-  >
-    Displayed route purpose:
-  </label>
-  <select
-    class="govuk-select"
-    id="purpose"
-    name="purpose"
-    bind:value={purpose}
-    on:change={setLayers}
-  >
-    {#each purposes as x}
-      <option value={x}>{x}</option>
-    {/each}
-  </select>
-</div>
-
+<!-- 
 <button class="govuk-label" style="font-size: 1.2rem;" on:click={resetMapAndID}
   >Clear polygons (right click)
-</button>
-
-<div class="startTimeSelection">
-  <label for="start-time-input">Start Time:</label>
-  <input
-    id="start-time-input"
-    type="time"
-    name="start-time-input"
-    value="08:00"
-    min="06:00"
-    max="22:00"
-    style="font-size: 15px; padding:5px"
-    on:change={(e) => updateStartTime(e)}
-  />
-  <span class="validity" />
-</div>
-
+</button> -->
 <style>
   button {
     display: false;
@@ -369,28 +368,12 @@
   .startTimeSelection {
     z-index: 1;
     position: absolute;
-    top: 392px;
+    top: 222px;
     right: 10px;
     background: white;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     font-size: 1.2rem;
-  }
-
-  input + span {
-    padding-right: 30px;
-  }
-
-  input:invalid + span::after {
-    position: absolute;
-    content: "✖";
-    padding-left: 5px;
-  }
-
-  input:valid + span::after {
-    position: absolute;
-    content: "✓";
-    padding-left: 5px;
   }
 </style>

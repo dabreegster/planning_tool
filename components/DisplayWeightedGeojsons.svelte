@@ -43,19 +43,6 @@
     }
   });
 
-  // $: {
-  //   if (weights && squareScores && squaresFound && map.getSource(source) && updatingColours) {
-  //     if (updatingColours === 0) {
-  //       updatingColours = 1;
-  //       console.log("running")
-  //       createSquareGeojson().then((gjData) => {
-  //         map.getSource(source).setData(gjData);
-  //         setLayer();
-  //       });
-  //       updatingColours = 0;
-  //     }
-  //   }
-  // }
   $: {
     if (squareScores && squaresFound && map.getSource(source)) {
       console.log("running");
@@ -65,18 +52,44 @@
     }
   }
   $: {
-    if (weights) {
-      if (geoJson !== null) {
-        geoJson = updateWeightingInGeoJson(geoJson, weights);
-        map.getSource(source).setData(geoJson);
-        setLayer();
-      }
-    }
-  }
-  $: {
     // if opacity changes just set layer again
     if (tileOpacity) {
       setLayer();
+    }
+  }
+
+  let reloadGeoJson = false;
+  let clickedOnSlider = false;
+
+  // Event listeners for if click used to reload tiles when click off sliders
+  // Add event listener for mouse down
+  document.addEventListener("mousedown", (e) => {
+    let clickedElement = e.target;
+    if (clickedElement.tagName !== "DIV") {
+      return;
+    }
+    // checks if the click is on slider
+    if (clickedElement.getAttribute("class") === "thumb svelte-1q9yxz9") {
+      clickedOnSlider = true;
+    }
+    reloadGeoJson = false;
+  });
+
+  // Add event listener for mouse up
+  document.addEventListener("mouseup", (e) => {
+    if (clickedOnSlider) {
+      reloadGeoJson = true;
+      clickedOnSlider = false;
+    }
+  });
+
+  $: {
+    if (geoJson !== null) {
+      if (reloadGeoJson) {
+        geoJson = updateWeightingInGeoJson(geoJson);
+        map.getSource(source).setData(geoJson);
+        setLayer();
+      }
     }
   }
 
@@ -168,7 +181,8 @@
     console.log(geojson);
     return geojson;
   }
-  function updateWeightingInGeoJson(geoJson, weights) {
+  function updateWeightingInGeoJson(geoJson) {
+    console.time("updateWeights");
     let combinedWeight = 0;
     let weightsArray = [];
     for (let key in weights) {
@@ -177,7 +191,10 @@
         weightsArray.push(weights[key]);
       }
     }
+    console.timeEnd("updateWeights");
+    console.time("updateWeighting");
     geoJson.features.forEach((feature) => {
+      // const scores = feature.properties.scores;
       let weightedOverall = 0;
       for (let i = 0; i < 6; i++) {
         weightedOverall += Math.round(
@@ -186,6 +203,7 @@
       }
       feature.properties.weightedScore = weightedOverall;
     });
+    console.timeEnd("updateWeighting");
     return geoJson;
   }
 

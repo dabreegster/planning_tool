@@ -31,9 +31,10 @@
     value={JSON.stringify(responseJson, null, "  ")}
   />
 </Modal>
+
 <button
   type="button"
-  class="govuk-button govuk-button--secondary"
+  class="white_button"
   data-module="govuk-button"
   style="font-size: 1rem; float: right;"
   on:click={toggleResponse}
@@ -42,9 +43,28 @@
 
 <button
   type="button"
-  class="govuk-button govuk-button--secondary"
+  class="white_button"
   data-module="govuk-button"
   style="font-size: 1rem; float: right;  margin-right: 10px;"
   on:click={toggleRequest}
   disabled={requestJson == null}>API request</button
 >
+
+<style>
+  button {
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .white_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
+  }
+</style>

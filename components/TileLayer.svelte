@@ -4,7 +4,7 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  export let tileOpacity = 70;
+  export let tileOpacity = 50;
   // TODO Revert, this is nicer for development
   let scoreLayer = "Hide";
 
@@ -12,174 +12,53 @@
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
   const layer = "tiles";
 
+  let modes = ["PT", "walking", "cycling", "driving"];
+
+  let purposes = [
+    "Business",
+    "Education",
+    "Health",
+    "Entertainment",
+    "Shopping",
+    "Residential",
+  ];
+
+  function addSource(purpose, mode) {
+    let source = purpose + " by " + mode;
+    let tileModeString;
+    if (map.getSource(source)) {
+    } else {
+      console.log();
+      if (mode === "PT") {
+        tileModeString = "";
+      } else if (mode === "walking") {
+        tileModeString = "_walk";
+      } else if (mode === "cycling") {
+        tileModeString = "_cycling";
+      } else {
+        tileModeString = "_car";
+      }
+      map.addSource(source, {
+        type: "raster",
+        url:
+          "pmtiles://" +
+          PMTILES_BUCKET_URL +
+          "ew_" +
+          purpose +
+          tileModeString +
+          "_nipy_spectral.pmtiles",
+      });
+    }
+  }
+
   onMount(async () => {
-    // test layer remove after
-    map.addSource("APGBtest", {
-      type: "raster",
-      url: "pmtiles://" + PMTILES_BUCKET_URL + "APGBtest.pmtiles",
-    });
-
-    map.addSource("Business by PT", {
-      type: "raster",
-      url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Business_nipy_spectral.pmtiles",
-    });
-    map.addSource("Entertainment by PT", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Entertainment_nipy_spectral.pmtiles",
-    });
-    map.addSource("Education by PT", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Education_nipy_spectral.pmtiles",
-    });
-    map.addSource("Shopping by PT", {
-      type: "raster",
-      url:
-        "pmtiles://" + PMTILES_BUCKET_URL + "ew_Shopping_nipy_spectral.pmtiles",
-    });
-    map.addSource("Residential by PT", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Residential_nipy_spectral.pmtiles",
-    });
-
-    map.addSource("Business by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Business_car_nipy_spectral.pmtiles",
-    });
-    map.addSource("Entertainment by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Entertainment_car_nipy_spectral.pmtiles",
-    });
-    map.addSource("Education by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Education_car_nipy_spectral.pmtiles",
-    });
-    map.addSource("Shopping by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Shopping_car_nipy_spectral.pmtiles",
-    });
-    map.addSource("Residential by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Residential_car_nipy_spectral.pmtiles",
-    });
-    map.addSource("Health by driving", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Health_car_nipy_spectral.pmtiles",
-    });
-
-    map.addSource("Business by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Business_walk_nipy_spectral.pmtiles",
-    });
-    map.addSource("Entertainment by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Entertainment_walk_nipy_spectral.pmtiles",
-    });
-    map.addSource("Education by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Education_walk_nipy_spectral.pmtiles",
-    });
-    map.addSource("Shopping by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Shopping_walk_nipy_spectral.pmtiles",
-    });
-    map.addSource("Residential by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Residential_walk_nipy_spectral.pmtiles",
-    });
-
-    map.addSource("Health by walking", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Health_walk_nipy_spectral.pmtiles",
-    });
-
-    map.addSource("Business by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Business_cycling_nipy_spectral.pmtiles",
-    });
-    map.addSource("Entertainment by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Entertainment_cycling_nipy_spectral.pmtiles",
-    });
-    map.addSource("Education by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Education_cycling_nipy_spectral.pmtiles",
-    });
-    map.addSource("Shopping by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Shopping_cycling_nipy_spectral.pmtiles",
-    });
-    map.addSource("Residential by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Residential_cycling_nipy_spectral.pmtiles",
-    });
-    map.addSource("Health by cycling", {
-      type: "raster",
-      url:
-        "pmtiles://" +
-        PMTILES_BUCKET_URL +
-        "ew_Health_cycling_nipy_spectral.pmtiles",
-    });
+    for (let i = 0; i < modes.length; i++) {
+      const mode = modes[i];
+      for (let i = 0; i < purposes.length; i++) {
+        const purpose = purposes[i];
+        addSource(purpose, mode);
+      }
+    }
     setLayer();
   });
 
@@ -209,34 +88,33 @@
   function scoreTypes() {
     let purposes = [
       "Hide",
-      "APGBtest",
 
       "Business by PT",
       "Education by PT",
+      "Entertainment by PT",
       "Shopping by PT",
       "Residential by PT",
-      "Entertainment by PT",
 
       "Business by walking",
       "Education by walking",
-      "Shopping by walking",
-      "Residential by walking",
       "Entertainment by walking",
       "Health by walking",
+      "Shopping by walking",
+      "Residential by walking",
 
       "Business by driving",
       "Education by driving",
-      "Shopping by driving",
-      "Residential by driving",
       "Entertainment by driving",
       "Health by driving",
+      "Shopping by driving",
+      "Residential by driving",
 
       "Business by cycling",
       "Education by cycling",
-      "Shopping by cycling",
-      "Residential by cycling",
       "Entertainment by cycling",
       "Health by cycling",
+      "Shopping by cycling",
+      "Residential by cycling",
       // "Overall"
     ];
     return purposes;
@@ -265,7 +143,7 @@
 </div>
 
 <style>
-  div {
+  /* div {
     z-index: 1;
     position: absolute;
     top: 260px;
@@ -274,7 +152,7 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
+  } */
 
   select {
     font-size: 1.1rem;
