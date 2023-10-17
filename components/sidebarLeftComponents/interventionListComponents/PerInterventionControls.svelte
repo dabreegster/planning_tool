@@ -18,10 +18,8 @@
     type="button"
     on:click={remove}>Delete</button
   >
-  <button
-    class="green_button"
-    type="button"
-    on:click={clearCurrentlyEditing}>Save</button
+  <button class="green_button" type="button" on:click={clearCurrentlyEditing}
+    >Save</button
   >
 </div>
 

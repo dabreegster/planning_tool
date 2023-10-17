@@ -15,7 +15,6 @@
     ];
     return purposes;
   }
-
 </script>
 
 <div class="govuk-form-group" style="display: flex; ">
@@ -27,10 +26,7 @@
       ? 0.15
       : 1}"
   >
-  <div style="font-size: 1rem">
-    Intervention scores:
-  </div>
-  
+    <div style="font-size: 1rem">Intervention scores:</div>
   </label>
   <select
     class="govuk-select"

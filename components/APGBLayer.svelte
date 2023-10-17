@@ -7,8 +7,8 @@
   const map = getMap();
 
   let APGBLayer = "Hide";
-  const APGBKEY = APGB_key["APGB_KEY"]
-  console.log(APGBKEY)
+  const APGBKEY = APGB_key["APGB_KEY"];
+  console.log(APGBKEY);
 
   onMount(async () => {
     if (map.getSource("25cm")) {

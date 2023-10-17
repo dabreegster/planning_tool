@@ -76,6 +76,7 @@
     );
   }
 </script>
+
 <div style="font-size: 16px;">
   Business: {business[0]}
   <Slider bind:value={business} />
@@ -102,5 +103,4 @@
 </div>
 
 <style>
-
 </style>

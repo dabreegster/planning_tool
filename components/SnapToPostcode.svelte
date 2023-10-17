@@ -40,9 +40,7 @@
     on:input={handleInput}
     on:keydown={handleKeyPress}
   />
-  <button 
-  class="white_button"
-  on:click={snapToPostcode}>Go</button>
+  <button class="white_button" on:click={snapToPostcode}>Go</button>
 </div>
 
 <style>

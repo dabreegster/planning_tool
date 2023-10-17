@@ -107,7 +107,7 @@
   }
 
   $: {
-    console.log(gjScheme)
+    console.log(gjScheme);
   }
 </script>
 
@@ -127,7 +127,7 @@
             {interventionName(feature)}
           {/if}
         </svelte:fragment>
-        <div class="govuk-body" >
+        <div class="govuk-body">
           {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
             <PathwayForm bind:props={feature.properties} />
           {:else if feature.properties.from_csv}
@@ -145,7 +145,9 @@
 <br />
 <br />
 <div class="govuk-heading-s">
-  <span style="font-size: 1.1rem">{countFeatures($gjScheme, true)} impact areas</span>
+  <span style="font-size: 1.1rem"
+    >{countFeatures($gjScheme, true)} impact areas</span
+  >
   <button
     type="button"
     class="red_button"
@@ -165,7 +167,7 @@
         on:mouseenter={currentSidebarHover.set(feature.id)}
         on:mouseleave={reset}
       >
-        <svelte:fragment slot="title" >
+        <svelte:fragment slot="title">
           {#if feature.id == $currentMapHover}
             <strong>{interventionName(feature)}</strong>
           {:else}

@@ -62,10 +62,7 @@
 {/if}
 
 <!-- <DebugApi {requestJson} {responseJson} /> -->
-
-
 <style>
-
   button {
     flex: 1; /* Distribute available space equally between headers */
     background: #00703c;

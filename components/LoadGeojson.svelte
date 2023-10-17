@@ -34,7 +34,7 @@
         isProcessingClick = false;
       }, 8000);
     }
-    console.log(isProcessingClick)
+    console.log(isProcessingClick);
   }
 
   function emptyGeojson() {
@@ -176,7 +176,6 @@
         }
       }
     }
-  
 
     // Lines for links
     maxPerPurpose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0];

@@ -39,27 +39,30 @@
   }
 </script>
 
-<div style="font-size: 1rem">
-  Route name:
-</div>
-<TextInput bind:value={props.name} style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" />
+<div style="font-size: 1rem">Route name:</div>
+<TextInput
+  bind:value={props.name}
+  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
+/>
 <br />
 
-<div style="font-size: 1rem">
-  Number of services on route:
-</div>
-<NumberInput hideSteppers bind:value={props.dailyTrips} style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" />
+<div style="font-size: 1rem">Number of services on route:</div>
+<NumberInput
+  hideSteppers
+  bind:value={props.dailyTrips}
+  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
+/>
 
 <br />
-<div style="font-size: 1rem">
-  Time between services (minutes):
-</div>
-<NumberInput hideSteppers style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;" bind:value={props.frequency} />
+<div style="font-size: 1rem">Time between services (minutes):</div>
+<NumberInput
+  hideSteppers
+  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
+  bind:value={props.frequency}
+/>
 
 <br />
-<div style="font-size: 1rem">
-  First service timetable:
-</div>
+<div style="font-size: 1rem">First service timetable:</div>
 <DataTable bind:rows {headers}>
   <svelte:fragment slot="cell" let:cell let:row>
     {#if cell.key == "departureTime" && row.departureTime != "Last stop"}

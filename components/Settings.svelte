@@ -26,7 +26,7 @@
 
 <div class="whitebox">
   <!-- <div class="greybox"> -->
-    <ScoreLegend {tileOpacity} />
+  <ScoreLegend {tileOpacity} />
   <!-- </div> -->
   <br />
   <div class="greybox">
@@ -40,7 +40,7 @@
       <SnapToEastingNorthing />
       <br />
       <div class="lightgreybox">
-        <LaLevelScoresToggle bind:LASelected/>
+        <LaLevelScoresToggle bind:LASelected />
         <LaLevelColourLegend />
       </div>
     </div>
@@ -58,7 +58,7 @@
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
-      <StopsLayerToggles bind:stopStatuses={stopStatuses} bind:stopCheckboxClicked />
+      <StopsLayerToggles bind:stopStatuses bind:stopCheckboxClicked />
     </div>
   </AccordionWithTwoHeaders>
   <!-- <Accordion>
@@ -88,7 +88,6 @@
       <StopsLayerToggles bind:stopStatuses={stopStatuses} bind:stopCheckboxClicked />
     </div>
   </Accordion> -->
-
 </div>
 
 <style>
@@ -96,7 +95,7 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    background:rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.7);
     padding: 10px 15px 0 15px;
     border-radius: 10px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);

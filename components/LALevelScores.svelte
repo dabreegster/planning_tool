@@ -35,7 +35,6 @@
     "#614a4a",
   ];
 
-
   function emptyGeojson() {
     return {
       type: "FeatureCollection",
@@ -56,16 +55,11 @@
     }
   });
 
-
-
   export let LASelected = "Hide";
 
   $: {
-    loadNewLAScores(LASelected)
+    loadNewLAScores(LASelected);
   }
- 
-
-
 
   async function loadNewLAScores(LASelected) {
     let response = await getLABinnedScores(LASelected);
@@ -76,9 +70,9 @@
         center: response["centroid"],
         zoom: 12,
       });
-      console.log(LAScores)
+      console.log(LAScores);
     }
-  };
+  }
 
   $: {
     if (LAScores) {
@@ -90,7 +84,7 @@
       map.getSource(source).setData(geoJson);
       setLayer();
     }
-  };
+  }
 
   $: {
     if (LAScores && tileOpacity) {
@@ -98,24 +92,24 @@
     }
   }
 
-
-
   function createLLCoords(LAScores) {
     // create longlat coordinates from the squareID
     let squareENCoordinates = [];
     let squareScores = [];
-    Object.entries(LAScores).forEach(([squareCentroid, scoreGroup_rawScore]) => {
-      let [centroidEasting, centroidNorthing] = squareCentroid
-        .split("_")
-        .map(Number);
-      squareENCoordinates.push([
-        [centroidEasting - 50, centroidNorthing - 50],
-        [centroidEasting + 50, centroidNorthing - 50],
-        [centroidEasting + 50, centroidNorthing + 50],
-        [centroidEasting - 50, centroidNorthing + 50],
-      ]);
-      squareScores.push(scoreGroup_rawScore)
-    });
+    Object.entries(LAScores).forEach(
+      ([squareCentroid, scoreGroup_rawScore]) => {
+        let [centroidEasting, centroidNorthing] = squareCentroid
+          .split("_")
+          .map(Number);
+        squareENCoordinates.push([
+          [centroidEasting - 50, centroidNorthing - 50],
+          [centroidEasting + 50, centroidNorthing - 50],
+          [centroidEasting + 50, centroidNorthing + 50],
+          [centroidEasting - 50, centroidNorthing + 50],
+        ]);
+        squareScores.push(scoreGroup_rawScore);
+      }
+    );
     // flatten array
     let flatSquareENCoordinates = squareENCoordinates.flat();
     // convert to LongLat
@@ -130,7 +124,6 @@
     }
     return [squareLLCoordinates, squareScores];
   }
-
 
   function createSquareGeojson() {
     // TODO: Add check so doesn't rerun on on already calculated scores
@@ -183,7 +176,6 @@
       console.log("set layer");
     }
   }
-
 </script>
 
 <!-- <div class="govuk-form-group" style="display: flex; ">
@@ -206,7 +198,6 @@
     {/each}
   </select>
 </div> -->
-
 <style>
   /* div {
     z-index: 1;

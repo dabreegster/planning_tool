@@ -184,6 +184,6 @@
     return geojson;
   }
   $: {
-    setLayer(scoreLayer)
+    setLayer(scoreLayer);
   }
 </script>

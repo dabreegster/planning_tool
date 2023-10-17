@@ -1,20 +1,18 @@
 <script>
-    import { NumberInput, TextInput, DataTable } from "carbon-components-svelte";
-    import {
-      gjScheme,
-    } from "../stores.js";
+  import { NumberInput, TextInput, DataTable } from "carbon-components-svelte";
+  import { gjScheme } from "../stores.js";
 
-    import { onMount, getContext } from "svelte";
+  import { onMount, getContext } from "svelte";
 
-    const { getMap } = getContext("map");
-    
-    // TODO fix importing this from RouteForm.svelte
-    // import { 
-    //   updateArrivalTime,
-    //   updateDepartureTime, 
-    //   currentArrivalTime, 
-    //   currentDepartureTime, 
-    //   headers, } from "./sidebarLeftComponents/interventionListComponents/RouteForm.svelte";
+  const { getMap } = getContext("map");
+
+  // TODO fix importing this from RouteForm.svelte
+  // import {
+  //   updateArrivalTime,
+  //   updateDepartureTime,
+  //   currentArrivalTime,
+  //   currentDepartureTime,
+  //   headers, } from "./sidebarLeftComponents/interventionListComponents/RouteForm.svelte";
 
   let step = 0;
   let ptMode = "Bus";
@@ -35,9 +33,8 @@
   onMount(async () => {
     const map = getMap();
     map.on("draw.create", async (e) => {
-      step += 1
+      step += 1;
     });
-  
   });
 
   function publicTransportModes() {
@@ -46,7 +43,7 @@
       "National Rail",
       "Tube/Lightrail/Metro",
       "Tram",
-      "Ferry",    
+      "Ferry",
     ];
     return modes;
   }
@@ -65,10 +62,9 @@
     } else if (ptMode == "Ferry") {
       stopLayerToggle = "ferry";
     } else {
-      console.log("ptMode not selected")
+      console.log("ptMode not selected");
     }
   }
-
 
   function nextStep() {
     if (step < steps.length - 1) {
@@ -81,9 +77,7 @@
       step -= 1;
     }
   }
-  function Confirm() {
-
-  }
+  function Confirm() {}
 
   let newRoute;
 
@@ -129,8 +123,6 @@
     let currentIndex = newRoute.properties.ATCO.indexOf(row["id"]);
     return newRoute.properties.departureTime[currentIndex];
   }
-
-
 </script>
 
 <main>
@@ -155,14 +147,22 @@
     <!-- <button on:click={prevStep}>Back</button> -->
   {:else if step === 2}
     <h3>{steps[step]}</h3>
-    <NumberInput hideSteppers bind:value={newRoute.properties.dailyTrips} style="font-size: 16px; background-color: white; border: 1px solid black;" />
-    <br/>
+    <NumberInput
+      hideSteppers
+      bind:value={newRoute.properties.dailyTrips}
+      style="font-size: 16px; background-color: white; border: 1px solid black;"
+    />
+    <br />
     <!-- <button on:click={prevStep}>Back</button> -->
     <button on:click={nextStep}>Contine</button>
   {:else if step === 3}
     <h3>{steps[step]}</h3>
-    <NumberInput hideSteppers bind:value={newRoute.properties.frequency} style="font-size: 16px; background-color: white; border: 1px solid black;" />
-    <br/>
+    <NumberInput
+      hideSteppers
+      bind:value={newRoute.properties.frequency}
+      style="font-size: 16px; background-color: white; border: 1px solid black;"
+    />
+    <br />
     <!-- <button on:click={prevStep}>Back</button> -->
     <button on:click={nextStep}>Contine</button>
   {:else if step === 4}
@@ -191,18 +191,17 @@
         {/if}
       </svelte:fragment>
     </DataTable>
-    <br/>
+    <br />
     <!-- <button on:click={prevStep}>Back</button> -->
     <button on:click={nextStep}>Contine</button>
   {:else if step === 5}
     <h3>{steps[step]}</h3>
-    <TextInput bind:value={newRoute.properties.name} style="font-size: 16px; background-color: white; border: 1px solid black;" />    <br/>
+    <TextInput
+      bind:value={newRoute.properties.name}
+      style="font-size: 16px; background-color: white; border: 1px solid black;"
+    /> <br />
     <!-- <button on:click={prevStep}>Back</button> -->
     <button on:click={nextStep}>Contine</button>
-
-
-
-
   {:else if step > 0 && step < steps.length - 1}
     <h3>{steps[step]}</h3>
     <button on:click={prevStep}>Back</button>

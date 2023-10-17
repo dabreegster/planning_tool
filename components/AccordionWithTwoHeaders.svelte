@@ -2,7 +2,7 @@
   export let pixelReduction;
   export let open = {
     headLeft: false,
-    headRight: false
+    headRight: false,
   };
 
   import { slide } from "svelte/transition";
@@ -34,7 +34,12 @@
       </button>
     </div>
 
-    <div class="accordion-content" style="{open.headLeft || open.headRight ? 'max-height: calc(85vh - ' + pixelReduction + 'px); overflow: auto;' : ''}">
+    <div
+      class="accordion-content"
+      style={open.headLeft || open.headRight
+        ? "max-height: calc(85vh - " + pixelReduction + "px); overflow: auto;"
+        : ""}
+    >
       {#if open.headLeft}
         <div class="details" transition:slide>
           <slot name="details" />
@@ -62,7 +67,7 @@
 
   div.header-container {
     display: flex;
-    gap: 10px; 
+    gap: 10px;
   }
 
   button.header {

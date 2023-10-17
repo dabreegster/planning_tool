@@ -187,7 +187,7 @@
   // let colours = getHexColors();
 </script>
 
-<div >
+<div>
   <div class="legendtitle">Connectivity score</div>
   <div class="legend">
     {#each nipy_spectral_100 as colour}
@@ -232,6 +232,4 @@
     opacity: 1;
     font-size: 0.8rem;
   }
-  
-
 </style>

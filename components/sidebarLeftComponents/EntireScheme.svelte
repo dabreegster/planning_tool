@@ -121,11 +121,7 @@
       class="white_button"
       title=""
       onclick="document.getElementById('load_geojson').click();"
-      style="width: calc({scaleButtonWidth(
-        innerWidth,
-        145,
-        0.38
-      )}px);"
+      style="width: calc({scaleButtonWidth(innerWidth, 145, 0.38)}px);"
     >
       Upload scheme from GeoJSON
     </button>
@@ -150,7 +146,9 @@
 <br />
 
 <div class="govuk-heading-s">
-  <span style="font-size: 1.1rem">{countFeatures($gjScheme, true)} interventions </span>
+  <span style="font-size: 1.1rem"
+    >{countFeatures($gjScheme, true)} interventions
+  </span>
   <button
     type="button"
     class="red_button"
@@ -195,5 +193,4 @@
   .red_button:hover {
     background: #aa2a16;
   }
-
 </style>

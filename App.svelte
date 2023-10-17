@@ -48,10 +48,7 @@
 </div>
 <div>
   <Map {innerHeight}>
-    <StopsLayer
-     {stopLayerToggle}
-     {stopCheckboxClicked}
-     bind:stopStatuses={stopStatuses} />
+    <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
     <!-- <SidebarLeft
       {innerWidth}
       {login_username}
@@ -63,7 +60,7 @@
     /> -->
     <Settings
       {infoForPDF}
-      bind:stopStatuses={stopStatuses}
+      bind:stopStatuses
       bind:tileOpacity
       bind:purpose
       bind:startTimeSeconds
@@ -78,7 +75,11 @@
       bind:hoverInfo
     />
     <HoverRouteInfo {hoverInfo} />
-    <CurrentInterventionLayer {responseJson} {scoreLayer} bind:hoveredInterventionScores />
+    <CurrentInterventionLayer
+      {responseJson}
+      {scoreLayer}
+      bind:hoveredInterventionScores
+    />
     <!-- <SidebarExplore
       {leftSidebarClassToggle}
       {tileOpacity}
@@ -95,15 +96,10 @@
       bind:loading
       bind:scoreLayer
       bind:stopLayerToggle
-      bind:drawing 
+      bind:drawing
       bind:line_toggle
     />
-    <DrawControls 
-     {open}
-     bind:stopLayerToggle
-     bind:drawing
-     bind:line_toggle
-     />
-     <LaLevelScores {LASelected} {tileOpacity}/>
+    <DrawControls {open} bind:stopLayerToggle bind:drawing bind:line_toggle />
+    <LaLevelScores {LASelected} {tileOpacity} />
   </Map>
 </div>
