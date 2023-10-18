@@ -15,7 +15,7 @@
   </button>
 
   {#if open}
-    <div class="details" transition:slide style="max-height: calc(30vh - 90px)">
+    <div class="details" transition:slide >
       <slot name="details" />
     </div>
   {/if}
