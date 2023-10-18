@@ -8,7 +8,6 @@
 
   let APGBLayer = "Hide";
   const APGBKEY = APGB_key["APGB_KEY"];
-  console.log(APGBKEY);
 
   onMount(async () => {
     if (map.getSource("25cm")) {
@@ -84,7 +83,7 @@
   <label
     class="govuk-label"
     for="scoreLayer"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1.2rem;"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
   >
     Aerial photo:
   </label>
@@ -102,19 +101,11 @@
 </div>
 
 <style>
-  /* div {
-    z-index: 1;
-    position: absolute;
-    top: 497px;
-    right: 10px;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  } */
-
   select {
-    font-size: 1.1rem;
     padding: 4px 8px;
+    font-size: 0.9rem;
+    height: 35px;
+    float: right;
+    border: 1px solid rgb(0, 0, 0);
   }
 </style>
