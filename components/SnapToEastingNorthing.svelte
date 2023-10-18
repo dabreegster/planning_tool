@@ -13,22 +13,27 @@
   let easting = 0;
   let northing = 0;
 
-  async function snapToLongLat() {
+  async function snapToEastNothing() {
     // convert easting/northing -> longitude/latitude
-    let longitudeLatitude = proj4(osgb, wgs84, [
-      parseFloat(easting),
-      parseFloat(northing),
-    ]);
-    let coords = [longitudeLatitude[0], longitudeLatitude[1]];
-    map.jumpTo({
-      center: coords,
-      zoom: 14,
-    });
+      if (easting <= 700_000 && easting >= 0 && northing <= 1_300_000 && northing >=0 ) {
+      let longitudeLatitude = proj4(osgb, wgs84, [
+        parseFloat(easting),
+        parseFloat(northing),
+      ]);
+      console.log(longitudeLatitude)
+      let coords = [longitudeLatitude[0], longitudeLatitude[1]];
+      map.jumpTo({
+        center: coords,
+        zoom: 14,
+      });
+      } else {
+        alert("Please enter valid easting/northing coordinates\n 0 ≤ Easting ≤ 700,000\n 0 ≤ Northing ≤ 1,300,000");
+      }
   }
 
   function handleKeyPress(event) {
     if (event.key === "Enter") {
-      snapToLongLat();
+      snapToEastNothing();
     }
   }
 
@@ -41,19 +46,18 @@
   }
 </script>
 
-<div style="font-size: 0.9rem;">
+<div style="font-size: 0.9rem; margin-left: 17px;">
   Easting:
   <input
     type="text"
-    style="width: 98px; background-color: white; border: 1px solid black;"
     on:input={handleEastingInput}
     on:keydown={handleKeyPress}
   />
-  <div style="float: right; font-size: 0.9rem;">
+  <button class="go_button" on:click={snapToEastNothing}>Go</button>
+  <div style="float: right; margin-right: 10px;">
     Northing:
     <input
       type="text"
-      style="width: 98px; background-color: white; border: 1px solid black;"
       on:input={handleNorthingInput}
       on:keydown={handleKeyPress}
     />
@@ -61,4 +65,22 @@
 </div>
 
 <style>
+  input {
+    width: 75px; 
+    background-color: white; 
+    border: 1px solid black;
+    margin-top: 4px;
+  }
+  .go_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+    float: right;
+  }
+  .go_button:hover {
+    background: #dfdfdf;
+  }
 </style>

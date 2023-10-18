@@ -40,14 +40,14 @@
     on:input={handleInput}
     on:keydown={handleKeyPress}
   />
-  <button class="white_button" on:click={snapToPostcode}>Go</button>
+  <button class="go_button" on:click={snapToPostcode}>Go</button>
 </div>
 
 <style>
   .postcode {
     font-size: 1rem;
   }
-  .white_button {
+  .go_button {
     background: white;
     border: 1px solid #ccc;
     padding: 5px;
@@ -55,7 +55,7 @@
     font-size: 0.8rem;
     transition: background-color 0.3s ease-in-out;
   }
-  .white_button:hover {
+  .go_button:hover {
     background: #dfdfdf;
   }
 </style>
