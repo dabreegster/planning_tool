@@ -39,14 +39,14 @@
   }
 </script>
 
-<div style="font-size: 1rem">Route name:</div>
+<div style="font-size: 0.9rem">Route name:</div>
 <TextInput
   bind:value={props.name}
   style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
 />
 <br />
 
-<div style="font-size: 1rem">Number of services on route:</div>
+<div style="font-size: 0.9rem">Number of services on route:</div>
 <NumberInput
   hideSteppers
   bind:value={props.dailyTrips}
@@ -54,7 +54,7 @@
 />
 
 <br />
-<div style="font-size: 1rem">Time between services (minutes):</div>
+<div style="font-size: 0.9rem">Time between services (minutes):</div>
 <NumberInput
   hideSteppers
   style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
@@ -62,7 +62,7 @@
 />
 
 <br />
-<div style="font-size: 1rem">First service timetable:</div>
+<div style="font-size: 0.9rem">First service timetable:</div>
 <DataTable bind:rows {headers}>
   <svelte:fragment slot="cell" let:cell let:row>
     {#if cell.key == "departureTime" && row.departureTime != "Last stop"}
@@ -71,7 +71,7 @@
         step="2"
         value={currentDepartureTime(row)}
         on:change={(e) => updateDepartureTime(e, row)}
-        style="font-size: 16px; padding:5px"
+        style="font-size: 13px; padding:5px"
       />
     {:else if cell.key == "arrivalTime" && row.arrivalTime != "First stop"}
       <input
@@ -79,7 +79,7 @@
         step="2"
         value={currentArrivalTime(row)}
         on:change={(e) => updateArrivalTime(e, row)}
-        style="font-size: 16px; padding:5px"
+        style="font-size: 13px; padding:5px"
       />
     {:else}
       {cell.value}

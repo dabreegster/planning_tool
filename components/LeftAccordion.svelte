@@ -11,7 +11,7 @@
   import Results from "./sidebarLeftComponents/Results.svelte";
   import CurrentInterventionLayerToggle from "./CurrentInterventionLayerToggle.svelte";
   import Accordion from "./Accordion.svelte";
-  import AddScheme from "./AddScheme.svelte";
+  // import AddScheme from "./AddScheme.svelte";
 
   let weights;
   let squareScores;
@@ -61,14 +61,14 @@
       <CsvUpload {innerWidth} />
       <br />
       <EntireScheme {innerWidth} />
-      <Accordion>
+      <!-- <Accordion>
         <span slot="head" class="header" title="Add new public transport route"
           >Add route
         </span>
         <div slot="details">
           <AddScheme bind:stopLayerToggle bind:drawing bind:line_toggle />
         </div>
-      </Accordion>
+      </Accordion> -->
       <br />
       <InterventionList />
       <br />

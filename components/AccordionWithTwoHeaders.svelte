@@ -85,9 +85,11 @@
     background: #005a31;
   }
 
-  /* div.accordion-content {
-    transition: max-height 0.3s ease-in-out, overflow 0.3s ease-in-out;
-  } */
+  div.accordion-content {
+    /* transition: max-height 0.3s ease-in-out, overflow 0.3s ease-in-out; */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
 
   div.details {
     background-color: #f0f0f0;

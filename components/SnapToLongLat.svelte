@@ -8,14 +8,21 @@
   let latitude = 0;
 
   async function snapToLongLat() {
-    if (longtiude <= 180 && longtiude >= -180 && latitude <= 90 && latitude >= -90 ) {
+    if (
+      longtiude <= 180 &&
+      longtiude >= -180 &&
+      latitude <= 90 &&
+      latitude >= -90
+    ) {
       let coords = [longtiude, latitude];
       map.jumpTo({
         center: coords,
         zoom: 14,
       });
     } else {
-      alert("Please enter valid longitude/latitude coordinates\n -180 ≤ Longitude ≤ 180\n -90 ≤ Latitude ≤ 90");
+      alert(
+        "Please enter valid longitude/latitude coordinates\n -180 ≤ Longitude ≤ 180\n -90 ≤ Latitude ≤ 90"
+      );
     }
   }
 
@@ -54,8 +61,8 @@
 
 <style>
   input {
-    width: 75px; 
-    background-color: white; 
+    width: 75px;
+    background-color: white;
     border: 1px solid black;
     margin-top: 4px;
   }

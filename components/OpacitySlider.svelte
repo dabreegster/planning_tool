@@ -14,7 +14,7 @@
 <style>
   h3 {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   /* .whitebox {
     background-color: white;

@@ -1,11 +1,15 @@
 <script>
-  import { callPDFDownload } from "../api.js";
+  import { callPDFDownload, getSquareScore } from "../api.js";
 
   export let infoForPDF;
 
   async function downloadPDF() {
-    console.log("infoForPDF");
-    console.log(infoForPDF);
+    let squareScores = await getSquareScore(infoForPDF["squareID"]);
+
+    infoForPDF = {
+      ...infoForPDF,
+      squareScores,
+    };
 
     const pdfResponse = await callPDFDownload(infoForPDF);
     const blob = await pdfResponse.blob();
@@ -28,7 +32,7 @@
 
 <div>
   <button
-    class="pdfDownloadButton"
+    class="white_button"
     on:click={() => downloadPDF()}
     disabled={infoForPDF == null}
   >
@@ -46,5 +50,16 @@
     border-radius: 10px;
     /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
     font-size: 1.2rem;
+  }
+  .white_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .white_button:hover {
+    background: #dfdfdf;
   }
 </style>

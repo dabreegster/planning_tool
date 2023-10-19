@@ -74,7 +74,7 @@
   }
   select {
     font-size: 0.9rem;
-    height: 30px;
+    height: 35px;
     float: right;
     border: 1px solid rgb(0, 0, 0);
   }

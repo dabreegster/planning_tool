@@ -15,7 +15,7 @@
   }
 </script>
 
-<div class="govuk-label govuk-text--s" style="font-size: 1.1rem;">
+<div class="govuk-label govuk-text--s" style="font-size: 0.9rem;">
   Bus/Coach stops:<input
     type="checkbox"
     bind:checked={stopStatuses["show"][0]}

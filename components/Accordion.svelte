@@ -15,7 +15,7 @@
   </button>
 
   {#if open}
-    <div class="details" transition:slide >
+    <div class="details" transition:slide>
       <slot name="details" />
     </div>
   {/if}

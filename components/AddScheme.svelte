@@ -83,9 +83,11 @@
 
   $: {
     let features = $gjScheme.features;
-    // select last feature if not select_area type
-    if (features[features.length - 1]["properties"]["select_area"] != true) {
-      newRoute = features[features.length - 1];
+    if (features.length > 0) {
+      // select last feature if not select_area type
+      if (features[features.length - 1]["properties"]["select_area"] != true) {
+        newRoute = features[features.length - 1];
+      }
     }
   }
 

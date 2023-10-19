@@ -381,7 +381,7 @@
   // }
 </script>
 
-<!-- 
+
 <button
   class={drawControlsToggle}
   title="Add new bus route"
@@ -390,57 +390,57 @@
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/bus-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
 </button>
 
 <button
   class={drawControlsToggle}
   title="Add new national rail route"
-  style="top: 75px;"
+  style="top: 66px;"
   on:click={addNewTrain}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/train-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
 </button>
 
 <button
   class={drawControlsToggle}
   title="Add new ferry route"
-  style="top: 136px;"
+  style="top: 122px;"
   on:click={addNewFerry}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/ferry-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
 </button>
 
 <button
   class={drawControlsToggle}
   title="Add new tram route"
-  style="top: 198px;"
+  style="top: 178px;"
   on:click={addNewTram}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/tram-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
 </button>
 
 <button
   class={drawControlsToggle}
   title="Add new underground/metro/light rail route"
-  style="top: 260px;"
+  style="top: 234px;"
   on:click={addNewUnderground}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/underground-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
-</button> -->
+</button>
 
 <!-- <button
   class={drawControlsToggle}
@@ -456,19 +456,19 @@
 <button
   class={drawControlsToggle}
   title="Select area of interest"
-  style="top: 320px;"
+  style="top: 292px;"
   on:click={addNewSelectedArea}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/area-icon.png"
-    style="height: 32; width: 32px;"
+    class="image-size"
   />
 </button>
 
 <style>
   :global(.mapboxgl-ctrl-group > button) {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 
   :global(.mapbox-gl-draw_polygon, .mapbox-gl-draw_line) {
@@ -478,7 +478,7 @@
   .on {
     z-index: 1;
     position: absolute;
-    left: calc(25% + 20px);
+    left: calc(25% + 15px);
     padding: 10px;
     border-radius: 5px;
     background: white;
@@ -486,5 +486,9 @@
   }
   .off {
     display: none;
+  }
+  .image-size {
+    height: 26px; 
+    width: 26px;
   }
 </style>
