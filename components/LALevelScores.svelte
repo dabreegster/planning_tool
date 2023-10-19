@@ -17,6 +17,7 @@
 
   let LAScoreLayer = "Show"; // TODO: change this
   export let tileOpacity = 50;
+  export let tileScoreLayer;
 
   let LAScores = null;
 
@@ -58,10 +59,12 @@
   export let LASelected = "Hide";
 
   $: {
-    loadNewLAScores(LASelected);
+    if (LASelected != "Hide") {
+      loadNewLAScores();
+    }
   }
 
-  async function loadNewLAScores(LASelected) {
+  async function loadNewLAScores() {
     let response = await getLABinnedScores(LASelected);
     if (response == "LA not in LA list") {
     } else {
@@ -80,6 +83,8 @@
         geoJson = emptyGeojson();
       } else {
         geoJson = createSquareGeojson();
+        // set tiles to blank
+        tileScoreLayer = "Hide";
       }
       map.getSource(source).setData(geoJson);
       setLayer();

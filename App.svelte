@@ -14,6 +14,8 @@
   import StopsLayer from "./components/StopsLayer.svelte";
   import LeftAccordion from "./components/LeftAccordion.svelte";
   import LaLevelScores from "./components/LALevelScores.svelte";
+  import TileLayer from "./components/TileLayer.svelte";
+
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -37,13 +39,13 @@
   let line_toggle;
   let LASelected;
   let landingPageToggle;
-
+  let tileScoreLayer;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
 <div>
-  <Header bind:landingPageToggle/>
+  <Header bind:landingPageToggle />
 </div>
 <div>
   <StageBanner />
@@ -51,6 +53,7 @@
 <div>
   <Map {innerHeight}>
     <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
+    <TileLayer {tileOpacity} {tileScoreLayer}/>
     <!-- <SidebarLeft
       {innerWidth}
       {login_username}
@@ -68,6 +71,7 @@
       bind:startTimeSeconds
       bind:stopCheckboxClicked
       bind:LASelected
+      bind:tileScoreLayer
     />
     <LoadGeojson
       {drawing}
@@ -87,7 +91,7 @@
       {tileOpacity}
       bind:exploreSidebarClassToggle
     /> -->
-    <LandingPage bind:landingPageToggle={landingPageToggle}/>
+    <LandingPage bind:landingPageToggle />
     <LeftAccordion
       {tileOpacity}
       {innerWidth}
@@ -102,11 +106,9 @@
       bind:line_toggle
     />
     <DrawControls {open} bind:stopLayerToggle bind:drawing bind:line_toggle />
-    <LaLevelScores {LASelected} {tileOpacity} />
+    <LaLevelScores {LASelected} {tileOpacity} bind:tileScoreLayer={tileScoreLayer}/>
   </Map>
 </div>
 
 <style>
-
-  
 </style>

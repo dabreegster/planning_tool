@@ -1,6 +1,7 @@
 <script>
   import Accordion from "./Accordion.svelte";
-  import TileLayer from "./TileLayer.svelte";
+  // import TileLayer from "./TileLayer.svelte";
+  import TileLayerToggle from "./TileLayerToggle.svelte";
   import PdfDownload from "./PdfDownload.svelte";
   import ApgbLayer from "./APGBLayer.svelte";
   import StopsLayerToggles from "./StopsLayerToggles.svelte";
@@ -22,6 +23,7 @@
   export let stopCheckboxClicked;
   export let pixelReduction = 210;
   export let LASelected;
+  export let tileScoreLayer;
 </script>
 
 <div class="whitebox">
@@ -54,7 +56,8 @@
       </Accordion>
       <OpacitySlider bind:tileOpacity />
       <br />
-      <TileLayer {tileOpacity} />
+      <!-- <TileLayer {tileOpacity} /> -->
+      <TileLayerToggle bind:tileScoreLayer />
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
