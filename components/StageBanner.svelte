@@ -13,6 +13,7 @@
 <style>
   .govuk-phase-banner {
     padding: 6px;
+    /* height: 30px; */
   }
 
   .govuk-tag.govuk-phase-banner__content__tag {

@@ -36,12 +36,14 @@
   let stopCheckboxClicked;
   let line_toggle;
   let LASelected;
+  let landingPageToggle;
+
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
 <div>
-  <Header />
+  <Header bind:landingPageToggle/>
 </div>
 <div>
   <StageBanner />
@@ -85,7 +87,7 @@
       {tileOpacity}
       bind:exploreSidebarClassToggle
     /> -->
-    <LandingPage />
+    <LandingPage bind:landingPageToggle={landingPageToggle}/>
     <LeftAccordion
       {tileOpacity}
       {innerWidth}
@@ -103,3 +105,8 @@
     <LaLevelScores {LASelected} {tileOpacity} />
   </Map>
 </div>
+
+<style>
+
+  
+</style>
