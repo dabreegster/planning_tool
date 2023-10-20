@@ -1,6 +1,8 @@
 <script>
+  import { onMount } from 'svelte';
+
   import Accordion from "./Accordion.svelte";
-  // import TileLayer from "./TileLayer.svelte";
+  import TileLayer from "./TileLayer.svelte";
   import TileLayerToggle from "./TileLayerToggle.svelte";
   import PdfDownload from "./PdfDownload.svelte";
   import ApgbLayer from "./APGBLayer.svelte";
@@ -21,20 +23,28 @@
   export let startTimeSeconds = 28800;
   export let stopStatuses;
   export let stopCheckboxClicked;
-  export let pixelReduction = 210;
+  export let pixelReduction = 300;
   export let LASelected;
   export let tileScoreLayer;
+  // let open = {
+  //   headLeft: false,
+  //   headRight: true,
+  // };
+
+  // onMount(() => {
+  //   setTimeout(() => {
+  //     open["headRight"] = false; // Hide the accordion after 0.1 seconds.
+  //   }, 10);
+  // });
 </script>
 
-<div class="whitebox">
-  <!-- <div class="greybox"> -->
+<div class="whitebox" >
   <ScoreLegend {tileOpacity} />
-  <!-- </div> -->
   <br />
   <div class="greybox">
     <SnapToPostcode />
   </div>
-  <AccordionWithTwoHeaders {pixelReduction}>
+  <AccordionWithTwoHeaders {pixelReduction} >
     <div slot="headLeft" class="header">Select location</div>
     <div slot="details">
       <SnapToLongLat />
@@ -56,41 +66,14 @@
       </Accordion>
       <OpacitySlider bind:tileOpacity />
       <br />
-      <!-- <TileLayer {tileOpacity} /> -->
       <TileLayerToggle bind:tileScoreLayer />
+      <!-- <TileLayer {tileOpacity} {tileScoreLayer}/> -->
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
       <StopsLayerToggles bind:stopStatuses bind:stopCheckboxClicked />
     </div>
   </AccordionWithTwoHeaders>
-  <!-- <Accordion>
-    <span slot="head" class="header">Find EN/LL </span>
-    <div slot="details">
-      <SnapToLongLat />
-      <br />
-      <SnapToEastingNorthing />
-    </div>
-  </Accordion>
-
-  <Accordion>
-    <span slot="head" class="header">Settings </span>
-    <div slot="details">
-      <Accordion>
-        <span slot="head" class="header">Route settings</span>
-        <div slot="details">
-          <DisplayedRouteSettings bind:purpose bind:startTimeSeconds />
-        </div>
-      </Accordion>
-      <OpacitySlider bind:tileOpacity />
-      <br />
-      <TileLayer {tileOpacity} />
-      <ApgbLayer />
-      <PdfDownload {infoForPDF} />
-      <br />
-      <StopsLayerToggles bind:stopStatuses={stopStatuses} bind:stopCheckboxClicked />
-    </div>
-  </Accordion> -->
 </div>
 
 <style>

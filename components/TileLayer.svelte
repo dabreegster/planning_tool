@@ -17,7 +17,7 @@
   let purposes = [
     "Business",
     "Education",
-    "Health",
+    // "Health",  // temp removed as get error
     "Entertainment",
     "Shopping",
     "Residential",

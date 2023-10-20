@@ -39,7 +39,8 @@
   <AccordionWithTwoHeaders {pixelReduction} bind:open>
     <div slot="headLeft" class="header">Explore Scores</div>
     <div slot="details">
-      <PurposeWeightSliders bind:weights {squareScores} />
+      Coming soon
+      <!-- <PurposeWeightSliders bind:weights {squareScores} />
       <br />
       <HoverScores
         {weights}
@@ -54,7 +55,7 @@
         {mode}
         {squaresFound}
         {tileOpacity}
-      />
+      /> -->
     </div>
     <div slot="headRight" class="header">New Scheme</div>
     <div slot="details2">

@@ -467,8 +467,8 @@
 
 <style>
   :global(.mapboxgl-ctrl-group > button) {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 
   :global(.mapbox-gl-draw_polygon, .mapbox-gl-draw_line) {
