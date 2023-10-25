@@ -84,14 +84,14 @@
 <style>
   button {
     border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
   .white_button {
     background: white;
     padding: 10px;
     border-radius: 10px;
     font-size: 0.8rem;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
   .white_button:hover {
     background: #dfdfdf;

@@ -53,7 +53,7 @@
     padding: 5px;
     border-radius: 8px;
     font-size: 0.8rem;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
   .go_button:hover {
     background: #dfdfdf;

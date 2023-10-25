@@ -196,6 +196,6 @@
 <style>
   button {
     border-radius: 5px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
 </style>

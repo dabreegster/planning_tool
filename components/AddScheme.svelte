@@ -223,7 +223,7 @@
     background: white;
     padding: 10px;
     border-radius: 8px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
   button:hover {
     background: #dfdfdf;

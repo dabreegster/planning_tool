@@ -189,7 +189,7 @@
     font-size: 0.8rem;
     border-radius: 8px;
     padding: 8px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.05s ease-in-out;
   }
   .red_button {
     background: #d4361b;
