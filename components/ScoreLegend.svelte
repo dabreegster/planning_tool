@@ -212,13 +212,14 @@
 
   .legendtitle-text {
       padding-right: 6px;
+      padding-bottom: 2px;
   }
 
   .greybox {
       background: #f0f0f0;
       padding: 5px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid rgb(229, 229, 229);
       min-width: min-content;
   }
 </style>
