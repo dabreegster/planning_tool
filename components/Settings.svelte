@@ -39,7 +39,7 @@
 </script>
 
 <div class="whitebox" >
-  <ScoreLegend {tileOpacity} />
+  <ScoreLegend {tileOpacity} {infoForPDF}/>
   <br />
   <div class="greybox">
     <SnapToPostcode />

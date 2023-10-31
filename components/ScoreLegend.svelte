@@ -1,26 +1,34 @@
 <script>
   export let tileOpacity;
+  export let infoForPDF;
+  
+  let linePositionFromLeft = 0;
+  let weightedOverallScore;
+  $: {
+    if (infoForPDF) {
+      // select overall score for each mode (not just [6] as currently health not calculated for PT)
+      let overallPTScore = infoForPDF["squareScores"]["pt"][infoForPDF["squareScores"]["pt"].length-1]
+      let overallCyclingScore = infoForPDF["squareScores"]["cycling"][infoForPDF["squareScores"]["cycling"].length-1]
+      let overallWalkScore = infoForPDF["squareScores"]["walk"][infoForPDF["squareScores"]["walk"].length-1]
 
-  // TODO fix this hack way of doing numbers
-  let paddedNumbers = [
-    0,
-    " ",
-    " ",
-    " ",
-    25,
-    " ",
-    " ",
-    " ",
-    50,
-    " ",
-    " ",
-    " ",
-    75,
-    " ",
-    " ",
-    " ",
-    100,
-  ];
+      // weigh to overall score
+      weightedOverallScore = Math.round(overallPTScore*0.5 + overallCyclingScore*0.25 + overallWalkScore*0.25)
+      // calculate linePositionFromLeft in pixels
+      linePositionFromLeft = weightedOverallScore * 3.645;
+    }
+}
+  // TODO: temp hacky fix for alpha release, fix this
+  function calcPixelGap(number) {
+    if (number == 0) {
+      return -2
+    } else if (number != 100) {
+      return 78
+    } else {
+      return 71
+    }
+
+  }
+
 
   // TODO find function which can create this
   let nipy_spectral_100 = [
@@ -127,69 +135,28 @@
     "#cccccc",
   ];
 
-  // TODO Simplify this function, probably packages avilable
-  // function getHexColors() {
-  //   const colors = {
-  //     0: "#67001f",
-  //     10: "#67001f",
-  //     20: "#b2182b",
-  //     30: "#d6604d",
-  //     40: "#f4a582",
-  //     50: "#fddbc7",
-  //     60: "#d1e5f0",
-  //     70: "#92c5de",
-  //     80: "#4393c3",
-  //     90: "#2166ac",
-  //     100: "#053061",
-  //   };
-  //   const hexColors = [];
-  //   for (let i = 0; i <= 100; i++) {
-  //     const lowerColor = colors[Math.floor(i / 10) * 10];
-  //     const upperColor = colors[Math.ceil(i / 10) * 10];
-  //     const interpolatedColor = interpolateColor(
-  //       lowerColor,
-  //       upperColor,
-  //       (i % 10) / 10
-  //     );
-  //     hexColors.push(interpolatedColor);
-  //   }
-  //   return hexColors;
-  // }
-
-  // function interpolateColor(lowerColor, upperColor, factor) {
-  //   const lowerColorArray = [];
-  //   lowerColorArray.push(parseInt(lowerColor.substring(1, 3), 16));
-  //   lowerColorArray.push(parseInt(lowerColor.substring(3, 5), 16));
-  //   lowerColorArray.push(parseInt(lowerColor.substring(5, 7), 16));
-
-  //   const upperColorArray = [];
-  //   upperColorArray.push(parseInt(upperColor.substring(1, 3), 16));
-  //   upperColorArray.push(parseInt(upperColor.substring(3, 5), 16));
-  //   upperColorArray.push(parseInt(upperColor.substring(5, 7), 16));
-
-  //   const interpolatedColorArray = [];
-  //   for (let i = 0; i < 3; i++) {
-  //     interpolatedColorArray.push(
-  //       Math.round(
-  //         lowerColorArray[i] +
-  //           factor * (upperColorArray[i] - lowerColorArray[i])
-  //       )
-  //     );
-  //   }
-
-  //   let interpolatedColor = "#";
-  //   for (let i = 0; i < 3; i++) {
-  //     const hex = interpolatedColorArray[i].toString(16).padStart(2, "0");
-  //     interpolatedColor += hex;
-  //   }
-  //   return interpolatedColor;
-  // }
-  // let colours = getHexColors();
 </script>
 
 <div>
-  <div class="legendtitle">Connectivity score</div>
+  <div class="legendtitle">
+    <div class="legendtitle-text">Connectivity score:</div>
+    {#if infoForPDF}
+      <div class="greybox" title="Overall connectivity score for selected square">
+          {weightedOverallScore}
+      </div>
+    {:else}
+      <div class="greybox" style="opacity: 0;">
+         99
+      </div>
+    {/if}
+  </div>
   <div class="legend">
+    {#if infoForPDF}
+      <div
+        class="scoreline"
+        style="left: {linePositionFromLeft}px"
+      />
+    {/if}
     {#each nipy_spectral_100 as colour}
       <div
         class="square"
@@ -197,39 +164,61 @@
       />
     {/each}
   </div>
-
-  <div class="numberline">
-    {#each paddedNumbers as number}
-      <div class="numbers">
+  <div class="numbers">
+    {#each [0, 25, 50, 75, 100] as number}
+      <div style="margin-left: {calcPixelGap(number)}px">
         {number}
       </div>
     {/each}
   </div>
 </div>
 
+
+
 <style>
-  .legendtitle {
-    font-size: 1rem;
-    padding-bottom: 5px; /* Adjust the value as needed */
-  }
+
   .legend {
     display: flex;
     border: 1px solid black;
-  }
-  .numberline {
-    display: flex;
+    position: relative; 
   }
   .square {
     width: 5px;
     height: 32px;
-    /* border-right: 1px solid black; */
+  }
+  .scoreline {
+    width: 3px;
+    height: 32px;
+    background-color: #000000;
+    opacity: 1;
+    position: absolute;
+    z-index: 1;
   }
 
   .numbers {
-    width: 37px;
+    display: flex;
     height: 10px;
     color: black;
     opacity: 1;
     font-size: 0.8rem;
+  }
+
+  .legendtitle {
+    font-size: 1rem;
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .legendtitle-text {
+      padding-right: 6px;
+  }
+
+  .greybox {
+      background: #f0f0f0;
+      padding: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      min-width: min-content;
   }
 </style>

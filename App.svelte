@@ -33,8 +33,6 @@
   let open;
   let stopStatuses;
   let scoreLayer;
-  // needs to be in bind:stopStatuses={stopStatuses} form
-  // npm run fmt ruins this
   let stopCheckboxClicked;
   let line_toggle;
   let LASelected;

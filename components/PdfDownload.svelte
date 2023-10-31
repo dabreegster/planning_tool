@@ -1,15 +1,9 @@
 <script>
-  import { callPDFDownload, getSquareScore } from "../api.js";
+  import { callPDFDownload } from "../api.js";
 
   export let infoForPDF;
 
   async function downloadPDF() {
-    let squareScores = await getSquareScore(infoForPDF["squareID"]);
-
-    infoForPDF = {
-      ...infoForPDF,
-      squareScores,
-    };
 
     const pdfResponse = await callPDFDownload(infoForPDF);
     const blob = await pdfResponse.blob();
@@ -41,16 +35,6 @@
 </div>
 
 <style>
-  .pdfDownloadButton {
-    /* position: absolute; */
-    /* top: 448px;
-    right: 10px; */
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    /* box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); */
-    font-size: 1.2rem;
-  }
   .white_button {
     background: white;
     border: 1px solid #ccc;

@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, getContext } from "svelte";
-  import { getSquareInfo, callFloodfillApi } from "../api.js";
+  import { getSquareInfo, callFloodfillApi, getSquareScore } from "../api.js";
 
   const { getMap } = getContext("map");
 
@@ -96,14 +96,20 @@
         console.log(req);
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
-        console.log(resp);
+
+        console.time("square scores API");
+        let squareScores = await getSquareScore(squareID);
+        console.timeEnd("square scores API");
 
         infoForPDF = {
           ...resp,
           squareCoords,
           startTimeSeconds,
+          squareScores,
           squareID,
         };
+        console.log("infoForPDF");
+        console.log(infoForPDF);
 
         dataChanged(resp, gj);
         isProcessingClick = false;
