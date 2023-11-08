@@ -201,7 +201,7 @@
       // TODO This whines about a layer missing, and I can't suppress with try/catch
       const ids = drawControls.getFeatureIdsAt(e.point);
       if (ids.length > 0) {
-        newHoverEntry = ids[0];
+        newHoverEntry = ids[ids.length - 1];
       }
       currentMapHover.set(newHoverEntry);
     });

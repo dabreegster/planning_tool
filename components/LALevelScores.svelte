@@ -17,7 +17,7 @@
 
   let LAScoreLayer = "Show"; // TODO: change this
   export let tileOpacity = 50;
-  export let tileScoreLayer;
+  export let tileScoreLayer = "Overall Connectivity";
 
   let LAScores = null;
 

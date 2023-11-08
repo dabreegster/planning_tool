@@ -6,7 +6,7 @@
 
   export let tileOpacity = 50;
   // TODO Revert, this is nicer for development
-  export let tileScoreLayer = "Overall Connectivity";
+  export let tileScoreLayer = null;
 
   let PMTILES_BUCKET_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
@@ -17,7 +17,7 @@
   let purposes = [
     "Business",
     "Education",
-    // "Health",  // temp removed as get error
+    // "Health",  // temp removed as get error as no PT health
     "Entertainment",
     "Shopping",
     "Residential",
@@ -28,7 +28,6 @@
     let tileModeString;
     if (map.getSource(source)) {
     } else {
-      console.log();
       if (mode === "PT") {
         tileModeString = "";
       } else if (mode === "walking") {
@@ -66,6 +65,18 @@
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
+
+    let layers = map.getStyle().layers;
+    console.log("layers");
+    console.log(layers);
+
+    let beforeID = null;
+    if (map.getLayer("draggable-points.cold")) {
+      // add below draggable-points.cold
+      beforeID = "draggable-points.cold";
+    }
+    console.log("beforeID");
+    console.log(beforeID);
     // Temp added for default tile layer until actual tiles made
     if (tileScoreLayer == "Overall Connectivity") {
       map.addLayer({
@@ -75,9 +86,10 @@
         paint: {
           "raster-opacity": tileOpacity / 100,
         },
-      });
-    }
-    if (tileScoreLayer != "Hide") {
+      },
+      beforeID,
+      );
+    } else if (tileScoreLayer != "Hide") {
       map.addLayer({
         id: layer,
         type: "raster",
@@ -85,17 +97,29 @@
         paint: {
           "raster-opacity": tileOpacity / 100,
         },
-      });
+      },
+      beforeID,
+      );
     }
   }
 
-  $: setLayer();
-
   $: {
     console.log(tileScoreLayer)
-    setContext("tileOpacity", tileOpacity);
-    setLayer();
+    if (tileScoreLayer) {
+      setContext("tileOpacity", tileOpacity);
+      setLayer();
+    }
   }
+
+  let layers = map.getStyle().layers;
+  console.log("layers");
+  console.log(layers);
+
+  onMount(() => {
+    setTimeout(() => {
+      tileScoreLayer = "Overall Connectivity"; // Hide the accordion after 0.1 seconds.
+    }, 10);
+  });
 </script>
 
 <style>

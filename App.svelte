@@ -51,6 +51,7 @@
 <div>
   <Map {innerHeight}>
     <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
+    <DrawControls {open} bind:stopLayerToggle bind:drawing bind:line_toggle />
     <TileLayer {tileOpacity} {tileScoreLayer}/>
     <!-- <SidebarLeft
       {innerWidth}
@@ -103,7 +104,6 @@
       bind:drawing
       bind:line_toggle
     />
-    <DrawControls {open} bind:stopLayerToggle bind:drawing bind:line_toggle />
     <LaLevelScores {LASelected} {tileOpacity} bind:tileScoreLayer={tileScoreLayer}/>
   </Map>
 </div>

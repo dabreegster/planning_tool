@@ -76,20 +76,22 @@
   });
 
   function toggle(index, draw) {
-    map.setLayoutProperty(
-      layers[index],
-      "visibility",
-      stopStatuses["show"][index] ? "visible" : "none"
-    );
-    if (draw) {
-      // TODO add ...&& switchStatus[index]
-      stopStatuses["switchStatus"][index] = stopStatuses["switchStatus"][index];
-    } else if (
-      stopStatuses["switchStatus"][index] == stopStatuses["show"][index]
-    ) {
-    } else {
-      stopStatuses["switchStatus"][index] =
-        !stopStatuses["switchStatus"][index];
+    if (map.getLayer(layers[index])) {
+      map.setLayoutProperty(
+        layers[index],
+        "visibility",
+        stopStatuses["show"][index] ? "visible" : "none"
+      );
+      if (draw) {
+        // TODO add ...&& switchStatus[index]
+        stopStatuses["switchStatus"][index] = stopStatuses["switchStatus"][index];
+      } else if (
+        stopStatuses["switchStatus"][index] == stopStatuses["show"][index]
+      ) {
+      } else {
+        stopStatuses["switchStatus"][index] =
+          !stopStatuses["switchStatus"][index];
+      }
     }
   }
 
