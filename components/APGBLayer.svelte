@@ -46,24 +46,37 @@
       if (map.getLayer(APGBLayer.split(" ")[0])) {
         map.removeLayer(APGBLayer.split(" ")[0]);
       }
-      if (APGBLayer.split(" ").length == 1) {
-        map.addLayer({
-          id: APGBLayer,
-          type: "raster",
-          source: APGBLayer.split(" ")[0],
-          paint: {},
-        });
-      } else {
-        map.addLayer(
-          {
-            id: APGBLayer.split(" ")[0],
-            type: "raster",
-            source: APGBLayer.split(" ")[0],
-            paint: {},
-          },
-          "aeroway_fill"
-        );
-      }
+      
+      // // select which layer to put it below
+      // let beforeID = null;
+      // if (map.getLayer("draggable-points.cold")) {
+      //   beforeID = "draggable-points.cold";
+      // }
+      // if (map.getLayer("tiles")) {
+      //   beforeID = "tiles";
+      // }
+      // // if statement to check if spaces in name (a bit primative)
+      // if (APGBLayer.split(" ").length == 1) {
+      //   map.addLayer(
+      //     {
+      //       id: APGBLayer,
+      //       type: "raster",
+      //       source: APGBLayer.split(" ")[0],
+      //       paint: {},
+      //     },
+      //     beforeID
+      //   );
+      // } else {
+    map.addLayer(
+      {
+        id: APGBLayer.split(" ")[0],
+        type: "raster",
+        source: APGBLayer.split(" ")[0],
+        paint: {},
+      },
+      "aeroway_fill"
+    );
+      // }
     }
   }
 
@@ -71,7 +84,7 @@
     let APGBLayers = [
       "Hide",
       "25cm",
-      "25cm with roads",
+      // "25cm with roads",
       // "12.5cm",
       // "12.5cm with roads",
     ];
