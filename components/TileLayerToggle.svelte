@@ -1,6 +1,7 @@
 <script>
 
   export let tileScoreLayer = "Overall Connectivity";
+  export let LASelected;
 
   function scoreTypes() {
     let purposes = [
@@ -36,6 +37,11 @@
       // "Overall"
     ];
     return purposes;
+  }
+  $:{
+    if (tileScoreLayer != "Hide") {
+      LASelected = "Hide"
+    }
   }
 </script>
 

@@ -66,7 +66,7 @@
       </Accordion>
       <OpacitySlider bind:tileOpacity />
       <br />
-      <TileLayerToggle bind:tileScoreLayer />
+      <TileLayerToggle bind:tileScoreLayer bind:LASelected/>
       <!-- <TileLayer {tileOpacity} {tileScoreLayer}/> -->
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
