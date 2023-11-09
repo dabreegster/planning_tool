@@ -58,18 +58,17 @@
         addSource(purpose, mode);
       }
     }
-    // setLayer();
+    // load in base scores on arrival
+    tileScoreLayer = "Overall Connectivity";
   });
 
   function setLayer() {
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
-
-    let layers = map.getStyle().layers;
-    console.log("layers");
-    console.log(layers);
-
+    // let layers = map.getStyle().layers;
+    // console.log("layers");
+    // console.log(layers);
     let beforeID = null;
     if (map.getLayer("base-line.cold")) {
       // add below base-line.cold
@@ -104,16 +103,42 @@
   $: {
     console.log(tileScoreLayer)
     if (tileScoreLayer) {
+      setLayer();
+    }
+  }
+
+  // Only reload tiles when opacity slider has decided on a location (mouseup)
+  let reloadTiles = false;
+  let clickedOnSlider = false;
+
+  // Event listeners for if click used to reload tiles when click off sliders
+  // Add event listener for mouse down
+  document.addEventListener("mousedown", (e) => {
+    let clickedElement = e.target;
+    if (clickedElement.tagName !== "DIV") {
+      return;
+    }
+    // checks if the click is on slider
+    if (clickedElement.getAttribute("class") === "thumb svelte-1q9yxz9") {
+      clickedOnSlider = true;
+    }
+    reloadTiles = false;
+  });
+
+  // Add event listener for mouse up
+  document.addEventListener("mouseup", (e) => {
+    if (clickedOnSlider) {
+      reloadTiles = true;
+      clickedOnSlider = false;
+    }
+  });
+
+  $: {
+    if (reloadTiles) {
       setContext("tileOpacity", tileOpacity);
       setLayer();
     }
   }
-  
-  onMount(() => {
-    setTimeout(() => {
-      tileScoreLayer = "Overall Connectivity"; // Hide the accordion after 0.1 seconds.
-    }, 10);
-  });
 </script>
 
 <style>
