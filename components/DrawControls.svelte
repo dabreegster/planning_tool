@@ -50,16 +50,11 @@
   export let stopLayerToggle;
   $: {
     if (open["headRight"]) {
-      drawControlsToggle = "on";
+      drawControlsToggle = "display-button-on";
     } else {
-      drawControlsToggle = "off";
+      drawControlsToggle = "display-button-off";
     }
   }
-    // $: {
-    //   if (line_toggle == "new_pt_route") {
-    //     drawControls.changeMode("draw_line_string");
-    //   }
-    // }
   const styles = [
     {
       id: "base-line",
@@ -256,10 +251,6 @@
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
-  // function addNewFootpath() {
-  //   line_toggle = "new_pathway";
-  //   drawControls.changeMode("draw_line_string");
-  // }
   function addNewSelectedArea() {
     area_toggle = "select_area";
     drawControls.changeMode("draw_polygon");
@@ -385,7 +376,7 @@
   on:click={addNewBus}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/bus-icon.png"
+    src="/assets/images/bus-icon.png"
     class="image-size"
   />
 </button>
@@ -397,7 +388,7 @@
   on:click={addNewTrain}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/train-icon.png"
+    src="/assets/images/train-icon.png"
     class="image-size"
   />
 </button>
@@ -409,7 +400,7 @@
   on:click={addNewFerry}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/ferry-icon.png"
+    src="/assets/images/ferry-icon.png"
     class="image-size"
   />
 </button>
@@ -421,7 +412,7 @@
   on:click={addNewTram}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/tram-icon.png"
+    src="/assets/images/tram-icon.png"
     class="image-size"
   />
 </button>
@@ -433,21 +424,10 @@
   on:click={addNewUnderground}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/underground-icon.png"
+    src="/assets/images/underground-icon.png"
     class="image-size"
   />
 </button>
-
-<!-- <button
-  class={drawControlsToggle}
-  style="top: 198px;"
-  on:click={addNewFootpath}
->
-  <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/footpath-icon.png"
-    style="height: 32; width: 32px;"
-  />
-</button> -->
 
 <button
   class={drawControlsToggle}
@@ -456,7 +436,7 @@
   on:click={addNewSelectedArea}
 >
   <img
-    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/dft_hackathon/main/assets/images/area-icon.png"
+    src="/assets/images/area-icon.png"
     class="image-size"
   />
 </button>
@@ -471,16 +451,15 @@
     display: none !important;
   }
 
-  .on {
+  .display-button-on {
     z-index: 1;
     position: absolute;
     left: calc(25% + 15px);
     padding: 10px;
     border-radius: 5px;
     background: white;
-    padding: 10px;
   }
-  .off {
+  .display-button-off {
     display: none;
   }
   .image-size {

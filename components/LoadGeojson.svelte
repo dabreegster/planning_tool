@@ -33,7 +33,6 @@
         isProcessingClick = false;
       }, 8000);
     }
-    console.log(isProcessingClick);
   }
 
   function emptyGeojson() {
@@ -71,8 +70,8 @@
         console.log(`Lookup square for ${e.lngLat}`);
         console.time("square API");
         let info = await getSquareInfo(e.lngLat);
-        console.log("info");
-        console.log(info);
+        // console.log("info");
+        // console.log(info);
         console.timeEnd("square API");
         if (info == "click_not_on_square") {
           console.log("Click not on square");
@@ -92,7 +91,7 @@
           trip_start_seconds: startTimeSeconds,
         };
         console.time("floodfill API");
-        console.log(req);
+        // console.log(req);
         let resp = await callFloodfillApi(req);
         console.timeEnd("floodfill API");
 
@@ -107,8 +106,8 @@
           squareScores,
           squareID,
         };
-        console.log("infoForPDF");
-        console.log(infoForPDF);
+        // console.log("infoForPDF");
+        // console.log(infoForPDF);
 
         dataChanged(resp, gj);
         isProcessingClick = false;
