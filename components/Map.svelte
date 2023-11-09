@@ -33,6 +33,10 @@
     });
     map.addControl(new ScaleControl());
     map.addControl(new NavigationControl(), "bottom-right");
+    // disable map rotation using right click + drag
+    map.dragRotate.disable();
+    // disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
 
     if (setCamera) {
       map.jumpTo({
