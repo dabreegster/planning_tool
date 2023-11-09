@@ -42,18 +42,18 @@
 </script>
 
 <div style="font-size: 0.9rem;">
-  Longitude:
+  Latitude: 
   <input
     type="text"
-    on:input={handleLongitudeInput}
+    on:input={handleLatitudeInput}
     on:keydown={handleKeyPress}
   />
   <button class="go_button" on:click={snapToLongLat}>Go</button>
   <div style="float: right; margin-right: 10px;">
-    Latitude:
+    Longitude:
     <input
       type="text"
-      on:input={handleLatitudeInput}
+      on:input={handleLongitudeInput}
       on:keydown={handleKeyPress}
     />
   </div>
