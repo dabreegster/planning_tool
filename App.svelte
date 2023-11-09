@@ -26,7 +26,6 @@
   let responseJson;
   let loading;
   let stopLayerToggle;
-  let drawing;
   let hoveredInterventionScores;
   let purpose;
   let startTimeSeconds;
@@ -51,7 +50,7 @@
 <div>
   <Map {innerHeight}>
     <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
-    <DrawControls {open} bind:stopLayerToggle bind:drawing bind:line_toggle />
+    <DrawControls {open} bind:stopLayerToggle bind:line_toggle />
     <TileLayer {tileOpacity} {tileScoreLayer}/>
     <!-- <SidebarLeft
       {innerWidth}
@@ -73,7 +72,6 @@
       bind:tileScoreLayer
     />
     <LoadGeojson
-      {drawing}
       {purpose}
       {startTimeSeconds}
       bind:infoForPDF
@@ -101,7 +99,6 @@
       bind:loading
       bind:scoreLayer
       bind:stopLayerToggle
-      bind:drawing
       bind:line_toggle
     />
     <LaLevelScores {LASelected} {tileOpacity} bind:tileScoreLayer={tileScoreLayer}/>

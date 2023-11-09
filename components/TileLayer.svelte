@@ -71,12 +71,10 @@
     console.log(layers);
 
     let beforeID = null;
-    if (map.getLayer("draggable-points.cold")) {
-      // add below draggable-points.cold
-      beforeID = "draggable-points.cold";
+    if (map.getLayer("base-line.cold")) {
+      // add below base-line.cold
+      beforeID = "base-line.cold";
     }
-    console.log("beforeID");
-    console.log(beforeID);
     // Temp added for default tile layer until actual tiles made
     if (tileScoreLayer == "Overall Connectivity") {
       map.addLayer({
@@ -110,11 +108,7 @@
       setLayer();
     }
   }
-
-  let layers = map.getStyle().layers;
-  console.log("layers");
-  console.log(layers);
-
+  
   onMount(() => {
     setTimeout(() => {
       tileScoreLayer = "Overall Connectivity"; // Hide the accordion after 0.1 seconds.

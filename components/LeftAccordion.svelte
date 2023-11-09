@@ -26,7 +26,6 @@
   export let loading;
   export let pixelReduction = 90;
   export let scoreLayer;
-  export let drawing = false;
   export let line_toggle = "new_pt_route";
   export let stopLayerToggle;
 

@@ -1,5 +1,6 @@
 <script>
   import MapboxDraw from "@mapbox/mapbox-gl-draw";
+  import * as MapboxDrawWaypoint from 'mapbox-gl-draw-waypoint';
   import * as turf from "@turf/turf";
   import proj4 from "proj4";
   import {
@@ -19,6 +20,10 @@
   let area_toggle = "select_area";
   export let line_toggle = "new_pt_route";
 
+  // disables the ability to move the polygons/lines
+  let modes = MapboxDraw.modes;
+  modes = MapboxDrawWaypoint.enable(modes);
+
   // configuration for lat/long -> OSGB easting northing conversion
   var osgb =
     "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
@@ -36,12 +41,13 @@
   const color = "black";
   const circleRadius = 5.5;
   const lineWidth = 4;
+  const outlineColor = "black";
+  const outlineWidth = 2;
   // allow if total < 10_000_000m^2 ~ 1000 squares
   const maxAreaSize = 10_000_000;
   let drawControlsToggle;
   export let open = false;
   export let stopLayerToggle;
-  export let drawing = false;
   $: {
     if (open["headRight"]) {
       drawControlsToggle = "on";
@@ -49,20 +55,12 @@
       drawControlsToggle = "off";
     }
   }
-  $: {
-    if (drawing) {
-      if (line_toggle == "new_pt_route") {
-        drawControls.changeMode("draw_line_string");
-      }
-    }
-  }
+    // $: {
+    //   if (line_toggle == "new_pt_route") {
+    //     drawControls.changeMode("draw_line_string");
+    //   }
+    // }
   const styles = [
-    {
-      id: "draggable-points",
-      filter: ["all", isPoint, ["!=", "meta", "feature"]],
-      // TODO The 1.5 is bulky and ugly, but I can't figure out how to get z-ordering working
-      ...drawCircle("blue", 1.5 * circleRadius),
-    },
     {
       id: "base-line",
       filter: isLine,
@@ -78,6 +76,11 @@
       filter: isPolygon,
       ...drawLine(color, lineWidth / 1.5),
     },
+    {
+      id: "static-line-points",
+      filter: ["all", isPoint, ["!=", "meta", "feature"], ["==", "meta", "vertex"]],
+      ...drawCircle("#EE7C0E", 1.5 * circleRadius, outlineColor, outlineWidth),
+    },
   ];
 
   let drawControls;
@@ -86,6 +89,7 @@
     const map = getMap();
 
     drawControls = new MapboxDraw({
+      modes,
       displayControlsDefault: false,
       controls: {
         line_string: true,
@@ -149,7 +153,6 @@
       } else {
         addGeometricProperties(feature);
       }
-      drawing = false;
       gjScheme.update((gj) => {
         gj.features.push(feature);
         return gj;
@@ -229,42 +232,35 @@
   }
 
   function addNewBus() {
-    drawing = true;
     stopLayerToggle = "bus";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewTrain() {
-    drawing = true;
     stopLayerToggle = "rail";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewFerry() {
-    drawing = true;
     stopLayerToggle = "ferry";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewUnderground() {
-    drawing = true;
     stopLayerToggle = "tube_lightrail_metro";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewTram() {
-    drawing = true;
     stopLayerToggle = "tram";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   // function addNewFootpath() {
-  //   drawing = true;
   //   line_toggle = "new_pathway";
   //   drawControls.changeMode("draw_line_string");
   // }
   function addNewSelectedArea() {
-    drawing = true;
     area_toggle = "select_area";
     drawControls.changeMode("draw_polygon");
   }

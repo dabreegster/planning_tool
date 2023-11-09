@@ -16,7 +16,6 @@
   let maxPerPurpose;
   export let purpose = "Business";
   export let hoverInfo = "no_selection";
-  export let drawing;
   let isProcessingClick = false;
 
   let purposes = [
@@ -60,8 +59,8 @@
   });
 
   map.on("click", async function (e) {
-    if (drawing == false) {
-      console.log(drawing);
+    // click + shiftkey
+    if (e.originalEvent.shiftKey) {
       if (isProcessingClick) {
         console.log("Click is already being processed");
         return;
@@ -319,9 +318,7 @@
 
   // on right click clear map
   map.on("contextmenu", function () {
-    if (drawing == false) {
-      resetMapAndPDFInfo();
-    }
+    resetMapAndPDFInfo();
   });
 
   // event listener for when purpose changes to set layers again

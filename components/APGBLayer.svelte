@@ -49,8 +49,8 @@
       
       // // select which layer to put it below
       // let beforeID = null;
-      // if (map.getLayer("draggable-points.cold")) {
-      //   beforeID = "draggable-points.cold";
+      // if (map.getLayer("base-line.cold")) {
+      //   beforeID = "base-line.cold";
       // }
       // if (map.getLayer("tiles")) {
       //   beforeID = "tiles";
