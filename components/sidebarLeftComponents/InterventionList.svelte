@@ -1,7 +1,7 @@
 <script>
   import { Accordion, AccordionItem } from "carbon-components-svelte";
   import RouteForm from "./interventionListComponents/RouteForm.svelte";
-  import PathwayForm from "./interventionListComponents/PathwayForm.svelte";
+  // import PathwayForm from "./interventionListComponents/PathwayForm.svelte";
   import AreaForm from "./interventionListComponents/AreaForm.svelte";
   import CsvRouteForm from "./interventionListComponents/CsvRouteForm.svelte";
   import PerInterventionControls from "./interventionListComponents/PerInterventionControls.svelte";
@@ -128,9 +128,9 @@
           {/if}
         </svelte:fragment>
         <div class="govuk-body">
-          {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
-            <PathwayForm bind:props={feature.properties} />
-          {:else if feature.properties.from_csv}
+          <!-- {#if feature.geometry.type == "LineString" && feature.properties.new_pathway}
+            <PathwayForm bind:props={feature.properties} /> // commented but kept for potential future use-->
+          {#if feature.properties.from_csv}
             <CsvRouteForm bind:props={feature.properties} />
           {:else}
             <RouteForm bind:props={feature.properties} />
