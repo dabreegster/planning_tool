@@ -68,6 +68,8 @@
             "circle-radius": 5,
             "circle-color": colors[i],
             "circle-opacity": 0.5,
+            "circle-stroke-color": "black",
+            "circle-stroke-width": 1,
           },
         });
       }

@@ -149,6 +149,7 @@
       } else {
         addGeometricProperties(feature);
       }
+      console.log(feature)
       gjScheme.update((gj) => {
         gj.features.push(feature);
         return gj;
@@ -460,7 +461,7 @@
     border-radius: 5px;
     background: white;
     transition: background-color 0.05s;
-    border: 2px solid #ccc;
+    /* border: 2px solid #ccc; */
   }
   .display-button-on:hover {
     background: #dfdfdf; /* Grey background color on hover */
