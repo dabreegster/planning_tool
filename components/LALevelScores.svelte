@@ -164,6 +164,11 @@
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
+    let beforeID = null;
+    if (map.getLayer("base-line.cold")) {
+      // add below base-line.cold
+      beforeID = "base-line.cold";
+    }
     if (LAScoreLayer !== "Hide") {
       map.addLayer({
         id: layer,
@@ -177,7 +182,9 @@
           "fill-outline-color": "rgba(0, 0, 0, 0.04)",
           "fill-opacity": tileOpacity / 100,
         },
-      });
+      },
+      beforeID
+      );
       console.log("set layer");
     }
   }
