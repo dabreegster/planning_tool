@@ -85,6 +85,7 @@
 
     drawControls = new MapboxDraw({
       modes,
+      clickBuffer: 4,
       displayControlsDefault: false,
       controls: {
         line_string: true,
@@ -431,7 +432,7 @@
 
 <button
   class={drawControlsToggle}
-  title="Select area of interest"
+  title="Select impact area"
   style="top: 292px;"
   on:click={addNewSelectedArea}
 >
@@ -455,15 +456,20 @@
     z-index: 1;
     position: absolute;
     left: calc(25% + 15px);
-    padding: 10px;
+    padding: 7px;
     border-radius: 5px;
     background: white;
+    transition: background-color 0.05s;
+    border: 2px solid #ccc;
+  }
+  .display-button-on:hover {
+    background: #dfdfdf; /* Grey background color on hover */
   }
   .display-button-off {
     display: none;
   }
   .image-size {
-    height: 26px; 
-    width: 26px;
+    height: 31px; 
+    width: 31px;
   }
 </style>
