@@ -16,6 +16,7 @@
   let maxPerPurpose;
   export let purpose = "Business";
   export let hoverInfo = "no_selection";
+  export let toggleDisplayeRouteOnClick;
   let isProcessingClick = false;
 
   let purposes = [
@@ -58,63 +59,64 @@
   });
 
   map.on("click", async function (e) {
-    // click + shiftkey
-    if (e.originalEvent.shiftKey) {
-      if (isProcessingClick) {
-        console.log("Click is already being processed");
+    // if either no shift key pressed or toggle is false then don't process click
+    if (!(e.originalEvent.shiftKey || toggleDisplayeRouteOnClick)) { 
+      return;
+    }
+    if (isProcessingClick) {
+      console.log("Click is already being processed");
+      return;
+    }
+    isProcessingClick = true;
+
+    if (startTimeSeconds >= 21600 && startTimeSeconds <= 79200) {
+      console.log(`Lookup square for ${e.lngLat}`);
+      console.time("square API");
+      let info = await getSquareInfo(e.lngLat);
+      // console.log("info");
+      // console.log(info);
+      console.timeEnd("square API");
+      if (info == "click_not_on_square") {
+        console.log("Click not on square");
+        isProcessingClick = false;
         return;
       }
-      isProcessingClick = true;
+      // set square coords to make square in question
+      let squareCoords = info["square_coords"];
+      // display the square whilst loading
+      let gj = createSquareGeojson(squareCoords);
+      let squareID = info["square_ID"];
+      delete info["square_coords"];
+      delete info["square_ID"];
+      // Now make the floodfill request
+      let req = {
+        ...info,
+        trip_start_seconds: startTimeSeconds,
+      };
+      console.time("floodfill API");
+      // console.log(req);
+      let resp = await callFloodfillApi(req);
+      console.timeEnd("floodfill API");
 
-      if (startTimeSeconds >= 21600 && startTimeSeconds <= 79200) {
-        console.log(`Lookup square for ${e.lngLat}`);
-        console.time("square API");
-        let info = await getSquareInfo(e.lngLat);
-        // console.log("info");
-        // console.log(info);
-        console.timeEnd("square API");
-        if (info == "click_not_on_square") {
-          console.log("Click not on square");
-          isProcessingClick = false;
-          return;
-        }
-        // set square coords to make square in question
-        let squareCoords = info["square_coords"];
-        // display the square whilst loading
-        let gj = createSquareGeojson(squareCoords);
-        let squareID = info["square_ID"];
-        delete info["square_coords"];
-        delete info["square_ID"];
-        // Now make the floodfill request
-        let req = {
-          ...info,
-          trip_start_seconds: startTimeSeconds,
-        };
-        console.time("floodfill API");
-        // console.log(req);
-        let resp = await callFloodfillApi(req);
-        console.timeEnd("floodfill API");
+      console.time("square scores API");
+      let squareScores = await getSquareScore(squareID);
+      console.timeEnd("square scores API");
 
-        console.time("square scores API");
-        let squareScores = await getSquareScore(squareID);
-        console.timeEnd("square scores API");
+      infoForPDF = {
+        ...resp,
+        squareCoords,
+        startTimeSeconds,
+        squareScores,
+        squareID,
+      };
+      // console.log("infoForPDF");
+      // console.log(infoForPDF);
 
-        infoForPDF = {
-          ...resp,
-          squareCoords,
-          startTimeSeconds,
-          squareScores,
-          squareID,
-        };
-        // console.log("infoForPDF");
-        // console.log(infoForPDF);
-
-        dataChanged(resp, gj);
-        isProcessingClick = false;
-      } else {
-        alert("Start time must be between 06:00 and 22:00");
-        isProcessingClick = false;
-      }
+      dataChanged(resp, gj);
+      isProcessingClick = false;
+    } else {
+      alert("Start time must be between 06:00 and 22:00");
+      isProcessingClick = false;
     }
   });
 

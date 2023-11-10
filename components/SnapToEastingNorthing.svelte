@@ -53,7 +53,7 @@
   }
 </script>
 
-<div style="font-size: 0.9rem; margin-left: 17px;">
+<div style="font-size: 0.9rem; margin-left:5px;">
   Easting:
   <input
     type="text"

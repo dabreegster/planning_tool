@@ -26,6 +26,7 @@
   export let pixelReduction = 300;
   export let LASelected;
   export let tileScoreLayer;
+  export let toggleDisplayeRouteOnClick;
   // let open = {
   //   headLeft: false,
   //   headRight: true,
@@ -59,9 +60,9 @@
     <div slot="headRight" class="header">Settings</div>
     <div slot="details2">
       <Accordion>
-        <span slot="head" class="header">Route settings</span>
+        <span slot="head" class="header">Displayed route settings</span>
         <div slot="details">
-          <DisplayedRouteSettings bind:purpose bind:startTimeSeconds />
+          <DisplayedRouteSettings bind:purpose bind:startTimeSeconds bind:toggleDisplayeRouteOnClick/>
         </div>
       </Accordion>
       <OpacitySlider bind:tileOpacity />

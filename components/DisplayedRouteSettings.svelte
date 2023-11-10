@@ -1,6 +1,7 @@
 <script>
   export let startTimeSeconds = 28800;
   export let purpose = "Business";
+  export let toggleDisplayeRouteOnClick = false
 
   let purposes = [
     "Business",
@@ -16,6 +17,14 @@
     startTimeSeconds = parseInt(hours) * 3600 + parseInt(minutes) * 60;
   }
 </script>
+
+<div class="govuk-label" style="font-size: 0.9rem;">
+  Display route on click:
+  <input type="checkbox" 
+  bind:checked={toggleDisplayeRouteOnClick} 
+/>
+</div>
+<br/>
 
 <div class="purposeBox" style="display: flex;">
   <label

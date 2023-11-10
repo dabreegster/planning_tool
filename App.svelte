@@ -37,6 +37,7 @@
   let LASelected;
   let landingPageToggle;
   let tileScoreLayer;
+  let toggleDisplayeRouteOnClick;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -70,10 +71,12 @@
       bind:stopCheckboxClicked
       bind:LASelected
       bind:tileScoreLayer
+      bind:toggleDisplayeRouteOnClick
     />
     <LoadGeojson
       {purpose}
       {startTimeSeconds}
+      {toggleDisplayeRouteOnClick}
       bind:infoForPDF
       bind:hoverInfo
     />
