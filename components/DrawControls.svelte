@@ -378,7 +378,7 @@
   on:click={addNewBus}
 >
   <img
-    src="/assets/images/bus-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/bus-icon.png"
     class="image-size"
   />
 </button>
@@ -390,7 +390,7 @@
   on:click={addNewTrain}
 >
   <img
-    src="/assets/images/train-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/train-icon.png"
     class="image-size"
   />
 </button>
@@ -402,7 +402,7 @@
   on:click={addNewFerry}
 >
   <img
-    src="/assets/images/ferry-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/ferry-icon.png"
     class="image-size"
   />
 </button>
@@ -414,7 +414,7 @@
   on:click={addNewTram}
 >
   <img
-    src="/assets/images/tram-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/tram-icon.png"
     class="image-size"
   />
 </button>
@@ -426,7 +426,7 @@
   on:click={addNewUnderground}
 >
   <img
-    src="/assets/images/underground-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/underground-icon.png"
     class="image-size"
   />
 </button>
@@ -438,7 +438,7 @@
   on:click={addNewSelectedArea}
 >
   <img
-    src="/assets/images/area-icon.png"
+    src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/area-icon.png"
     class="image-size"
   />
 </button>
