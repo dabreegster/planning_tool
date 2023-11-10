@@ -36,8 +36,13 @@
   let line_toggle;
   let LASelected;
   let landingPageToggle;
-  let tileScoreLayer;
   let toggleDisplayeRouteOnClick;
+  let tileSettings = {
+    toggle: false,
+    level: "National",
+    mode: "Overall",
+    purpose: "Overall",
+  };
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
@@ -56,7 +61,7 @@
       bind:line_toggle 
       bind:toggleDisplayeRouteOnClick
     />
-    <TileLayer {tileOpacity} {tileScoreLayer}/>
+    <TileLayer {tileOpacity} {tileSettings}/>
     <Settings
       {infoForPDF}
       bind:stopStatuses
@@ -65,8 +70,8 @@
       bind:startTimeSeconds
       bind:stopCheckboxClicked
       bind:LASelected
-      bind:tileScoreLayer
       bind:toggleDisplayeRouteOnClick
+      bind:tileSettings
     />
     <LoadGeojson
       {purpose}
@@ -94,7 +99,7 @@
       bind:stopLayerToggle
       bind:line_toggle
     />
-    <LaLevelScores {LASelected} {tileOpacity} bind:tileScoreLayer={tileScoreLayer}/>
+    <LaLevelScores {LASelected} {tileOpacity} bind:tileSettings={tileSettings}/>
   </Map>
 </div>
 

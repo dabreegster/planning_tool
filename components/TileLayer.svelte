@@ -5,37 +5,56 @@
   const map = getMap();
 
   export let tileOpacity = 50;
-  // TODO Revert, this is nicer for development
-  export let tileScoreLayer = null;
+  export let tileSettings = {
+    toggle: false,
+    level: "National",
+    mode: "Overall",
+    purpose: "Overall",
+  };
 
   let PMTILES_BUCKET_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
-  const layer = "tiles";
-
-  let modes = ["PT", "walking", "cycling", "driving"];
+  const layer = "nationalTiles";
+  let modes =  [
+    "Overall",
+    "Public transport",
+    "Walking",
+    "Cycling",
+    "Driving",
+  ]
 
   let purposes = [
-    "Business",
-    "Education",
-    // "Health",  // temp removed as get error as no PT health
-    "Entertainment",
-    "Shopping",
-    "Residential",
-  ];
+        "Overall",
+        "Business",
+        "Education",
+        "Entertainment",
+        // "Health", // temp removed as get error as no PT health
+        "Shopping",
+        "Residential",
+      ]
 
   function addSource(purpose, mode) {
-    let source = purpose + " by " + mode;
+    let source = purpose + "_" + mode;
     let tileModeString;
     if (map.getSource(source)) {
     } else {
-      if (mode === "PT") {
+      if (mode === "Public transport") {
         tileModeString = "";
-      } else if (mode === "walking") {
+      } else if (mode === "Walking") {
         tileModeString = "_walk";
-      } else if (mode === "cycling") {
+      } else if (mode === "Cycling") {
         tileModeString = "_cycling";
-      } else {
+      } else if (mode == "Driving") {
         tileModeString = "_car";
+      } else {
+        // TODO update this with else if (mode == "Overall")
+        // currently just set the same as PT
+        tileModeString = "";
+      }
+      // TODO update this with else if (purpose == "Overall")
+      // currently just set the same as PT
+      if (purpose == "Overall") {
+        purpose = "Business"
       }
       map.addSource(source, {
         type: "raster",
@@ -59,7 +78,7 @@
       }
     }
     // load in base scores on arrival
-    tileScoreLayer = "Overall Connectivity";
+    tileSettings["toggle"] = true;
   });
 
   function setLayer() {
@@ -74,23 +93,11 @@
       // add below base-line.cold
       beforeID = "base-line.cold";
     }
-    // Temp added for default tile layer until actual tiles made
-    if (tileScoreLayer == "Overall Connectivity") {
+    if (tileSettings["level"] == "National" && tileSettings["toggle"]) {
       map.addLayer({
         id: layer,
         type: "raster",
-        source: "Business by PT",
-        paint: {
-          "raster-opacity": tileOpacity / 100,
-        },
-      },
-      beforeID,
-      );
-    } else if (tileScoreLayer != "Hide") {
-      map.addLayer({
-        id: layer,
-        type: "raster",
-        source: tileScoreLayer,
+        source: tileSettings["purpose"] + "_" + tileSettings["mode"],
         paint: {
           "raster-opacity": tileOpacity / 100,
         },
@@ -101,9 +108,14 @@
   }
 
   $: {
-    // console.log(tileScoreLayer)
-    if (tileScoreLayer) {
+    // if toggle on then set layer
+    if (tileSettings["toggle"]) {
       setLayer();
+    } else {
+      // if not then remove 
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
     }
   }
 

@@ -1,50 +1,106 @@
 <script>
 
-  export let tileScoreLayer = "Overall Connectivity";
   export let LASelected;
 
-  function scoreTypes() {
-    let purposes = [
-      "Hide",
-      "Overall Connectivity",
-
-      "Business by PT",
-      "Education by PT",
-      "Entertainment by PT",
-      "Shopping by PT",
-      "Residential by PT",
-
-      "Business by walking",
-      "Education by walking",
-      "Entertainment by walking",
-      "Health by walking",
-      "Shopping by walking",
-      "Residential by walking",
-
-      "Business by driving",
-      "Education by driving",
-      "Entertainment by driving",
-      "Health by driving",
-      "Shopping by driving",
-      "Residential by driving",
-
-      "Business by cycling",
-      "Education by cycling",
-      "Entertainment by cycling",
-      "Health by cycling",
-      "Shopping by cycling",
-      "Residential by cycling",
-      // "Overall"
-    ];
-    return purposes;
-  }
+  // TODO remove this after sorted LA
   $:{
-    if (tileScoreLayer != "Hide") {
+    if (tileSettings["level"] != "Local authority") {
       LASelected = "Hide"
     }
   }
+
+  function modes() {
+    return [
+      "Overall",
+      "Public transport",
+      "Walking",
+      "Cycling",
+      "Driving",
+    ]
+  }
+
+  function purposes() {
+    return [
+      "Overall",
+      "Business",
+      "Education",
+      "Entertainment",
+      // "Health",
+      "Shopping",
+      "Residential",
+    ]
+  }
+  function tileLevels() {
+    return [
+      "National",
+      "Local authority",
+    ]
+  }
+
+  export let tileSettings = {
+    toggle: true,
+    level: "National",
+    mode: "Overall",
+    purpose: "Overall",
+  };
 </script>
 
+<div class="govuk-label" style="font-size: 1rem;">
+  Toggle tile layer:
+  <input type="checkbox" 
+  bind:checked={tileSettings["toggle"]} 
+/>
+</div>
+<div class="govuk-form-group" style="display: flex;">
+  <div
+    class="govuk-label"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
+  >
+    Level:
+  </div>
+  <select
+    class="govuk-select"
+    bind:value={tileSettings["level"]}
+  >
+    {#each tileLevels() as x}
+      <option value={x}>{x}</option>
+    {/each}
+  </select>
+</div>
+<div class="govuk-form-group" style="display: flex;">
+  <div
+    class="govuk-label"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
+  >    
+    Purpose:
+  </div>
+  <select
+    class="govuk-select"
+    bind:value={tileSettings["purpose"]}
+  >
+    {#each purposes() as x}
+      <option value={x}>{x}</option>
+    {/each}
+  </select>
+</div>
+<div class="govuk-form-group" style="display: flex;">
+  <div
+    class="govuk-label"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
+  >
+    Mode:
+  </div>
+  <select
+    class="govuk-select"
+    bind:value={tileSettings["mode"]}
+    >
+    {#each modes() as x}
+      <option value={x}>{x}</option>
+    {/each}
+  </select>
+</div>
+
+<!-- 
 <div class="govuk-form-group" style="display: flex;">
   <label class="govuk-label" for="tileScoreLayer" style="font-size: 1rem;">
     Tile layer score purpose:
@@ -59,7 +115,7 @@
       <option value={x}>{x}</option>
     {/each}
   </select>
-</div>
+</div> -->
 
 <style>
   select {

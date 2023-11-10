@@ -17,7 +17,7 @@
 
   let LAScoreLayer = "Show"; // TODO: change this
   export let tileOpacity = 50;
-  export let tileScoreLayer = "Overall Connectivity";
+  export let tileSettings;
 
   let LAScores = null;
 
@@ -79,12 +79,12 @@
 
   $: {
     if (LAScores) {
-      if (LASelected == "Hide") {
+      if (LASelected == "Hide" || !tileSettings["toggle"]) {
         geoJson = emptyGeojson();
       } else {
         geoJson = createSquareGeojson();
-        // set tiles to blank
-        tileScoreLayer = "Hide";
+        // set tile level to LA
+        tileSettings["level"] = "Local authority";
       }
       map.getSource(source).setData(geoJson);
       setLayer();

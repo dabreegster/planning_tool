@@ -25,8 +25,8 @@
   export let stopCheckboxClicked;
   export let pixelReduction = 300;
   export let LASelected;
-  export let tileScoreLayer;
   export let toggleDisplayeRouteOnClick;
+  export let tileSettings;
   // let open = {
   //   headLeft: false,
   //   headRight: true,
@@ -67,8 +67,7 @@
       </Accordion>
       <OpacitySlider bind:tileOpacity />
       <br />
-      <TileLayerToggle bind:tileScoreLayer bind:LASelected/>
-      <!-- <TileLayer {tileOpacity} {tileScoreLayer}/> -->
+      <TileLayerToggle bind:LASelected bind:tileSettings/>
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
