@@ -51,17 +51,12 @@
 <div>
   <Map {innerHeight}>
     <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
-    <DrawControls {open} bind:stopLayerToggle bind:line_toggle />
+    <DrawControls {open} 
+      bind:stopLayerToggle 
+      bind:line_toggle 
+      bind:toggleDisplayeRouteOnClick
+    />
     <TileLayer {tileOpacity} {tileScoreLayer}/>
-    <!-- <SidebarLeft
-      {innerWidth}
-      {login_username}
-      {hoveredInterventionScores}
-      {exploreSidebarClassToggle}
-      bind:responseJson
-      bind:leftSidebarClassToggle
-      bind:loading
-    /> -->
     <Settings
       {infoForPDF}
       bind:stopStatuses
@@ -86,11 +81,6 @@
       {scoreLayer}
       bind:hoveredInterventionScores
     />
-    <!-- <SidebarExplore
-      {leftSidebarClassToggle}
-      {tileOpacity}
-      bind:exploreSidebarClassToggle
-    /> -->
     <LandingPage bind:landingPageToggle />
     <LeftAccordion
       {tileOpacity}

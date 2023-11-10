@@ -19,6 +19,7 @@
   // potentially redundant with only 1 draw polygon purpose
   let area_toggle = "select_area";
   export let line_toggle = "new_pt_route";
+  export let toggleDisplayeRouteOnClick;
 
   // disables the ability to move the polygons/lines
   let modes = MapboxDraw.modes;
@@ -229,31 +230,37 @@
   }
 
   function addNewBus() {
+    toggleDisplayeRouteOnClick = false;
     stopLayerToggle = "bus";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewTrain() {
+    toggleDisplayeRouteOnClick = false;
     stopLayerToggle = "rail";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewFerry() {
+    toggleDisplayeRouteOnClick = false;
     stopLayerToggle = "ferry";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewUnderground() {
+    toggleDisplayeRouteOnClick = false;
     stopLayerToggle = "tube_lightrail_metro";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewTram() {
+    toggleDisplayeRouteOnClick = false;
     stopLayerToggle = "tram";
     line_toggle = "new_pt_route";
     drawControls.changeMode("draw_line_string");
   }
   function addNewSelectedArea() {
+    toggleDisplayeRouteOnClick = false;
     area_toggle = "select_area";
     drawControls.changeMode("draw_polygon");
   }
