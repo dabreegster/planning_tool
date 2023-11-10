@@ -374,7 +374,7 @@
 <button
   class={drawControlsToggle}
   title="Add new bus route"
-  style="top: 10px;"
+  style="top: 6px;"
   on:click={addNewBus}
 >
   <img
@@ -386,7 +386,7 @@
 <button
   class={drawControlsToggle}
   title="Add new national rail route"
-  style="top: 66px;"
+  style="top: 62px;"
   on:click={addNewTrain}
 >
   <img
@@ -398,7 +398,7 @@
 <button
   class={drawControlsToggle}
   title="Add new ferry route"
-  style="top: 122px;"
+  style="top: 118px;"
   on:click={addNewFerry}
 >
   <img
@@ -410,7 +410,7 @@
 <button
   class={drawControlsToggle}
   title="Add new tram route"
-  style="top: 178px;"
+  style="top: 174px;"
   on:click={addNewTram}
 >
   <img
@@ -422,7 +422,7 @@
 <button
   class={drawControlsToggle}
   title="Add new underground/metro/light rail route"
-  style="top: 234px;"
+  style="top: 230px;"
   on:click={addNewUnderground}
 >
   <img
@@ -434,7 +434,7 @@
 <button
   class={drawControlsToggle}
   title="Select impact area"
-  style="top: 292px;"
+  style="top: 286px;"
   on:click={addNewSelectedArea}
 >
   <img
@@ -458,8 +458,8 @@
     position: absolute;
     left: calc(25% + 15px);
     padding: 7px;
-    border-radius: 5px;
-    background: white;
+    border-radius: 8px;
+    background: #fafafa;
     transition: background-color 0.05s;
     /* border: 2px solid #ccc; */
   }
