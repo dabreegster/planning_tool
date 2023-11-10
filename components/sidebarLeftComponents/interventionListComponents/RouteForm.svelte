@@ -22,8 +22,6 @@
         departureTime: props.departureTime[i],
       });
     }
-    console.log("rows")
-    console.log(rows)
   }
 
   export function updateArrivalTime(e, row) {

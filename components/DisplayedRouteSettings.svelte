@@ -24,8 +24,10 @@
   bind:checked={toggleDisplayeRouteOnClick} 
 />
 </div>
+<div>
+  <b style="font-size: 0.9rem;">Right click to remove routes</b>
+</div>
 <br/>
-
 <div class="purposeBox" style="display: flex;">
   <label
     class="govuk-label"
@@ -60,10 +62,6 @@
     on:change={(e) => updateStartTime(e)}
   />
   <span class="validity" />
-</div>
-<br />
-<div>
-  <b style="font-size: 0.9rem;">Right click to remove routes</b>
 </div>
 
 <style>

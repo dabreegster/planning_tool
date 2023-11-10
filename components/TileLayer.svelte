@@ -101,7 +101,7 @@
   }
 
   $: {
-    console.log(tileScoreLayer)
+    // console.log(tileScoreLayer)
     if (tileScoreLayer) {
       setLayer();
     }

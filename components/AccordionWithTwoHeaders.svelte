@@ -10,10 +10,10 @@
   const handleClick = (header) => {
     open[header] = !open[header];
     if (header === "headRight") {
-      open.headLeft = false; // Close headLeft when headRight is clicked
+      open.headLeft = false; 
     }
     if (header === "headLeft") {
-      open.headRight = false; // Close headRight when headLeft is clicked
+      open.headRight = false; 
     }
   };
 </script>

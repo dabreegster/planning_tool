@@ -29,9 +29,6 @@
   export let line_toggle = "new_pt_route";
   export let stopLayerToggle;
 
-  $: {
-    console.log(open);
-  }
 </script>
 
 <div class="whitebox">
