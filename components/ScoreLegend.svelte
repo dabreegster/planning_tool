@@ -1,6 +1,7 @@
 <script>
   export let tileOpacity;
   export let infoForPDF;
+  export let tileSettings;
   
   let linePositionFromLeft = 0;
   let weightedOverallScore;
@@ -18,7 +19,7 @@
     }
 }
   // TODO: temp hacky fix for alpha release, fix this
-  function calcPixelGap(number) {
+  function calcNationalNumberPixelGap(number) {
     if (number == 0) {
       return -2
     } else if (number != 100) {
@@ -26,12 +27,24 @@
     } else {
       return 71
     }
+  }
 
+  function calcPixelGap(percent) {
+    ["0-10%", "30-40%", "60-70%", "90-100%"]
+    if (percent == "0-10%") {  
+      return 1
+    } else if (percent == "30-40%") {
+      return 68
+    } else if (percent == "60-70%") {
+      return 64
+    } else {
+      return 58
+    }
   }
 
 
   // TODO find function which can create this
-  let nipy_spectral_100 = [
+  const nipy_spectral_100 = [
     "#000000",
     "#130015",
     "#2f0035",
@@ -135,6 +148,19 @@
     "#cccccc",
   ];
 
+  const laScoreColours = [
+    "#614a4a",
+    "#776A80",
+    "#9594c7",
+    "#bccff5",
+    "#8ef4f5",
+    "#94fa94",
+    "#f9fa94",
+    "#f6bca8",
+    "#f48f8e",
+    "#c69494",
+  ];
+
 </script>
 
 <div>
@@ -150,27 +176,50 @@
       </div>
     {/if}
   </div>
-  <div class="legend">
-    {#if infoForPDF}
-      <div
-        class="scoreline"
-        style="left: {linePositionFromLeft}px"
-      />
-    {/if}
-    {#each nipy_spectral_100 as colour}
-      <div
-        class="square"
-        style="background-color: {colour}; opacity: {tileOpacity / 100};"
-      />
-    {/each}
-  </div>
-  <div class="numbers">
-    {#each [0, 25, 50, 75, 100] as number}
-      <div style="margin-left: {calcPixelGap(number)}px">
-        {number}
-      </div>
-    {/each}
-  </div>
+  {#if tileSettings["level"] === "National"}
+    <div class="legend">
+      {#if infoForPDF}
+        <div
+          class="scoreline"
+          style="left: {linePositionFromLeft}px"
+        />
+      {/if}
+      {#each nipy_spectral_100 as colour}
+        <div
+          class="national_square"
+          style="background-color: {colour}; opacity: {tileOpacity / 100};"
+        />
+      {/each}
+    </div>
+    <div class="national_numbers">
+      {#each [0, 25, 50, 75, 100] as number}
+        <div style="margin-left: {calcNationalNumberPixelGap(number)}px">
+          {number}
+        </div>
+      {/each}
+    </div>
+  {:else if tileSettings["level"] === "Local authority"}
+    <div class="legend">
+      {#each laScoreColours as colour}
+        <div
+          class="LA_square"
+          style="background-color: {colour}; opacity: {tileOpacity / 100};"
+        />
+      {/each}
+    </div>
+    <div class="national_numbers">
+      <!-- {#each [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] as number} -->
+      {#each ["0-10%", "30-40%", "60-70%", "90-100%"] as percent}
+        <div style="margin-left: {calcPixelGap(percent)}px">
+          {percent}
+        </div>
+      {/each}
+    </div>
+  {:else}
+      <!-- if add new tile layer/colour schemes add here -->
+  {/if}
+
+
 </div>
 
 
@@ -182,8 +231,12 @@
     border: 1px solid black;
     position: relative; 
   }
-  .square {
+  .national_square {
     width: 5px;
+    height: 32px;
+  }
+  .LA_square {
+    width: 50px;
     height: 32px;
   }
   .scoreline {
@@ -195,7 +248,7 @@
     z-index: 1;
   }
 
-  .numbers {
+  .national_numbers {
     display: flex;
     height: 10px;
     color: black;

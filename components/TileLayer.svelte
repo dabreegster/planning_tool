@@ -79,6 +79,7 @@
       }
     }
     // load in base scores on arrival
+    tileSettings["level"] = "National";
     tileSettings["toggle"] = true;
   });
 

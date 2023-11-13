@@ -22,8 +22,9 @@
 
   let geoJson = null;
 
-  let hexlookup = [
-    "#eeeeee",
+  const laScoreColours = [
+    "#614a4a",
+    "#776A80",
     "#9594c7",
     "#bccff5",
     "#8ef4f5",
@@ -32,7 +33,6 @@
     "#f6bca8",
     "#f48f8e",
     "#c69494",
-    "#614a4a",
   ];
 
   function emptyGeojson() {
@@ -55,23 +55,23 @@
     }
   });
 
-  let x;
+  let LAtoggle;
 
   $: {
     if (tileSettings["LA"] != "Hide") {
-      x = tileSettings["LA"];
+      LAtoggle = tileSettings["LA"];
     }
   }
 
-
   $: {
-    if (x != "Hide") {
+    if (LAtoggle != "Hide") {
       loadNewLAScores();
     }
   }
 
   async function loadNewLAScores() {
     tileSettings["level"] = "Local authority";
+    // TODO add mode and purpose selection for LA scores
     let response = await getLABinnedScores(tileSettings["LA"]);
     if (response == "LA not in LA list") {
     } else {
@@ -86,11 +86,10 @@
 
   $: {
     if (LAScores) {
-      if (tileSettings["LA"] == "Hide" || !tileSettings["toggle"]) {
+      if (tileSettings["LA"] == "Hide" || !tileSettings["toggle"] || tileSettings["level"] !== "Local authority") {
         geoJson = emptyGeojson();
       } else {
         geoJson = createSquareGeojson();
-        // set tile level to LA
       }
       map.getSource(source).setData(geoJson);
       setLayer();
@@ -185,7 +184,7 @@
         paint: {
           "fill-color": [
             "to-color",
-            ["at", ["get", "scoreGroup"], ["literal", hexlookup]],
+            ["at", ["get", "scoreGroup"], ["literal", laScoreColours]],
           ],
           "fill-outline-color": "rgba(0, 0, 0, 0.04)",
           "fill-opacity": tileOpacity / 100,

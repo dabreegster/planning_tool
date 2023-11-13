@@ -24,7 +24,6 @@
   export let stopStatuses;
   export let stopCheckboxClicked;
   export let pixelReduction = 300;
-  export let LASelected;
   export let toggleDisplayeRouteOnClick;
   export let tileSettings;
   // let open = {
@@ -40,7 +39,7 @@
 </script>
 
 <div class="whitebox" >
-  <ScoreLegend {tileOpacity} {infoForPDF}/>
+  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings}/>
   <br />
   <div class="greybox">
     <SnapToPostcode />
@@ -51,10 +50,10 @@
       <SnapToLongLat />
       <br />
       <SnapToEastingNorthing />
-      <br />
+      <!-- <br />
       <div class="lightgreybox">
         <LaLevelColourLegend />
-      </div>
+      </div> -->
     </div>
     <div slot="headRight" class="header">Settings</div>
     <div slot="details2">
@@ -66,8 +65,8 @@
       </Accordion>
       <OpacitySlider bind:tileOpacity />
       <br />
-      <TileLayerToggle bind:LASelected bind:tileSettings/>
-      <LaLevelScoresToggle bind:LASelected bind:tileSettings/>
+      <TileLayerToggle bind:tileSettings/>
+      <LaLevelScoresToggle bind:tileSettings/>
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
