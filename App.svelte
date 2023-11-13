@@ -42,6 +42,7 @@
     level: "National",
     mode: "Overall",
     purpose: "Overall",
+    LA: "Hide",
   };
 </script>
 
@@ -69,7 +70,6 @@
       bind:purpose
       bind:startTimeSeconds
       bind:stopCheckboxClicked
-      bind:LASelected
       bind:toggleDisplayeRouteOnClick
       bind:tileSettings
     />
@@ -99,7 +99,7 @@
       bind:stopLayerToggle
       bind:line_toggle
     />
-    <LaLevelScores {LASelected} {tileOpacity} bind:tileSettings={tileSettings}/>
+    <LaLevelScores {tileOpacity} bind:tileSettings/>
   </Map>
 </div>
 

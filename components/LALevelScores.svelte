@@ -15,7 +15,6 @@
   const source = "LASquares";
   const layer = "LASquaresLayer";
 
-  let LAScoreLayer = "Show"; // TODO: change this
   export let tileOpacity = 50;
   export let tileSettings;
 
@@ -56,16 +55,24 @@
     }
   });
 
-  export let LASelected = "Hide";
+  let x;
 
   $: {
-    if (LASelected != "Hide") {
+    if (tileSettings["LA"] != "Hide") {
+      x = tileSettings["LA"];
+    }
+  }
+
+
+  $: {
+    if (x != "Hide") {
       loadNewLAScores();
     }
   }
 
   async function loadNewLAScores() {
-    let response = await getLABinnedScores(LASelected);
+    tileSettings["level"] = "Local authority";
+    let response = await getLABinnedScores(tileSettings["LA"]);
     if (response == "LA not in LA list") {
     } else {
       LAScores = response["scores"];
@@ -79,12 +86,11 @@
 
   $: {
     if (LAScores) {
-      if (LASelected == "Hide" || !tileSettings["toggle"]) {
+      if (tileSettings["LA"] == "Hide" || !tileSettings["toggle"]) {
         geoJson = emptyGeojson();
       } else {
         geoJson = createSquareGeojson();
         // set tile level to LA
-        tileSettings["level"] = "Local authority";
       }
       map.getSource(source).setData(geoJson);
       setLayer();
@@ -169,7 +175,9 @@
       // add below base-line.cold
       beforeID = "base-line.cold";
     }
-    if (LAScoreLayer !== "Hide") {
+    // if (LAScoreLayer !== "Hide") {
+    if (tileSettings["level"] == "Local authority") {
+
       map.addLayer({
         id: layer,
         source: source,

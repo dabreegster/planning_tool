@@ -10,6 +10,7 @@
     level: "National",
     mode: "Overall",
     purpose: "Overall",
+    LA: "Hide",
   };
 
   let PMTILES_BUCKET_URL =

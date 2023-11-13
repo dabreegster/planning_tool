@@ -1,5 +1,6 @@
 <script>
-  export let LASelected = "Hide";
+  export let tileSettings;
+  
   let LANames = [
     "Hide",
     "Adur",
@@ -345,12 +346,12 @@
 </script>
 
 <div class="govuk-form-group">
-  <label class="govuk-label" for="scoreLayer"> Local Authority: </label>
+  <label class="govuk-label" for="scoreLayer"> Local authority: </label>
   <select
     class="govuk-select"
     id="scoreLayer"
     name="scoreLayer"
-    bind:value={LASelected}
+    bind:value={tileSettings["LA"]}
   >
     {#each LANames as LAName}
       <option value={LAName}>{LAName}</option>

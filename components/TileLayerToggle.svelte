@@ -1,14 +1,4 @@
 <script>
-
-  export let LASelected;
-
-  // TODO remove this after sorted LA
-  $:{
-    if (tileSettings["level"] != "Local authority") {
-      LASelected = "Hide"
-    }
-  }
-
   function modes() {
     return [
       "Overall",
@@ -51,22 +41,7 @@
   bind:checked={tileSettings["toggle"]} 
 />
 </div>
-<div class="govuk-form-group" style="display: flex;">
-  <div
-    class="govuk-label"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
-  >
-    Level:
-  </div>
-  <select
-    class="govuk-select"
-    bind:value={tileSettings["level"]}
-  >
-    {#each tileLevels() as x}
-      <option value={x}>{x}</option>
-    {/each}
-  </select>
-</div>
+
 <div class="govuk-form-group" style="display: flex;">
   <div
     class="govuk-label"
@@ -83,6 +58,7 @@
     {/each}
   </select>
 </div>
+
 <div class="govuk-form-group" style="display: flex;">
   <div
     class="govuk-label"
@@ -95,6 +71,23 @@
     bind:value={tileSettings["mode"]}
     >
     {#each modes() as x}
+      <option value={x}>{x}</option>
+    {/each}
+  </select>
+</div>
+
+<div class="govuk-form-group" style="display: flex;">
+  <div
+    class="govuk-label"
+    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
+  >
+    Level:
+  </div>
+  <select
+    class="govuk-select"
+    bind:value={tileSettings["level"]}
+  >
+    {#each tileLevels() as x}
       <option value={x}>{x}</option>
     {/each}
   </select>

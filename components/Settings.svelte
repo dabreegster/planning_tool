@@ -53,7 +53,6 @@
       <SnapToEastingNorthing />
       <br />
       <div class="lightgreybox">
-        <LaLevelScoresToggle bind:LASelected />
         <LaLevelColourLegend />
       </div>
     </div>
@@ -68,6 +67,7 @@
       <OpacitySlider bind:tileOpacity />
       <br />
       <TileLayerToggle bind:LASelected bind:tileSettings/>
+      <LaLevelScoresToggle bind:LASelected bind:tileSettings/>
       <ApgbLayer />
       <PdfDownload {infoForPDF} />
       <br />
