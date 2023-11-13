@@ -1,4 +1,6 @@
 <script>
+  export let tileSettings;
+
   function modes() {
     return [
       "Overall",
@@ -26,20 +28,13 @@
       "Local authority",
     ]
   }
-
-  export let tileSettings = {
-    toggle: true,
-    level: "National",
-    mode: "Overall",
-    purpose: "Overall",
-  };
 </script>
 
 <div class="govuk-label" style="font-size: 1rem;">
-  Toggle tile layer:
+  Tiles on/off:
   <input type="checkbox" 
-  bind:checked={tileSettings["toggle"]} 
-/>
+    bind:checked={tileSettings["toggle"]} 
+  />
 </div>
 
 <div class="govuk-form-group" style="display: flex;">

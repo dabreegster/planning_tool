@@ -40,10 +40,10 @@
     border: 1px solid #ccc;
     padding: 8px;
     border-radius: 8px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     transition: background-color 0.05s ease-in-out;
   }
-  .white_button:hover {
+  .white_button:not([disabled]):hover {
     background: #dfdfdf;
   }
 </style>

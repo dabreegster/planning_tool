@@ -15,7 +15,7 @@
   import ScoreLegend from "./ScoreLegend.svelte";
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
   import LaLevelScoresToggle from "./LALevelScoresToggle.svelte";
-  import LaLevelColourLegend from "./LALevelColourLegend.svelte";
+  import OrientationViewToggle from './OrientationViewToggle.svelte'; 
 
   export let tileOpacity;
   export let infoForPDF;
@@ -50,25 +50,32 @@
       <SnapToLongLat />
       <br />
       <SnapToEastingNorthing />
-      <!-- <br />
-      <div class="lightgreybox">
-        <LaLevelColourLegend />
-      </div> -->
     </div>
     <div slot="headRight" class="header">Settings</div>
     <div slot="details2">
       <Accordion>
+        <span slot="head" class="header">Tile settings</span>
+        <div slot="details">
+          <OpacitySlider bind:tileOpacity />
+          <br />
+          <TileLayerToggle bind:tileSettings/>
+          <LaLevelScoresToggle bind:tileSettings/>
+        </div>
+      </Accordion>
+      <Accordion>
         <span slot="head" class="header">Displayed route settings</span>
         <div slot="details">
           <DisplayedRouteSettings bind:purpose bind:startTimeSeconds bind:toggleDisplayeRouteOnClick/>
+          <PdfDownload {infoForPDF} />
         </div>
       </Accordion>
-      <OpacitySlider bind:tileOpacity />
-      <br />
-      <TileLayerToggle bind:tileSettings/>
-      <LaLevelScoresToggle bind:tileSettings/>
-      <ApgbLayer />
-      <PdfDownload {infoForPDF} />
+      <Accordion>
+        <span slot="head" class="header">Base map settings</span>
+        <div slot="details">
+          <ApgbLayer />
+          <OrientationViewToggle />
+        </div>
+      </Accordion>
       <br />
       <StopsLayerToggles bind:stopStatuses bind:stopCheckboxClicked />
     </div>
@@ -95,12 +102,5 @@
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
-  }
-  .lightgreybox {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 1rem;
-    margin-top: 10px;
   }
 </style>

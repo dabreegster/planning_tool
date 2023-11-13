@@ -6,7 +6,7 @@
   const { getMap } = getContext("map");
   const map = getMap();
 
-  let APGBLayer = "Hide";
+  let APGBLayer;
   const APGBKEY = APGB_key["APGB_KEY"];
 
   onMount(async () => {

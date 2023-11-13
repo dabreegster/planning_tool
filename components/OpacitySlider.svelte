@@ -1,12 +1,12 @@
 <script>
   import Slider from "@bulatdashiev/svelte-slider";
 
-  export let tileOpacity = [50];
+  export let tileOpacity;
 </script>
 
 <div class="whitebox">
   <h3>
-    Tile opacity: {tileOpacity} %
+    Opacity: {tileOpacity} %
   </h3>
   <Slider bind:value={tileOpacity} />
 </div>
