@@ -137,6 +137,7 @@
               maxAreaSize / 1_000_000 +
               "km\u00B2 \n\nPlease select a smaller area"
           );
+          drawControls.delete(feature.id);
           return;
         }
       } else if (
@@ -154,8 +155,10 @@
         // if not drawn on known stops alert
         if (result === "not all stops within 3km") {
           alert(
-            "New routes must be between existing stops\n \nThese are highlighted for your selected mode when adding a new route"
+            "New routes must be between existing stops\n \nThese are highlighted for your selected mode when adding a new route\n \nPlease redraw your route using existing stops"
           );
+          // not currently removing it from the map unlike with the polygon
+          drawControls.delete(feature.id);
           return;
         }
         feature.geometry.coordinates = result.geometry.coordinates;
@@ -225,7 +228,7 @@
       // TODO This whines about a layer missing, and I can't suppress with try/catch
       const ids = drawControls.getFeatureIdsAt(e.point);
       if (ids.length > 0) {
-        newHoverEntry = ids[ids.length - 1];
+        newHoverEntry = ids[0];
       }
       currentMapHover.set(newHoverEntry);
     });

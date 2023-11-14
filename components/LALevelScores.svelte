@@ -178,9 +178,9 @@
       map.removeLayer(layer);
     }
     let beforeID = null;
-    if (map.getLayer("base-line.cold")) {
-      // add below base-line.cold
-      beforeID = "base-line.cold";
+    if (map.getLayer("editing-lines")) {
+      // add below editing-lines
+      beforeID = "editing-lines";
     }
     // if (LAScoreLayer !== "Hide") {
     if (tileSettings["level"] == "Local authority") {

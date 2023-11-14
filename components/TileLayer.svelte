@@ -85,9 +85,9 @@
     // console.log("layers");
     // console.log(layers);
     let beforeID = null;
-    if (map.getLayer("base-line.cold")) {
+    if (map.getLayer("editing-lines")) {
       // add below base-line.cold
-      beforeID = "base-line.cold";
+      beforeID = "editing-lines";
     }
     if (tileSettings["level"] == "National" && tileSettings["toggle"]) {
       map.addLayer(

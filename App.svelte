@@ -15,6 +15,8 @@
   import LeftAccordion from "./components/LeftAccordion.svelte";
   import LaLevelScores from "./components/LALevelScores.svelte";
   import TileLayer from "./components/TileLayer.svelte";
+  import EditingLayer from "./components/EditingLayer.svelte";
+  import HoverLayer from "./components/HoverLayer.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -33,7 +35,6 @@
   let scoreLayer;
   let stopCheckboxClicked;
   let line_toggle;
-  let LASelected;
   let landingPageToggle;
   let toggleDisplayeRouteOnClick;
   let tileSettings = {
@@ -100,6 +101,8 @@
       bind:line_toggle
     />
     <LaLevelScores {tileOpacity} bind:tileSettings />
+    <EditingLayer />
+    <HoverLayer />
   </Map>
 </div>
 
