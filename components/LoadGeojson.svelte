@@ -60,7 +60,7 @@
 
   map.on("click", async function (e) {
     // if either no shift key pressed or toggle is false then don't process click
-    if (!(e.originalEvent.shiftKey || toggleDisplayeRouteOnClick)) { 
+    if (!(e.originalEvent.shiftKey || toggleDisplayeRouteOnClick)) {
       return;
     }
     if (isProcessingClick) {

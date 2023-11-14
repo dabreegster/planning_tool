@@ -67,11 +67,11 @@
   }
 
   // if just tile level changes then add or remove layer
-  let levelToggle
+  let levelToggle;
   $: {
     levelToggle = tileSettings["level"];
   }
-  let tileToggleOnOff
+  let tileToggleOnOff;
   $: {
     tileToggleOnOff = tileSettings["toggle"];
   }
@@ -81,7 +81,7 @@
         map.removeLayer(layer);
       }
     } else {
-      setLayer()
+      setLayer();
     }
   }
 
@@ -94,7 +94,7 @@
 
   async function loadNewLAScores() {
     tileSettings["level"] = "Local authority";
-    console.log("Loading LA scores for:", tileSettings["LA"])
+    console.log("Loading LA scores for:", tileSettings["LA"]);
     // TODO add mode and purpose selection for LA scores
     let response = await getLABinnedScores(tileSettings["LA"]);
     if (response == "LA not in LA list") {
@@ -184,21 +184,21 @@
     }
     // if (LAScoreLayer !== "Hide") {
     if (tileSettings["level"] == "Local authority") {
-
-      map.addLayer({
-        id: layer,
-        source: source,
-        type: "fill",
-        paint: {
-          "fill-color": [
-            "to-color",
-            ["at", ["get", "scoreGroup"], ["literal", laScoreColours]],
-          ],
-          "fill-outline-color": "rgba(0, 0, 0, 0.04)",
-          "fill-opacity": tileOpacity / 100,
+      map.addLayer(
+        {
+          id: layer,
+          source: source,
+          type: "fill",
+          paint: {
+            "fill-color": [
+              "to-color",
+              ["at", ["get", "scoreGroup"], ["literal", laScoreColours]],
+            ],
+            "fill-outline-color": "rgba(0, 0, 0, 0.04)",
+            "fill-opacity": tileOpacity / 100,
+          },
         },
-      },
-      beforeID
+        beforeID
       );
       console.log("set layer");
     }
@@ -206,5 +206,4 @@
 </script>
 
 <style>
-
 </style>

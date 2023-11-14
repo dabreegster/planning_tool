@@ -4,7 +4,6 @@
   export let infoForPDF;
 
   async function downloadPDF() {
-
     const pdfResponse = await callPDFDownload(infoForPDF);
     const blob = await pdfResponse.blob();
 

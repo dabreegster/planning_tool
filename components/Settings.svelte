@@ -11,7 +11,7 @@
   import SnapToEastingNorthing from "./SnapToEastingNorthing.svelte";
   import ScoreLegend from "./ScoreLegend.svelte";
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
-  import OrientationViewToggle from './OrientationViewToggle.svelte'; 
+  import OrientationViewToggle from "./OrientationViewToggle.svelte";
 
   export let tileOpacity;
   export let infoForPDF;
@@ -24,13 +24,13 @@
   export let tileSettings;
 </script>
 
-<div class="whitebox" >
-  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings}/>
+<div class="whitebox">
+  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings} />
   <br />
   <div class="greybox">
     <SnapToPostcode />
   </div>
-  <AccordionWithTwoHeaders {pixelReduction} >
+  <AccordionWithTwoHeaders {pixelReduction}>
     <div slot="headLeft" class="header">Select location</div>
     <div slot="details">
       <SnapToLongLat />
@@ -44,13 +44,17 @@
         <div slot="details">
           <OpacitySlider bind:tileOpacity />
           <br />
-          <TileLayerToggle bind:tileSettings/>
+          <TileLayerToggle bind:tileSettings />
         </div>
       </Accordion>
       <Accordion>
         <span slot="head" class="header">Displayed route settings</span>
         <div slot="details">
-          <DisplayedRouteSettings bind:purpose bind:startTimeSeconds bind:toggleDisplayeRouteOnClick/>
+          <DisplayedRouteSettings
+            bind:purpose
+            bind:startTimeSeconds
+            bind:toggleDisplayeRouteOnClick
+          />
           <PdfDownload {infoForPDF} />
         </div>
       </Accordion>

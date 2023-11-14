@@ -1,7 +1,7 @@
 <script>
   export let startTimeSeconds = 28800;
   export let purpose = "Business";
-  export let toggleDisplayeRouteOnClick = false
+  export let toggleDisplayeRouteOnClick = false;
 
   let purposes = [
     "Business",
@@ -20,14 +20,12 @@
 
 <div class="govuk-label" style="font-size: 0.9rem;">
   Display route on click:
-  <input type="checkbox" 
-  bind:checked={toggleDisplayeRouteOnClick} 
-/>
+  <input type="checkbox" bind:checked={toggleDisplayeRouteOnClick} />
 </div>
 <div>
   <b style="font-size: 0.9rem;">Right click to remove routes</b>
 </div>
-<br/>
+<br />
 <div class="purposeBox" style="display: flex;">
   <label
     class="govuk-label"
@@ -63,7 +61,7 @@
   />
   <span class="validity" />
 </div>
-<br/>
+<br />
 
 <style>
   input + span {

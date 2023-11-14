@@ -28,7 +28,6 @@
   export let scoreLayer;
   export let line_toggle = "new_pt_route";
   export let stopLayerToggle;
-
 </script>
 
 <div class="whitebox">

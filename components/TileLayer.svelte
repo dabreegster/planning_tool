@@ -16,23 +16,17 @@
   let PMTILES_BUCKET_URL =
     "https://storage.googleapis.com/very-nice-tiles-bucket/";
   const layer = "nationalTiles";
-  let modes =  [
-    "Overall",
-    "Public transport",
-    "Walking",
-    "Cycling",
-    "Driving",
-  ]
+  let modes = ["Overall", "Public transport", "Walking", "Cycling", "Driving"];
 
   let purposes = [
-        "Overall",
-        "Business",
-        "Education",
-        "Entertainment",
-        // "Health", // temp removed as get error as no PT health
-        "Shopping",
-        "Residential",
-      ]
+    "Overall",
+    "Business",
+    "Education",
+    "Entertainment",
+    // "Health", // temp removed as get error as no PT health
+    "Shopping",
+    "Residential",
+  ];
 
   function addSource(purpose, mode) {
     let source = purpose + "_" + mode;
@@ -55,7 +49,7 @@
       // TODO update this with else if (purpose == "Overall")
       // currently just set the same as PT
       if (purpose == "Overall") {
-        purpose = "Business"
+        purpose = "Business";
       }
       map.addSource(source, {
         type: "raster",
@@ -96,15 +90,16 @@
       beforeID = "base-line.cold";
     }
     if (tileSettings["level"] == "National" && tileSettings["toggle"]) {
-      map.addLayer({
-        id: layer,
-        type: "raster",
-        source: tileSettings["purpose"] + "_" + tileSettings["mode"],
-        paint: {
-          "raster-opacity": tileOpacity / 100,
+      map.addLayer(
+        {
+          id: layer,
+          type: "raster",
+          source: tileSettings["purpose"] + "_" + tileSettings["mode"],
+          paint: {
+            "raster-opacity": tileOpacity / 100,
+          },
         },
-      },
-      beforeID,
+        beforeID
       );
     }
   }
@@ -114,7 +109,7 @@
     if (tileSettings["toggle"]) {
       setLayer();
     } else {
-      // if not then remove 
+      // if not then remove
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
       }
@@ -156,5 +151,4 @@
 </script>
 
 <style>
- 
 </style>

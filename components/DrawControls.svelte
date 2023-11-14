@@ -1,6 +1,6 @@
 <script>
   import MapboxDraw from "@mapbox/mapbox-gl-draw";
-  import * as MapboxDrawWaypoint from 'mapbox-gl-draw-waypoint';
+  import * as MapboxDrawWaypoint from "mapbox-gl-draw-waypoint";
   import * as turf from "@turf/turf";
   import proj4 from "proj4";
   import {
@@ -74,7 +74,12 @@
     },
     {
       id: "static-line-points",
-      filter: ["all", isPoint, ["!=", "meta", "feature"], ["==", "meta", "vertex"]],
+      filter: [
+        "all",
+        isPoint,
+        ["!=", "meta", "feature"],
+        ["==", "meta", "vertex"],
+      ],
       ...drawCircle("#EE7C0E", 1.5 * circleRadius, outlineColor, outlineWidth),
     },
   ];
@@ -148,7 +153,9 @@
         const result = await lookupPTRoute(feature);
         // if not drawn on known stops alert
         if (result === "not all stops within 3km") {
-          alert("New routes must be between existing stops\n \nThese are highlighted for your selected mode when adding a new route");
+          alert(
+            "New routes must be between existing stops\n \nThese are highlighted for your selected mode when adding a new route"
+          );
           return;
         }
         feature.geometry.coordinates = result.geometry.coordinates;
@@ -157,14 +164,16 @@
         feature.properties.arrivalTime = ["First stop"].concat(
           Array(feature.properties.ATCO.length - 1).fill("not_set")
         );
-        feature.properties.departureTime = Array(feature.properties.ATCO.length - 1)
+        feature.properties.departureTime = Array(
+          feature.properties.ATCO.length - 1
+        )
           .fill("not_set")
           .concat("Last stop");
         addGeometricProperties(feature);
       } else {
         addGeometricProperties(feature);
       }
-      console.log(feature)
+      console.log(feature);
       gjScheme.update((gj) => {
         gj.features.push(feature);
         return gj;
@@ -391,7 +400,6 @@
   // }
 </script>
 
-
 <button
   class={drawControlsToggle}
   title="Add new bus route"
@@ -491,7 +499,7 @@
     display: none;
   }
   .image-size {
-    height: 31px; 
+    height: 31px;
     width: 31px;
   }
 </style>

@@ -46,7 +46,7 @@
       if (map.getLayer(APGBLayer.split(" ")[0])) {
         map.removeLayer(APGBLayer.split(" ")[0]);
       }
-      
+
       // // select which layer to put it below
       // let beforeID = null;
       // if (map.getLayer("base-line.cold")) {
@@ -67,15 +67,15 @@
       //     beforeID
       //   );
       // } else {
-    map.addLayer(
-      {
-        id: APGBLayer.split(" ")[0],
-        type: "raster",
-        source: APGBLayer.split(" ")[0],
-        paint: {},
-      },
-      "aeroway_fill"
-    );
+      map.addLayer(
+        {
+          id: APGBLayer.split(" ")[0],
+          type: "raster",
+          source: APGBLayer.split(" ")[0],
+          paint: {},
+        },
+        "aeroway_fill"
+      );
       // }
     }
   }

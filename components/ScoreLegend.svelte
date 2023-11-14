@@ -2,46 +2,58 @@
   export let tileOpacity;
   export let infoForPDF;
   export let tileSettings;
-  
+
   let linePositionFromLeft = 0;
   let weightedOverallScore;
   $: {
     if (infoForPDF) {
       // select overall score for each mode (not just [6] as currently health not calculated for PT)
-      let overallPTScore = infoForPDF["squareScores"]["pt"][infoForPDF["squareScores"]["pt"].length-1]
-      let overallCyclingScore = infoForPDF["squareScores"]["cycling"][infoForPDF["squareScores"]["cycling"].length-1]
-      let overallWalkScore = infoForPDF["squareScores"]["walk"][infoForPDF["squareScores"]["walk"].length-1]
+      let overallPTScore =
+        infoForPDF["squareScores"]["pt"][
+          infoForPDF["squareScores"]["pt"].length - 1
+        ];
+      let overallCyclingScore =
+        infoForPDF["squareScores"]["cycling"][
+          infoForPDF["squareScores"]["cycling"].length - 1
+        ];
+      let overallWalkScore =
+        infoForPDF["squareScores"]["walk"][
+          infoForPDF["squareScores"]["walk"].length - 1
+        ];
 
       // weigh to overall score
-      weightedOverallScore = Math.round(overallPTScore*0.5 + overallCyclingScore*0.25 + overallWalkScore*0.25)
+      weightedOverallScore = Math.round(
+        overallPTScore * 0.5 +
+          overallCyclingScore * 0.25 +
+          overallWalkScore * 0.25
+      );
       // calculate linePositionFromLeft in pixels
       linePositionFromLeft = weightedOverallScore * 3.645;
     }
-}
+  }
   // TODO: temp hacky fix for alpha release, fix this
   function calcNationalNumberPixelGap(number) {
     if (number == 0) {
-      return -2
+      return -2;
     } else if (number != 100) {
-      return 78
+      return 78;
     } else {
-      return 71
+      return 71;
     }
   }
 
   function calcPixelGap(percent) {
-    ["0-10%", "30-40%", "60-70%", "90-100%"]
-    if (percent == "0-10%") {  
-      return 1
+    ["0-10%", "30-40%", "60-70%", "90-100%"];
+    if (percent == "0-10%") {
+      return 1;
     } else if (percent == "30-40%") {
-      return 68
+      return 68;
     } else if (percent == "60-70%") {
-      return 64
+      return 64;
     } else {
-      return 58
+      return 58;
     }
   }
-
 
   // TODO find function which can create this
   const nipy_spectral_100 = [
@@ -160,29 +172,26 @@
     "#f48f8e",
     "#c69494",
   ];
-
 </script>
 
 <div>
   <div class="legendtitle">
     <div class="legendtitle-text">Connectivity score:</div>
     {#if infoForPDF}
-      <div class="greybox" title="Overall connectivity score for selected square">
-          {weightedOverallScore}
+      <div
+        class="greybox"
+        title="Overall connectivity score for selected square"
+      >
+        {weightedOverallScore}
       </div>
     {:else}
-      <div class="greybox" style="opacity: 0;">
-         99
-      </div>
+      <div class="greybox" style="opacity: 0;">99</div>
     {/if}
   </div>
   {#if tileSettings["level"] === "National"}
     <div class="legend">
       {#if infoForPDF}
-        <div
-          class="scoreline"
-          style="left: {linePositionFromLeft}px"
-        />
+        <div class="scoreline" style="left: {linePositionFromLeft}px" />
       {/if}
       {#each nipy_spectral_100 as colour}
         <div
@@ -216,20 +225,15 @@
       {/each}
     </div>
   {:else}
-      <!-- if add new tile layer/colour schemes add here -->
+    <!-- if add new tile layer/colour schemes add here -->
   {/if}
-
-
 </div>
 
-
-
 <style>
-
   .legend {
     display: flex;
     border: 1px solid black;
-    position: relative; 
+    position: relative;
   }
   .national_square {
     width: 5px;
@@ -264,15 +268,15 @@
   }
 
   .legendtitle-text {
-      padding-right: 6px;
-      padding-bottom: 2px;
+    padding-right: 6px;
+    padding-bottom: 2px;
   }
 
   .greybox {
-      background: #f0f0f0;
-      padding: 5px;
-      border-radius: 10px;
-      border: 1px solid rgb(229, 229, 229);
-      min-width: min-content;
+    background: #f0f0f0;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgb(229, 229, 229);
+    min-width: min-content;
   }
 </style>

@@ -86,7 +86,8 @@
       );
       if (draw) {
         // TODO add ...&& switchStatus[index]
-        stopStatuses["switchStatus"][index] = stopStatuses["switchStatus"][index];
+        stopStatuses["switchStatus"][index] =
+          stopStatuses["switchStatus"][index];
       } else if (
         stopStatuses["switchStatus"][index] == stopStatuses["show"][index]
       ) {

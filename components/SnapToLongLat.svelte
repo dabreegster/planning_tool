@@ -42,7 +42,7 @@
 </script>
 
 <div style="font-size: 0.9rem;">
-  Latitude: 
+  Latitude:
   <input
     type="text"
     on:input={handleLatitudeInput}

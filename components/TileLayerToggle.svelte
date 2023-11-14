@@ -2,13 +2,7 @@
   export let tileSettings;
 
   function modes() {
-    return [
-      "Overall",
-      "Public transport",
-      "Walking",
-      "Cycling",
-      "Driving",
-    ]
+    return ["Overall", "Public transport", "Walking", "Cycling", "Driving"];
   }
 
   function purposes() {
@@ -20,13 +14,10 @@
       // "Health", // TODO: uncomment this when health scores found
       "Shopping",
       "Residential",
-    ]
+    ];
   }
   function tileLevels() {
-    return [
-      "National",
-      "Local authority",
-    ]
+    return ["National", "Local authority"];
   }
 
   function LAnames() {
@@ -377,23 +368,18 @@
 
 <div class="govuk-label" style="font-size: 0.9rem;">
   Tiles on/off:
-  <input type="checkbox" 
-    bind:checked={tileSettings["toggle"]} 
-  />
+  <input type="checkbox" bind:checked={tileSettings["toggle"]} />
 </div>
-<br/>
+<br />
 
 <div class="govuk-form-group" style="display: flex; margin-bottom: 20px">
   <div
     class="govuk-label"
     style="padding: 5px 32px 0px 0px; font-size: 0.9rem;"
-  >    
+  >
     Purpose:
   </div>
-  <select
-    class="govuk-select"
-    bind:value={tileSettings["purpose"]}
-  >
+  <select class="govuk-select" bind:value={tileSettings["purpose"]}>
     {#each purposes() as x}
       <option value={x}>{x}</option>
     {/each}
@@ -407,10 +393,7 @@
   >
     Mode:
   </div>
-  <select
-    class="govuk-select"
-    bind:value={tileSettings["mode"]}
-    >
+  <select class="govuk-select" bind:value={tileSettings["mode"]}>
     {#each modes() as x}
       <option value={x}>{x}</option>
     {/each}
@@ -424,10 +407,7 @@
   >
     Level:
   </div>
-  <select
-    class="govuk-select"
-    bind:value={tileSettings["level"]}
-  >
+  <select class="govuk-select" bind:value={tileSettings["level"]}>
     {#each tileLevels() as x}
       <option value={x}>{x}</option>
     {/each}
@@ -435,12 +415,12 @@
 </div>
 
 <div class="govuk-form-group" style="display: flex;">
-  <label 
+  <label
     class="govuk-label"
     for="scoreLayer"
     style="padding: 1px 27px 0px 0px; font-size: 0.9rem;"
-  > 
-    Local <br> authority: 
+  >
+    Local <br /> authority:
   </label>
   <select
     class="govuk-select"
@@ -464,6 +444,5 @@
     border: 1px solid rgb(0, 0, 0);
     height: 30px;
     width: 68%;
-
   }
 </style>

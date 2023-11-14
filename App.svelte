@@ -16,7 +16,6 @@
   import LaLevelScores from "./components/LALevelScores.svelte";
   import TileLayer from "./components/TileLayer.svelte";
 
-
   export let innerWidth = 0;
   export let innerHeight = 0;
   export let login_username = "user";
@@ -57,12 +56,13 @@
 <div>
   <Map {innerHeight}>
     <StopsLayer {stopLayerToggle} {stopCheckboxClicked} bind:stopStatuses />
-    <DrawControls {open} 
-      bind:stopLayerToggle 
-      bind:line_toggle 
+    <DrawControls
+      {open}
+      bind:stopLayerToggle
+      bind:line_toggle
       bind:toggleDisplayeRouteOnClick
     />
-    <TileLayer {tileOpacity} {tileSettings}/>
+    <TileLayer {tileOpacity} {tileSettings} />
     <Settings
       {infoForPDF}
       bind:stopStatuses
@@ -99,7 +99,7 @@
       bind:stopLayerToggle
       bind:line_toggle
     />
-    <LaLevelScores {tileOpacity} bind:tileSettings/>
+    <LaLevelScores {tileOpacity} bind:tileSettings />
   </Map>
 </div>
 

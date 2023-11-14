@@ -32,7 +32,13 @@ export function drawPolygon(color, opacity) {
   };
 }
 
-export function drawCircle(color, radius, outlineColor, outlineWidth, opacity = 1.0) {
+export function drawCircle(
+  color,
+  radius,
+  outlineColor,
+  outlineWidth,
+  opacity = 1.0
+) {
   return {
     type: "circle",
     paint: {

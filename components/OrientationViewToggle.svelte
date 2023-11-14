@@ -12,7 +12,7 @@
     // disable map rotation using touch rotation gesture
     map.touchZoomRotate.disableRotation();
     map.setBearing(0); // Set bearing to north
-    map.setPitch(0);   // Set pitch to 0 (top-down view)
+    map.setPitch(0); // Set pitch to 0 (top-down view)
   }
   function enableRotation() {
     // Enable map rotation using right click + drag
@@ -23,21 +23,17 @@
 
   $: {
     if (rotationToggle) {
-      enableRotation()
+      enableRotation();
     } else {
-      disableRotation()
+      disableRotation();
     }
   }
 </script>
 
-
 <div class="govuk-label" style="font-size: 0.9rem;">
   Right click rotate map on/off:
-  <input type="checkbox" 
-    bind:checked={rotationToggle} 
-  />
+  <input type="checkbox" bind:checked={rotationToggle} />
 </div>
-
 
 <style>
 </style>
