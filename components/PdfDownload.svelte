@@ -42,6 +42,7 @@
     border-radius: 8px;
     font-size: 0.9rem;
     transition: background-color 0.05s ease-in-out;
+    margin-left: -6px;
   }
   .white_button:not([disabled]):hover {
     background: #dfdfdf;

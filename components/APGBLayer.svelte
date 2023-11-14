@@ -96,7 +96,7 @@
   <label
     class="govuk-label"
     for="scoreLayer"
-    style="margin-right: 10px; margin-top: 5px; font-size: 1rem;"
+    style="margin-right: 10px; margin-top: 5px; font-size: 0.9rem;"
   >
     Aerial photo:
   </label>
@@ -117,8 +117,9 @@
   select {
     padding: 4px 8px;
     font-size: 0.9rem;
-    height: 35px;
+    height: 30px;
     float: right;
     border: 1px solid rgb(0, 0, 0);
+    width: 68%;
   }
 </style>

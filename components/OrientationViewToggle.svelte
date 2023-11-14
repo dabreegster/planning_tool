@@ -31,7 +31,7 @@
 </script>
 
 
-<div class="govuk-label" style="font-size: 1rem;">
+<div class="govuk-label" style="font-size: 0.9rem;">
   Right click rotate map on/off:
   <input type="checkbox" 
     bind:checked={rotationToggle} 

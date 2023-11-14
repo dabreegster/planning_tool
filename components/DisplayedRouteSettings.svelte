@@ -48,7 +48,7 @@
 </button> -->
 <br />
 <div class="startTimeSelection">
-  <label for="start-time-input" style="font-size: 0.9rem;"
+  <label for="start-time-input" style="font-size: 0.9rem; margin-right: 5px;"
     >Displayed route start time:</label
   >
   <input
@@ -58,11 +58,12 @@
     value="08:00"
     min="06:00"
     max="22:00"
-    style="font-size: 0.9rem; padding:5px; border: 1px solid;"
+    style="font-size: 0.9rem; padding:5px; border: 1px solid; height: 30px;"
     on:change={(e) => updateStartTime(e)}
   />
   <span class="validity" />
 </div>
+<br/>
 
 <style>
   input + span {
@@ -81,8 +82,9 @@
   }
   select {
     font-size: 0.9rem;
-    height: 35px;
+    height: 30px;
     float: right;
     border: 1px solid rgb(0, 0, 0);
+    margin-top: 7px;
   }
 </style>
