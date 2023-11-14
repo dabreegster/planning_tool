@@ -208,16 +208,7 @@ export async function lookupPTRoute(feature) {
     headers: jsonRequestHeaders("snap"),
     body: JSON.stringify(feature),
   });
-  const result = await resp.json();
-  feature.geometry.coordinates = result.geometry.coordinates;
-  feature.properties.ptMode = result.properties.ptMode;
-  feature.properties.ATCO = result.properties.ATCO;
-  feature.properties.arrivalTime = ["First stop"].concat(
-    Array(feature.properties.ATCO.length - 1).fill("not_set")
-  );
-  feature.properties.departureTime = Array(feature.properties.ATCO.length - 1)
-    .fill("not_set")
-    .concat("Last stop");
+  return await resp.json();
 }
 
 export async function lookupPathway(feature) {
@@ -240,7 +231,6 @@ export async function callPDFDownload(infoForPDF) {
   return await resp;
 }
 
-
 function jsonRequestHeaders(APIcode) {
   return {
     "Bypass-Tunnel-Reminder": "haha",
@@ -254,10 +244,10 @@ function jsonRequestHeaders(APIcode) {
 
 // const squareInfoEndpt = "https://a147-35-242-177-130.ngrok-free.app";
 // const floodfillEndpt = "https://cec0-35-242-177-130.ngrok-free.app";
-// const scoresEndpt = "https://cacb-35-246-77-214.ngrok-free.app";
 // const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";
-// const PDFEndpt = "https://6925-35-246-77-214.ngrok-free.app";
-// const LAEndpt = "https://d21c-35-246-77-214.ngrok-free.app";
+// const scoresEndpt = "https://83ba-34-147-177-92.ngrok-free.app";
+// const PDFEndpt = "https://5dbd-34-147-177-92.ngrok-free.app";
+// const LAEndpt = "https://61a9-34-147-177-92.ngrok-free.app";
 
 // export const snapAPIEndpt = "https://e69b-34-89-73-233.ngrok-free.app";
 
@@ -467,16 +457,7 @@ function jsonRequestHeaders(APIcode) {
 //     headers: jsonRequestHeaders(),
 //     body: JSON.stringify(feature),
 //   });
-//   const result = await resp.json();
-//   feature.geometry.coordinates = result.geometry.coordinates;
-//   feature.properties.ptMode = result.properties.ptMode;
-//   feature.properties.ATCO = result.properties.ATCO;
-//   feature.properties.arrivalTime = ["First stop"].concat(
-//     Array(feature.properties.ATCO.length - 1).fill("not_set")
-//   );
-//   feature.properties.departureTime = Array(feature.properties.ATCO.length - 1)
-//     .fill("not_set")
-//     .concat("Last stop");
+//   return await resp.json();
 // }
 
 // export async function lookupPathway(feature) {

@@ -1,8 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
-
   import Accordion from "./Accordion.svelte";
-  import TileLayer from "./TileLayer.svelte";
   import TileLayerToggle from "./TileLayerToggle.svelte";
   import PdfDownload from "./PdfDownload.svelte";
   import ApgbLayer from "./APGBLayer.svelte";
@@ -25,16 +22,6 @@
   export let pixelReduction = 300;
   export let toggleDisplayeRouteOnClick;
   export let tileSettings;
-  // let open = {
-  //   headLeft: false,
-  //   headRight: true,
-  // };
-
-  // onMount(() => {
-  //   setTimeout(() => {
-  //     open["headRight"] = false; // Hide the accordion after 0.1 seconds.
-  //   }, 10);
-  // });
 </script>
 
 <div class="whitebox" >

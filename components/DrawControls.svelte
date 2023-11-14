@@ -145,7 +145,21 @@
       } else if (feature.geometry.type == "LineString") {
         feature.properties["line_toggle"] = line_toggle;
         feature.properties["ptMode"] = ptmode;
-        await lookupPTRoute(feature);
+        const result = await lookupPTRoute(feature);
+        // if not drawn on known stops alert
+        if (result === "not all stops within 3km") {
+          alert("New routes must be between existing stops\n \nThese are highlighted for your selected mode when adding a new route");
+          return;
+        }
+        feature.geometry.coordinates = result.geometry.coordinates;
+        feature.properties.ptMode = result.properties.ptMode;
+        feature.properties.ATCO = result.properties.ATCO;
+        feature.properties.arrivalTime = ["First stop"].concat(
+          Array(feature.properties.ATCO.length - 1).fill("not_set")
+        );
+        feature.properties.departureTime = Array(feature.properties.ATCO.length - 1)
+          .fill("not_set")
+          .concat("Last stop");
         addGeometricProperties(feature);
       } else {
         addGeometricProperties(feature);

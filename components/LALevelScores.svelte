@@ -71,8 +71,12 @@
   $: {
     levelToggle = tileSettings["level"];
   }
+  let tileToggleOnOff
   $: {
-    if (levelToggle == "National" || selectedLA == "Hide") {
+    tileToggleOnOff = tileSettings["toggle"];
+  }
+  $: {
+    if (levelToggle == "National" || selectedLA == "Hide" || !tileToggleOnOff) {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
       }
