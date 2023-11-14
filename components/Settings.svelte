@@ -14,7 +14,6 @@
   import SnapToEastingNorthing from "./SnapToEastingNorthing.svelte";
   import ScoreLegend from "./ScoreLegend.svelte";
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
-  import LaLevelScoresToggle from "./LALevelScoresToggle.svelte";
   import OrientationViewToggle from './OrientationViewToggle.svelte'; 
 
   export let tileOpacity;
@@ -59,7 +58,6 @@
           <OpacitySlider bind:tileOpacity />
           <br />
           <TileLayerToggle bind:tileSettings/>
-          <LaLevelScoresToggle bind:tileSettings/>
         </div>
       </Accordion>
       <Accordion>
