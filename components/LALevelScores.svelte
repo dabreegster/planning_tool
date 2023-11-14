@@ -55,22 +55,42 @@
     }
   });
 
-  let LAtoggle;
-
+  // if LA changes, load new LA scores and set on map
+  let selectedLA;
   $: {
-    if (tileSettings["LA"] != "Hide") {
-      LAtoggle = tileSettings["LA"];
+    selectedLA = tileSettings["LA"];
+  }
+  $: {
+    if (selectedLA != "Hide") {
+      loadNewLAScores();
     }
   }
 
+  // if just tile level changes then add or remove layer
+  let levelToggle
   $: {
-    if (LAtoggle != "Hide") {
-      loadNewLAScores();
+    levelToggle = tileSettings["level"];
+  }
+  $: {
+    if (levelToggle == "National" || selectedLA == "Hide") {
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    } else {
+      setLayer()
+    }
+  }
+
+  // on opacity changes, just reset layer
+  $: {
+    if (geoJson && tileOpacity) {
+      setLayer();
     }
   }
 
   async function loadNewLAScores() {
     tileSettings["level"] = "Local authority";
+    console.log("Loading LA scores for:", tileSettings["LA"])
     // TODO add mode and purpose selection for LA scores
     let response = await getLABinnedScores(tileSettings["LA"]);
     if (response == "LA not in LA list") {
@@ -80,24 +100,8 @@
         center: response["centroid"],
         zoom: 12,
       });
-      console.log(LAScores);
-    }
-  }
-
-  $: {
-    if (LAScores) {
-      if (tileSettings["LA"] == "Hide" || !tileSettings["toggle"] || tileSettings["level"] !== "Local authority") {
-        geoJson = emptyGeojson();
-      } else {
-        geoJson = createSquareGeojson();
-      }
+      geoJson = createSquareGeojson();
       map.getSource(source).setData(geoJson);
-      setLayer();
-    }
-  }
-
-  $: {
-    if (LAScores && tileOpacity) {
       setLayer();
     }
   }
@@ -197,40 +201,6 @@
   }
 </script>
 
-<!-- <div class="govuk-form-group" style="display: flex; ">
-  <label
-    class="govuk-label"
-    for="scoreLayer"
-    style="margin-right: 10px; margin-top: 8px; font-size: 1rem;"
-  >
-    LA socres:
-  </label>
-  <select
-    class="govuk-select"
-    id="scoreLayer"
-    name="scoreLayer"
-    bind:value={LASelected}
-    on:change={loadNewLAScores}
-  >
-    {#each LANames as LAName}
-      <option value={LAName}>{LAName}</option>
-    {/each}
-  </select>
-</div> -->
 <style>
-  /* div {
-    z-index: 1;
-    position: absolute;
-    bottom: 44px;
-    right: 65px;
-    background: white;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
-  }
 
-  select {
-    font-size: 16px;
-    padding: 4px 8px;
-  } */
 </style>

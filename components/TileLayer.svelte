@@ -78,7 +78,7 @@
         addSource(purpose, mode);
       }
     }
-    // load in base scores on arrival
+    // load in national base scores on arrival
     tileSettings["level"] = "National";
     tileSettings["toggle"] = true;
   });
