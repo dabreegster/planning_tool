@@ -51,11 +51,21 @@
   export let stopLayerToggle;
   $: {
     if (open["headRight"]) {
-      drawControlsToggle = "display-button-on";
+      // drawControlsToggle = "display-button-on";
+      updateButtonsToggle("display-button-on");
     } else {
-      drawControlsToggle = "display-button-off";
+      // drawControlsToggle = "display-button-off";
+      updateButtonsToggle("display-button-off");
     }
   }
+
+  function updateButtonsToggle(display) {
+    drawControlsToggle = [];
+    for (let i = 0; i < 6; i++) {
+      drawControlsToggle.push(display)
+    }
+  }
+
   const styles = [
     {
       id: "base-line",
@@ -101,8 +111,13 @@
     });
     map.addControl(drawControls);
 
+    map.on("click", async function (e) {
+      console.log(drawControls.getMode())
+    }); 
+
     // When we draw a new feature, add it to the store
     map.on("draw.create", async (e) => {
+      updateButtonsToggle("display-button-on");
       let ptmode = stopLayerToggle;
       stopLayerToggle = "toggle_drawing_off";
       // Assume there's exactly 1 feature
@@ -255,40 +270,28 @@
     }
   }
 
-  function addNewBus() {
+  function addNewRoute(mode, i) {
     toggleDisplayeRouteOnClick = false;
-    stopLayerToggle = "bus";
     line_toggle = "new_pt_route";
+    stopLayerToggle = mode;
+    updateButtonsToggle("display-button-on");
+    drawControlsToggle[i] = "display-button-clicked"
+
     drawControls.changeMode("draw_line_string");
-  }
-  function addNewTrain() {
-    toggleDisplayeRouteOnClick = false;
-    stopLayerToggle = "rail";
-    line_toggle = "new_pt_route";
-    drawControls.changeMode("draw_line_string");
-  }
-  function addNewFerry() {
-    toggleDisplayeRouteOnClick = false;
-    stopLayerToggle = "ferry";
-    line_toggle = "new_pt_route";
-    drawControls.changeMode("draw_line_string");
-  }
-  function addNewUnderground() {
-    toggleDisplayeRouteOnClick = false;
-    stopLayerToggle = "tube_lightrail_metro";
-    line_toggle = "new_pt_route";
-    drawControls.changeMode("draw_line_string");
-  }
-  function addNewTram() {
-    toggleDisplayeRouteOnClick = false;
-    stopLayerToggle = "tram";
-    line_toggle = "new_pt_route";
-    drawControls.changeMode("draw_line_string");
+    setTimeout(function () {
+        drawControls.changeMode("draw_line_string");
+    }, 50);
   }
   function addNewSelectedArea() {
     toggleDisplayeRouteOnClick = false;
     area_toggle = "select_area";
+    updateButtonsToggle("display-button-on");
+    drawControlsToggle[5] = "display-button-clicked"
+
     drawControls.changeMode("draw_polygon");
+    setTimeout(function () {
+        drawControls.changeMode("draw_polygon");
+    }, 50);
   }
 
   // find the min and max x and y coordinates of an area
@@ -401,13 +404,17 @@
   //   }
   //   return new Set(allSqaureIDs);
   // }
+
+  $: {
+    console.log(drawControls)
+  }
 </script>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[0]}
   title="Add new bus route"
   style="top: 6px;"
-  on:click={addNewBus}
+  on:click={() => addNewRoute("bus", 0)}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/bus-icon.png"
@@ -416,10 +423,10 @@
 </button>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[1]}
   title="Add new national rail route"
   style="top: 62px;"
-  on:click={addNewTrain}
+  on:click={() => addNewRoute("rail", 1)}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/train-icon.png"
@@ -428,10 +435,10 @@
 </button>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[2]}
   title="Add new ferry route"
   style="top: 118px;"
-  on:click={addNewFerry}
+  on:click={() => addNewRoute("ferry", 2)}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/ferry-icon.png"
@@ -440,10 +447,10 @@
 </button>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[3]}
   title="Add new tram route"
   style="top: 174px;"
-  on:click={addNewTram}
+  on:click={() => addNewRoute("tram", 3)}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/tram-icon.png"
@@ -452,10 +459,10 @@
 </button>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[4]}
   title="Add new underground/metro/light rail route"
   style="top: 230px;"
-  on:click={addNewUnderground}
+  on:click={() => addNewRoute("tube_lightrail_metro", 4)}
 >
   <img
     src="https://raw.githubusercontent.com/ADD-William-WaltersDavis/planning_tool/main/assets/images/underground-icon.png"
@@ -464,7 +471,7 @@
 </button>
 
 <button
-  class={drawControlsToggle}
+  class={drawControlsToggle[5]}
   title="Select impact area"
   style="top: 286px;"
   on:click={addNewSelectedArea}
@@ -497,6 +504,16 @@
   }
   .display-button-on:hover {
     background: #dfdfdf; /* Grey background color on hover */
+  }
+  .display-button-clicked {
+    z-index: 1;
+    position: absolute;
+    left: calc(25% + 15px);
+    padding: 7px;
+    border-radius: 8px;
+    background: #bbbbbb;
+    border-color: #bbbbbb;
+    transition: background-color 0.05s;
   }
   .display-button-off {
     display: none;
