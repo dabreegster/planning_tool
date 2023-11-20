@@ -111,10 +111,6 @@
     });
     map.addControl(drawControls);
 
-    map.on("click", async function (e) {
-      console.log(drawControls.getMode())
-    }); 
-
     // When we draw a new feature, add it to the store
     map.on("draw.create", async (e) => {
       updateButtonsToggle("display-button-on");
@@ -405,9 +401,6 @@
   //   return new Set(allSqaureIDs);
   // }
 
-  $: {
-    console.log(drawControls)
-  }
 </script>
 
 <button

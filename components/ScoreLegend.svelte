@@ -41,20 +41,6 @@
       return 71;
     }
   }
-
-  function calcPixelGap(percent) {
-    ["0-10%", "30-40%", "60-70%", "90-100%"];
-    if (percent == "0-10%") {
-      return 1;
-    } else if (percent == "30-40%") {
-      return 68;
-    } else if (percent == "60-70%") {
-      return 64;
-    } else {
-      return 58;
-    }
-  }
-
   // TODO find function which can create this
   const nipy_spectral_100 = [
     "#000000",
@@ -175,20 +161,20 @@
 </script>
 
 <div>
-  <div class="legendtitle">
-    <div class="legendtitle-text">Connectivity score:</div>
-    {#if infoForPDF}
-      <div
-        class="greybox"
-        title="Overall connectivity score for selected square"
-      >
-        {weightedOverallScore}
-      </div>
-    {:else}
-      <div class="greybox" style="opacity: 0;">99</div>
-    {/if}
-  </div>
   {#if tileSettings["level"] === "National"}
+    <div class="legendtitle">
+      <div class="legendtitle-text">Connectivity score:</div>
+      {#if infoForPDF}
+        <div
+          class="greybox"
+          title="Overall connectivity score for selected square"
+        >
+          {weightedOverallScore}
+        </div>
+      {:else}
+        <div class="greybox" style="opacity: 0;">99</div>
+      {/if}
+    </div>
     <div class="legend">
       {#if infoForPDF}
         <div class="scoreline" style="left: {linePositionFromLeft}px" />
@@ -208,6 +194,21 @@
       {/each}
     </div>
   {:else if tileSettings["level"] === "Local authority"}
+    <div class="legendtitle">
+      <div class="legendtitle-text">Local authority connectivity decile:</div>
+      <div class="greybox" style="opacity: 0;">99</div>
+      <!-- TODO: when get decile on click load in which decile here-->
+      <!-- {#if infoForPDF}
+        <div
+          class="greybox"
+          title="Overall connectivity score for selected square"
+        >
+          {weightedOverallScore}
+        </div>
+      {:else}
+        <div class="greybox" style="opacity: 0;">99</div>
+      {/if} -->
+    </div>
     <div class="legend">
       {#each laScoreColours as colour}
         <div
@@ -216,11 +217,10 @@
         />
       {/each}
     </div>
-    <div class="national_numbers">
-      <!-- {#each [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100] as number} -->
-      {#each ["0-10%", "30-40%", "60-70%", "90-100%"] as percent}
-        <div style="margin-left: {calcPixelGap(percent)}px">
-          {percent}
+    <div class="national_numbers" style="margin-left: 5px">
+      {#each ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"] as decile}
+        <div style="margin-right: 18px">
+          {decile}
         </div>
       {/each}
     </div>
