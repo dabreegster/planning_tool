@@ -494,7 +494,8 @@
   .display-button-on {
     z-index: 1;
     position: absolute;
-    left: calc(25% + 15px);
+    /* left: calc(25% + 15px); */
+    left: 535px;
     padding: 7px;
     border-radius: 8px;
     background: #fafafa;
@@ -507,7 +508,8 @@
   .display-button-clicked {
     z-index: 1;
     position: absolute;
-    left: calc(25% + 15px);
+    /* left: calc(25% + 15px); */
+    left: 535px;
     padding: 7px;
     border-radius: 8px;
     background: #bbbbbb;
