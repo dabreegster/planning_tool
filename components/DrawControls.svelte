@@ -71,6 +71,12 @@
       id: "base-line",
       filter: isLine,
       ...drawLine(color, lineWidth),
+      paint: {
+        "line-color": color,
+        "line-width": lineWidth,
+        "line-opacity": 1,
+        "line-dasharray": [2,2.5],
+      },
     },
     {
       id: "base-polygon-fill",
