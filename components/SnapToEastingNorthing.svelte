@@ -1,5 +1,6 @@
 <script>
   import { getContext } from "svelte";
+  import { areaSearchDictionary } from "../stores.js";
   import proj4 from "proj4";
 
   const { getMap } = getContext("map");
@@ -10,11 +11,17 @@
     "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs";
   var wgs84 = "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs";
 
-  let easting = 0;
-  let northing = 0;
 
   async function snapToEastNothing() {
+    let easting = $areaSearchDictionary.eastnorth["easting"]
+    let northing = $areaSearchDictionary.eastnorth["northing"]
     // convert easting/northing -> longitude/latitude
+    if (!easting || !northing) {
+      alert(
+        "Please enter valid easting/northing coordinates\n 0 ≤ Easting ≤ 700,000\n 0 ≤ Northing ≤ 1,300,000"
+      );
+      return;
+    }
     if (
       easting <= 700_000 &&
       easting >= 0 &&
@@ -44,20 +51,13 @@
     }
   }
 
-  function handleEastingInput(event) {
-    easting = event.target.value;
-  }
-
-  function handleNorthingInput(event) {
-    northing = event.target.value;
-  }
 </script>
 
 <div style="font-size: 0.9rem; margin-left:5px;">
   Easting:
   <input
     type="text"
-    on:input={handleEastingInput}
+    bind:value={$areaSearchDictionary.eastnorth["easting"]}
     on:keydown={handleKeyPress}
   />
   <button class="go_button" on:click={snapToEastNothing}>Go</button>
@@ -65,7 +65,7 @@
     Northing:
     <input
       type="text"
-      on:input={handleNorthingInput}
+      bind:value={$areaSearchDictionary.eastnorth["northing"]}
       on:keydown={handleKeyPress}
     />
   </div>

@@ -1,20 +1,26 @@
 <script>
   import { getContext } from "svelte";
+  import { areaSearchDictionary } from "../stores.js";
 
   const { getMap } = getContext("map");
   const map = getMap();
 
-  let longtiude = 0;
-  let latitude = 0;
-
   async function snapToLongLat() {
+    let latitude = $areaSearchDictionary.latlong["latitude"]
+    let longitude = $areaSearchDictionary.latlong["longitude"]
+    if (!latitude || !longitude) {
+      alert(
+        "Please enter valid longitude/latitude coordinates\n -180 ≤ Longitude ≤ 180\n -90 ≤ Latitude ≤ 90"
+      );
+      return;
+    }
     if (
-      longtiude <= 180 &&
-      longtiude >= -180 &&
+      longitude <= 180 &&
+      longitude >= -180 &&
       latitude <= 90 &&
       latitude >= -90
     ) {
-      let coords = [longtiude, latitude];
+      let coords = [longitude, latitude];
       map.jumpTo({
         center: coords,
         zoom: 14,
@@ -32,20 +38,13 @@
     }
   }
 
-  function handleLongitudeInput(event) {
-    longtiude = event.target.value;
-  }
-
-  function handleLatitudeInput(event) {
-    latitude = event.target.value;
-  }
 </script>
 
 <div style="font-size: 0.9rem;">
   Latitude:
   <input
     type="text"
-    on:input={handleLatitudeInput}
+    bind:value={$areaSearchDictionary.latlong["latitude"]}
     on:keydown={handleKeyPress}
   />
   <button class="go_button" on:click={snapToLongLat}>Go</button>
@@ -53,7 +52,7 @@
     Longitude:
     <input
       type="text"
-      on:input={handleLongitudeInput}
+      bind:value={$areaSearchDictionary.latlong["longitude"]}
       on:keydown={handleKeyPress}
     />
   </div>

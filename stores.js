@@ -3,6 +3,7 @@ import { writable, derived } from "svelte/store";
 export const gjScheme = writable(emptyGeojson());
 export const currentSidebarHover = writable(null);
 export const currentMapHover = writable(null);
+export const areaSearchDictionary = writable(emptyAreaSearchDictionary());
 
 // TODO Should we store a map from ID to feature?
 // TODO DrawControls will partly own state. Do we have to listen for every geometry change?
@@ -46,4 +47,18 @@ export function clearCurrentlyEditing() {
     });
     return gj;
   });
+}
+
+export function emptyAreaSearchDictionary() {
+  return {
+    latlong: {
+      latitude: null,
+      longitude: null,
+    },
+    eastnorth: {
+      easting: null,
+      northing: null,
+    },
+    postcode: null,
+  }
 }

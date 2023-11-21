@@ -1,5 +1,5 @@
 <script>
-  export let startTimeSeconds = 28800;
+  export let startTimeSeconds;
   export let purpose = "Business";
   export let toggleDisplayeRouteOnClick = false;
 
@@ -60,6 +60,7 @@
     on:change={(e) => updateStartTime(e)}
   />
   <span class="validity" />
+  <!-- <button class="go_button" on:click={snapToPostcode}>Go</button> -->
 </div>
 <br />
 
@@ -85,4 +86,15 @@
     border: 1px solid rgb(0, 0, 0);
     margin-top: 7px;
   }
+  /* .go_button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    transition: background-color 0.05s ease-in-out;
+  }
+  .go_button:hover {
+    background: #dfdfdf;
+  } */
 </style>
