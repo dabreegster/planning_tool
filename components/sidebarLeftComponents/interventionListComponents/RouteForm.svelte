@@ -1,5 +1,5 @@
 <script>
-  import { NumberInput, TextInput, DataTable } from "carbon-components-svelte";
+  import { TextInput, DataTable } from "carbon-components-svelte";
   export let props;
 
   let headers = [
@@ -41,32 +41,46 @@
     let currentIndex = row["stopNumber"] - 1;
     return props.departureTime[currentIndex];
   }
+  // disable scrolling on number elements
+  document.addEventListener("wheel", function(event){
+      if(document.activeElement.type === "number"){
+          document.activeElement.blur();
+      }
+  });
 </script>
 
 <div style="font-size: 0.9rem">Route name:</div>
 <TextInput
   bind:value={props.name}
-  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
+  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px; width: 300px;"
 />
 <br />
 
 <div style="font-size: 0.9rem">Number of services on route per day:</div>
-<NumberInput
+<input 
+  type="number"
+  class="numberinput"
+  bind:value={props.dailyTrips} 
+  min="1" 
+/>
+<!-- <NumberInput
   hideSteppers
   bind:value={props.dailyTrips}
   style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
-/>
+/> -->
 
+<br />
 <br />
 <div style="font-size: 0.9rem">
   Time between each of these services (minutes):
 </div>
-<NumberInput
-  hideSteppers
-  style="font-size: 14px; background-color: white; border: 1px solid black; height: 30px;"
-  bind:value={props.frequency}
+<input 
+  type="number"
+  class="numberinput"
+  bind:value={props.frequency} 
+  min="0" 
 />
-
+<br />
 <br />
 <div style="font-size: 0.9rem">First service timetable:</div>
 <DataTable bind:rows {headers}>
@@ -92,6 +106,18 @@
     {/if}
   </svelte:fragment>
 </DataTable>
+
+<style>
+  .numberinput {
+    font-size: 14px; 
+    background-color: white; 
+    border: 1px solid black; 
+    height: 30px;
+    width: 300px;
+  }
+
+
+</style>
 <!-- <DataTable bind:rows {headers}>
   <svelte:fragment slot="cell" let:cell let:row>
     {#if cell.key == "departureTime" && row.departureTime != "Last stop"}
