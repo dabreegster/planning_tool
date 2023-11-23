@@ -34,7 +34,7 @@
       ]);
       console.log(longitudeLatitude);
       let coords = [longitudeLatitude[0], longitudeLatitude[1]];
-      map.jumpTo({
+      map.flyTo({
         center: coords,
         zoom: 14,
       });

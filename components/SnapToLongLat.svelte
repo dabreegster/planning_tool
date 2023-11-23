@@ -21,7 +21,7 @@
       latitude >= -90
     ) {
       let coords = [longitude, latitude];
-      map.jumpTo({
+      map.flyTo({
         center: coords,
         zoom: 14,
       });

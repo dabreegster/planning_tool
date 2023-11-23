@@ -86,11 +86,11 @@
   .landed {
     background-color: white;
     position: absolute;
-    width: calc(100% - 600px);
+    width: calc(100% - 1000px);
     height: calc(100% - 200px);
     padding: 20px;
     border-radius: 10px;
-    right: 300px;
+    right: 500px;
     top: 100px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
