@@ -97,6 +97,7 @@
       // console.log(req);
       let resp = await callFloodfillApi(req);
       console.timeEnd("floodfill API");
+      console.log(resp);
 
       console.time("square scores API");
       let squareScores = await getSquareScore(squareID);
@@ -148,16 +149,24 @@
     if (map.getLayer(squareLayer)) {
       map.removeLayer(squareLayer);
     }
-    map.addLayer({
-      source,
-      id: squareLayer,
-      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
-      type: "line",
-      paint: {
-        "line-color": "#000000",
-        "line-width": 3,
+    let beforeID = null;
+    if (map.getLayer("bus_layer")) {
+      // add below bus_layer
+      beforeID = "bus_layer";
+    }
+    map.addLayer(
+      {
+        source,
+        id: squareLayer,
+        filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
+        type: "line",
+        paint: {
+          "line-color": "#000000",
+          "line-width": 3,
+        },
       },
-    });
+      beforeID
+    );
   }
 
   function dataChanged(resp, gj) {
@@ -233,58 +242,72 @@
         map.removeLayer(layer);
       }
     }
-    map.addLayer({
-      source,
-      id: squareLayer,
-      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
-      type: "line",
-      paint: {
-        "line-color": "#000000",
-        "line-width": 3,
+    let beforeID = null;
+    if (map.getLayer("bus_layer")) {
+      // add below bus_layer
+      beforeID = "bus_layer";
+    }
+    map.addLayer(
+      {
+        source,
+        id: squareLayer,
+        filter: ["all", ["==", "$type", "LineString"], ["==", "name", "square"]],
+        type: "line",
+        paint: {
+          "line-color": "#000000",
+          "line-width": 3,
+        },
       },
-    });
-    map.addLayer({
-      source,
-      id: pointLayer,
-      filter: ["all", ["==", "$type", "Point"], ["==", "purpose", purposeIdx]],
-      type: "circle",
-      paint: {
-        "circle-radius": 10.0,
-        "circle-color": "white",
-        "circle-opacity": 1.0,
-        "circle-stroke-color": "black",
-        "circle-stroke-width": 2,
+      beforeID,
+    );
+    map.addLayer(
+      {
+        source,
+        id: pointLayer,
+        filter: ["all", ["==", "$type", "Point"], ["==", "purpose", purposeIdx]],
+        type: "circle",
+        paint: {
+          "circle-radius": 10.0,
+          "circle-color": "white",
+          "circle-opacity": 0.8,
+          "circle-stroke-color": "black",
+          "circle-stroke-width": 2,
+        },
       },
-    });
-    map.addLayer({
-      source,
-      id: lineLayer,
-      filter: ["all", ["==", "$type", "LineString"], ["==", "name", "link"]],
-      type: "line",
-      paint: {
-        "line-color": [
-          "match",
-          ["get", "link_type"],
-          0,
-          "#1f493d",
-          1,
-          "#EE7C0E",
-          // Fallback shouldn't happen
-          "red",
-        ],
-        // sqrt(x) / sqrt(max) * 10
-        "line-width": [
-          "*",
-          10,
-          [
-            "/",
-            ["sqrt", ["get", purpose]],
-            Math.sqrt(maxPerPurpose[purposeIdx]),
+      // beforeID,
+    );
+    map.addLayer(
+      {
+        source,
+        id: lineLayer,
+        filter: ["all", ["==", "$type", "LineString"], ["==", "name", "link"]],
+        type: "line",
+        paint: {
+          "line-color": [
+            "match",
+            ["get", "link_type"],
+            0,
+            "#1f493d",
+            1,
+            "#EE7C0E",
+            // Fallback shouldn't happen
+            "red",
           ],
-        ],
-        "line-opacity": 1.0,
+          // sqrt(x) / sqrt(max) * 10
+          "line-width": [
+            "*",
+            10,
+            [
+              "/",
+              ["sqrt", ["get", purpose]],
+              Math.sqrt(maxPerPurpose[purposeIdx]),
+            ],
+          ],
+          "line-opacity": 1.0,
+        },
       },
-    });
+      beforeID,
+    );
 
     map.on("mousemove", (e) => {
       const features = map.queryRenderedFeatures(e.point);
