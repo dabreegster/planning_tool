@@ -426,7 +426,8 @@
     class="govuk-select"
     id="scoreLayer"
     name="scoreLayer"
-    style="margin-top: 5px;"
+    style="margin-top: 5px; opacity: {tileSettings["level"] !== "Local authority" ? 0.4 : 1};"
+    disabled={tileSettings["level"] !== "Local authority"}
     bind:value={tileSettings["LA"]}
   >
     {#each LAnames() as LAName}
