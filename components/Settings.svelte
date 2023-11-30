@@ -31,7 +31,7 @@
     <SnapToPostcode />
   </div>
   <AccordionWithTwoHeaders {pixelReduction}>
-    <div slot="headLeft" class="header">Select location</div>
+    <div slot="headLeft" class="header">Coordinate search</div>
     <div slot="details">
       <SnapToLongLat />
       <br />

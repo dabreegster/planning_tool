@@ -34,7 +34,7 @@
       ]);
       console.log(longitudeLatitude);
       let coords = [longitudeLatitude[0], longitudeLatitude[1]];
-      map.jumpTo({
+      map.flyTo({
         center: coords,
         zoom: 14,
       });
@@ -54,21 +54,21 @@
 </script>
 
 <div style="font-size: 0.9rem; margin-left:5px;">
-  Easting:
-  <input
-    type="text"
-    bind:value={$areaSearchDictionary.eastnorth["easting"]}
-    on:keydown={handleKeyPress}
-  />
-  <button class="go_button" on:click={snapToEastNothing}>Go</button>
-  <div style="float: right; margin-right: 10px;">
+  <div style="float: left; margin-right: 18px;">
+    Easting:
+    <input
+      type="text"
+      bind:value={$areaSearchDictionary.eastnorth["easting"]}
+      on:keydown={handleKeyPress}
+    />
+  </div>
     Northing:
     <input
       type="text"
       bind:value={$areaSearchDictionary.eastnorth["northing"]}
       on:keydown={handleKeyPress}
     />
-  </div>
+  <button class="go_button" on:click={snapToEastNothing}>Go</button>
 </div>
 
 <style>
