@@ -12,7 +12,7 @@
       alert(
         "Please enter valid longitude/latitude coordinates\n -180 ≤ Longitude ≤ 180\n -90 ≤ Latitude ≤ 90"
       );
-      return
+      return;
     }
     if (
       longitude <= 180 &&
@@ -21,7 +21,7 @@
       latitude >= -90
     ) {
       let coords = [longitude, latitude];
-      map.jumpTo({
+      map.flyTo({
         center: coords,
         zoom: 14,
       });
@@ -40,7 +40,7 @@
 
 </script>
 
-<!-- <div style="font-size: 0.9rem;">
+<div style="font-size: 0.9rem;">
   Latitude:
   <input
     type="text"
@@ -56,24 +56,6 @@
       on:keydown={handleKeyPress}
     />
   </div>
-</div> -->
-
-<div style="font-size: 0.9rem;">
-  <div style="float: left; margin-right:10px;">
-    Latitude:
-    <input
-      type="text"
-      bind:value={$areaSearchDictionary.latlong["latitude"]}
-      on:keydown={handleKeyPress}
-    />
-  </div>
-    Longitude:
-    <input
-      type="text"
-      bind:value={$areaSearchDictionary.latlong["longitude"]}
-      on:keydown={handleKeyPress}
-    />
-  <button class="go_button" on:click={snapToLongLat}>Go</button>
 </div>
 
 <style>

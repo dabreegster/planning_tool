@@ -54,21 +54,21 @@
 </script>
 
 <div style="font-size: 0.9rem; margin-left:5px;">
-  <div style="float: left; margin-right: 18px;">
-    Easting:
-    <input
-      type="text"
-      bind:value={$areaSearchDictionary.eastnorth["easting"]}
-      on:keydown={handleKeyPress}
-    />
-  </div>
+  Easting:
+  <input
+    type="text"
+    bind:value={$areaSearchDictionary.eastnorth["easting"]}
+    on:keydown={handleKeyPress}
+  />
+  <button class="go_button" on:click={snapToEastNothing}>Go</button>
+  <div style="float: right; margin-right: 10px;">
     Northing:
     <input
       type="text"
       bind:value={$areaSearchDictionary.eastnorth["northing"]}
       on:keydown={handleKeyPress}
     />
-  <button class="go_button" on:click={snapToEastNothing}>Go</button>
+  </div>
 </div>
 
 <style>
