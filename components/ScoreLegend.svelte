@@ -1,4 +1,6 @@
 <script>
+  import { RingLoader } from "svelte-loading-spinners";
+
   export let tileOpacity;
   export let infoForPDF;
   export let tileSettings;
@@ -181,14 +183,6 @@
       return purpose.toLowerCase();
     }
   }
-  function showScore(hoverScore) {
-    if (hoverScore) {
-      return hoverScore;
-    } else {
-      return "Loading..."
-    }
-
-  }
 </script>
 
 <div>
@@ -200,7 +194,11 @@
           class="greybox"
           title="Overall connectivity score for selected square"
         >
-          {showScore(hoverScore)}
+          {#if hoverScore !== undefined}
+            {hoverScore}
+          {:else}
+            <RingLoader size="20" color="#FF3E00" unit="px" duration="2s"/>
+          {/if}
         </div>
       {:else}
         <div class="greybox" style="opacity: 0;">99</div>
