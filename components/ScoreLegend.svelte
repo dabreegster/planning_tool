@@ -33,9 +33,14 @@
   //   }
   // }
   $: {
-    if (hoverScore) {
+    if (hoverScore !== null) {
       // calculate linePositionFromLeft in pixels
-      linePositionFromLeft = hoverScore * 3.645;
+      if (hoverScore == 100) {
+        // hard code for 100 to have no gap
+        linePositionFromLeft = hoverScore * 3.645 + 0.4;
+      } else {
+        linePositionFromLeft = hoverScore * 3.645;
+      }
     }
   }
   // TODO: temp hacky fix for alpha release, fix this
@@ -182,7 +187,7 @@
   {#if tileSettings["level"] === "National"}
     <div class="legendtitle">
       <div class="legendtitle-text"> {getModeText(tileSettings["mode"])} connectivity score for {getPurposeText(tileSettings["purpose"])}:</div>
-      {#if hoverScore}
+      {#if hoverScore !== null}
         <div
           class="greybox"
           title="Overall connectivity score for selected square"
@@ -194,7 +199,7 @@
       {/if}
     </div>
     <div class="legend">
-      {#if hoverScore}
+      {#if hoverScore !== null}
         <div class="scoreline" style="left: {linePositionFromLeft}px" />
       {/if}
       {#each nipy_spectral_100 as colour}

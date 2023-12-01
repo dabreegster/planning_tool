@@ -23,7 +23,6 @@
   let lastRequestTime = 0;
   let zoom = map.getZoom();
   let squaresFound = false;
-  let mode = "Public Transport";
   let open;
   export let hoverScore = null;
   export let tileSettings;
@@ -62,7 +61,7 @@
             squaresFound = true;
             freeForRequest = true;
             hoverScore = scores[squareID];
-              return;
+            return;
           }
         }
       }
