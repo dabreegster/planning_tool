@@ -197,7 +197,7 @@
           {#if hoverScore !== undefined}
             {hoverScore}
           {:else}
-            <RingLoader size="20" color="#FF3E00" unit="px" duration="2s"/>
+            <RingLoader size="20" color="#FF3E00" unit="px" duration="0.7s"/>
           {/if}
         </div>
       {:else}
