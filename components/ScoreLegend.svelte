@@ -181,6 +181,14 @@
       return purpose.toLowerCase();
     }
   }
+  function showScore(hoverScore) {
+    if (hoverScore) {
+      return hoverScore;
+    } else {
+      return "Loading..."
+    }
+
+  }
 </script>
 
 <div>
@@ -192,7 +200,7 @@
           class="greybox"
           title="Overall connectivity score for selected square"
         >
-          {hoverScore}
+          {showScore(hoverScore)}
         </div>
       {:else}
         <div class="greybox" style="opacity: 0;">99</div>
