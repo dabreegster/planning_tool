@@ -1,5 +1,5 @@
 <script>
-  import Spinner from "svelte-spinner";
+  import { RingLoader } from "svelte-loading-spinners";
   // import DebugApi from "./DebugApi.svelte";
   import { gjScheme } from "../../stores.js";
   import { geojsonToApiPayload, callApi } from "../../api.js";
@@ -22,10 +22,16 @@
     if (totalSquares > 0) {
       responseJson = null;
       loading = true;
-      requestJson = await geojsonToApiPayload(
-        $gjScheme.features,
-        login_username
-      );
+      try {
+        requestJson = await geojsonToApiPayload(
+          $gjScheme.features,
+          login_username
+        );
+      } catch (error) {
+        loading = false;
+        alert("An error occurred during your recalculation\n\n Please make sure each route has been filled out completely");
+        return;
+      };
       if (requestJson == "stop_lookup_error") {
         loading = false;
         return;
@@ -49,17 +55,23 @@
   }
 </script>
 
-<button
-  type="button"
-  title="Calculate impact of new scheme on impact areas"
-  disabled={$gjScheme.features.length == 0 || loading}
-  on:click={recalculate}
-  >Calculate impact
-</button>
-
-{#if loading}
-  <Spinner class="spinner" />
-{/if}
+<div>
+  <button
+    type="button"
+    title="Calculate impact of new scheme on impact areas"
+    disabled={$gjScheme.features.length == 0 || loading}
+    on:click={recalculate}
+    >Calculate impact
+  </button>
+  {#if loading}
+    <div class="ring-loader">
+      <RingLoader size="25" color="#FF3E00" unit="px" duration="2s"/>
+    </div>
+    <p>
+      Calculating... ~40s
+    </p>
+  {/if}
+</div>
 
 <!-- <DebugApi {requestJson} {responseJson} /> -->
 <style>
@@ -73,9 +85,20 @@
     padding: 8px 10px;
     transition: background-color 0.05s ease-in-out;
     font-size: 1rem;
+    float: left;
   }
-
   button:hover {
     background: #005a31;
+  }
+  .ring-loader {
+    float:left;
+    margin-left: 10px;
+    margin-top: 5px;
+  }
+  p {
+    font-size: 1rem;
+    float:left;
+    margin-left: 8px;
+    margin-top: 7px;
   }
 </style>
