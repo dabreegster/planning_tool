@@ -1,6 +1,6 @@
 <script>
   import AccordionWithTwoHeaders from "./AccordionWithTwoHeaders.svelte";
-  import HoverScores from "./HoverScores.svelte";
+  import HoverScores_legacy from "./HoverScores_legacy.svelte";
   import PurposeWeightSliders from "./PurposeWeightSliders.svelte";
   import DisplayWeightedGeojsons from "./DisplayWeightedGeojsons.svelte";
   import EntireScheme from "./sidebarLeftComponents/EntireScheme.svelte";
@@ -37,7 +37,7 @@
       Coming soon
       <!-- <PurposeWeightSliders bind:weights {squareScores} />
       <br />
-      <HoverScores
+      <HoverScores_legacy
         {weights}
         {open}
         bind:squareScores

@@ -2,33 +2,40 @@
   export let tileOpacity;
   export let infoForPDF;
   export let tileSettings;
+  export let hoverScore;
 
   let linePositionFromLeft = 0;
   let weightedOverallScore;
-  $: {
-    if (infoForPDF) {
-      // select overall score for each mode (not just [6] as currently health not calculated for PT)
-      let overallPTScore =
-        infoForPDF["squareScores"]["pt"][
-          infoForPDF["squareScores"]["pt"].length - 1
-        ];
-      let overallCyclingScore =
-        infoForPDF["squareScores"]["cycling"][
-          infoForPDF["squareScores"]["cycling"].length - 1
-        ];
-      let overallWalkScore =
-        infoForPDF["squareScores"]["walk"][
-          infoForPDF["squareScores"]["walk"].length - 1
-        ];
+  // $: {
+  //   if (infoForPDF) {
+  //     // select overall score for each mode (not just [6] as currently health not calculated for PT)
+  //     let overallPTScore =
+  //       infoForPDF["squareScores"]["pt"][
+  //         infoForPDF["squareScores"]["pt"].length - 1
+  //       ];
+  //     let overallCyclingScore =
+  //       infoForPDF["squareScores"]["cycling"][
+  //         infoForPDF["squareScores"]["cycling"].length - 1
+  //       ];
+  //     let overallWalkScore =
+  //       infoForPDF["squareScores"]["walk"][
+  //         infoForPDF["squareScores"]["walk"].length - 1
+  //       ];
 
-      // weigh to overall score
-      weightedOverallScore = Math.round(
-        overallPTScore * 0.5 +
-          overallCyclingScore * 0.25 +
-          overallWalkScore * 0.25
-      );
+  //     // weigh to overall score
+  //     weightedOverallScore = Math.round(
+  //       overallPTScore * 0.5 +
+  //         overallCyclingScore * 0.25 +
+  //         overallWalkScore * 0.25
+  //     );
+  //     // calculate linePositionFromLeft in pixels
+  //     linePositionFromLeft = weightedOverallScore * 3.645;
+  //   }
+  // }
+  $: {
+    if (hoverScore) {
       // calculate linePositionFromLeft in pixels
-      linePositionFromLeft = weightedOverallScore * 3.645;
+      linePositionFromLeft = hoverScore * 3.645;
     }
   }
   // TODO: temp hacky fix for alpha release, fix this
@@ -158,25 +165,36 @@
     "#f48f8e",
     "#c69494",
   ];
+
+  function getModeText(mode) {
+    return mode;
+  }
+  function getPurposeText(purpose) {
+    if (purpose == "Overall") {
+      return " all purposes";
+    } else {
+      return purpose.toLowerCase();
+    }
+  }
 </script>
 
 <div>
   {#if tileSettings["level"] === "National"}
     <div class="legendtitle">
-      <div class="legendtitle-text">Connectivity score:</div>
-      {#if infoForPDF}
+      <div class="legendtitle-text"> {getModeText(tileSettings["mode"])} connectivity score for {getPurposeText(tileSettings["purpose"])}:</div>
+      {#if hoverScore}
         <div
           class="greybox"
           title="Overall connectivity score for selected square"
         >
-          {weightedOverallScore}
+          {hoverScore}
         </div>
       {:else}
         <div class="greybox" style="opacity: 0;">99</div>
       {/if}
     </div>
     <div class="legend">
-      {#if infoForPDF}
+      {#if hoverScore}
         <div class="scoreline" style="left: {linePositionFromLeft}px" />
       {/if}
       {#each nipy_spectral_100 as colour}
@@ -262,7 +280,7 @@
 
   .legendtitle {
     font-size: 1rem;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
     display: flex;
     align-items: center;
   }
@@ -278,6 +296,6 @@
     border-radius: 10px;
     border: 1px solid rgb(229, 229, 229);
     min-width: min-content;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 </style>

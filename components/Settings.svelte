@@ -22,10 +22,11 @@
   export let pixelReduction = 300;
   export let toggleDisplayeRouteOnClick;
   export let tileSettings;
+  export let hoverScore;
 </script>
 
 <div class="whitebox">
-  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings} />
+  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings} {hoverScore}/>
   <br />
   <div class="greybox">
     <SnapToPostcode />

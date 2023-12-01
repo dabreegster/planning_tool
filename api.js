@@ -31,12 +31,12 @@ export async function lookupPostcode(postcode) {
   return await resp.json();
 }
 
-export async function getHoverScores(squareID, mode) {
+export async function getHoverScores(squareID, mode, purpose) {
   let resp;
   resp = await fetch(endpt, {
     method: "POST",
     headers: jsonRequestHeaders("hoverScores"),
-    body: JSON.stringify({ square_ID: squareID, modeType: mode }),
+    body: JSON.stringify({ square_ID: squareID, modeType: mode , purpose: purpose}),
   });
   return await resp.json();
 }
@@ -280,12 +280,12 @@ function jsonRequestHeaders(APIcode) {
 //   return await resp.json();
 // }
 
-// export async function getHoverScores(squareID, mode) {
+// export async function getHoverScores(squareID, mode, purpose) {
 //   let resp;
 //   resp = await fetch(scoresEndpt, {
 //     method: "POST",
 //     headers: jsonRequestHeaders(),
-//     body: JSON.stringify({ square_ID: squareID, modeType: mode }),
+//     body: JSON.stringify({ square_ID: squareID, modeType: mode , purpose: purpose}),
 //   });
 //   return await resp.json();
 // }

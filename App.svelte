@@ -17,6 +17,7 @@
   import TileLayer from "./components/TileLayer.svelte";
   import EditingLayer from "./components/EditingLayer.svelte";
   import HoverLayer from "./components/HoverLayer.svelte";
+  import HoverScores from "./components/HoverScores.svelte";
 
   export let innerWidth = 0;
   export let innerHeight = 0;
@@ -37,6 +38,7 @@
   let line_toggle;
   let landingPageToggle;
   let toggleDisplayeRouteOnClick;
+  let hoverScore;
   let tileSettings = {
     toggle: false,
     level: "National",
@@ -66,6 +68,7 @@
     <TileLayer {tileOpacity} {tileSettings} />
     <Settings
       {infoForPDF}
+      {hoverScore}
       bind:stopStatuses
       bind:tileOpacity
       bind:purpose
@@ -103,6 +106,7 @@
     <LaLevelScores {tileOpacity} bind:tileSettings />
     <EditingLayer />
     <HoverLayer />
+    <HoverScores {tileSettings} bind:hoverScore/>
   </Map>
 </div>
 
