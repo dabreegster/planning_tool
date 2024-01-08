@@ -254,7 +254,7 @@
     });
 
     currentlyEditing.subscribe((id) => {
-      if (id) {
+      if (id) {      
         let feature = $gjScheme.features.find((f) => f.id == id);
         drawControls.changeMode("direct_select", {
           featureId: feature.id,

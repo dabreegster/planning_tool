@@ -242,6 +242,18 @@ function jsonRequestHeaders(APIcode) {
   };
 }
 
+const autofillBusEndpt = "https://d714-34-89-73-233.ngrok-free.app";
+
+export async function callAutofillBus(req) {
+  const resp = await fetch(autofillBusEndpt, {
+    method: "POST",
+    headers: jsonRequestHeaders("autofill"),
+    body: JSON.stringify(req),
+  });
+  return await resp.json();
+}
+
+
 // const squareInfoEndpt = "https://a147-35-242-177-130.ngrok-free.app";
 // const floodfillEndpt = "https://cec0-35-242-177-130.ngrok-free.app";
 // const scoreCalculationEndpt = "https://7eae-34-89-73-233.ngrok-free.app";

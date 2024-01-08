@@ -68,7 +68,7 @@
       <RingLoader size="25" color="#FF3E00" unit="px" duration="2s"/>
     </div>
     <p>
-      Calculating... ~40s
+      Calculating... ~40seconds
     </p>
   {/if}
 </div>

@@ -99,9 +99,6 @@
     }
   }
 </script>
-<!-- <div>
-  Score: {showScore(hoverScore)}
-</div> -->
 
 
 <style>
