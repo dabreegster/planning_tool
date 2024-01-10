@@ -21,14 +21,14 @@
   let squareID = null;
   let freeForRequest = true;
   let lastRequestTime = 0;
-  let zoom = map.getZoom();
+  // let zoom = map.getZoom();
   let squaresFound = false;
   let open;
   export let hoverScore = null;
   export let tileSettings;
 
   // if (freeForRequest && open["headLeft"]) {
-  if (freeForRequest && tileSettings["level"] == "National" && zoom >= 11.5) {
+  if (freeForRequest && tileSettings["level"] == "National") {
     map.on("mousemove", async function (e) {
       freeForRequest = false;
       let currentTime = Date.now();
@@ -67,17 +67,11 @@
       }
     });
   }
-  async function bootHoverScores() {
-    let response = await getHoverScores("000000_000000", tileSettings["mode"], tileSettings["purpose"]);
-    if (response == "not_in_square") {
-    }
-  }
-  bootHoverScores();
 
-  // on zoom record the current zoom level
-  map.on("zoom", () => {
-    zoom = map.getZoom();
-  });
+  // // on zoom record the current zoom level
+  // map.on("zoom", () => {
+  //   zoom = map.getZoom();
+  // });
 
 
   function resetScores() {
@@ -97,13 +91,13 @@
       hoverScore = null;
     }
   }
-  $: {
-    // when zooming out far reset scores
-    if (zoom <11.5) {
-      resetScores();
-      hoverScore = null;
-    }
-  }
+  // $: {
+  //   // when zooming out far reset scores
+  //   if (zoom <11.5) {
+  //     resetScores();
+  //     hoverScore = null;
+  //   }
+  // }
 </script>
 
 
