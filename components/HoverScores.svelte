@@ -67,6 +67,12 @@
       }
     });
   }
+  async function bootHoverScores() {
+    let response = await getHoverScores("000000_000000", tileSettings["mode"], tileSettings["purpose"]);
+    if (response == "not_in_square") {
+    }
+  }
+  bootHoverScores();
 
   // on zoom record the current zoom level
   map.on("zoom", () => {
