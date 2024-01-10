@@ -59,15 +59,19 @@
       alert(
         "Please enter a valid departure time \nBetween 6:00 and 22:00"
       );
+      return;
     }
     let req = {
       "init_travel_times_user_input": init_travel_times_user_input,
       "atco_list": props.ATCO,
     };
     let resp = await callAutofillBus(req);
-    console.log("resp");
-    console.log(resp);
-
+    if (resp == "Stop present on island") {
+      alert(
+        "This route requires manual timetable entry"
+      );
+      return;
+    }
     const [arrivalTimes, departureTimes] = setArrivalAndDepartureTimes(init_travel_times_user_input, resp["times"]);
     props.arrivalTime = arrivalTimes;
     props.departureTime = departureTimes;
@@ -98,7 +102,12 @@
     departureTimes[departureTimes.length-1] = "Last stop"
     return [arrivalTimes, departureTimes]
   }
-
+  function resetTimetable() {
+    props.arrivalTime = Array.from({length: props.arrivalTime.length}, () => 'not_set');
+    props.departureTime = Array.from({length: props.departureTime.length}, () => 'not_set');
+    props.arrivalTime[0] = "First stop";
+    props.departureTime[props.departureTime.length - 1] = "Last stop";
+  }
 </script>
 
 <div style="font-size: 0.9rem">Route name:</div>
@@ -135,11 +144,9 @@
 <br />
 <br />
 
-
-
 <div>
   {#if props.ptMode == "bus"}
-    Roughly estimate bus timetable
+    Optional: Estimate bus timetable
     <br />
     <div style="float: left; font-size: 13px;">
       Departure time:
@@ -152,13 +159,17 @@
         style="padding:5px;"
       />
     </div>
-    <button class="grey_button" on:click={autofillBusRoute}>Estimate bus timetable</button>
+    <div style="float: left;"> 
+      <button class="grey_button"  on:click={autofillBusRoute}>Estimate bus timetable</button>
+      <button class="grey_button" style="float: right;" on:click={resetTimetable}>Reset timetable</button>
+    </div>
   {/if}
 </div>
 <br />
 <br />
+<br />
 
-<div style="font-size: 0.9rem">First service timetable:</div>
+<div style="font-size: 1rem">First service timetable:</div>
 <DataTable bind:rows {headers}>
   <svelte:fragment slot="cell" let:cell let:row>
     {#if cell.key == "departureTime" && row.departureTime != "Last stop"}
@@ -199,7 +210,6 @@
     border-radius: 8px;
     font-size: 0.8rem;
     transition: background-color 0.05s ease-in-out;
-    float: right;
   }
   .grey_button:hover {
     background: #dfdfdf;
