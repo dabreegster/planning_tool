@@ -65,7 +65,15 @@
       "init_travel_times_user_input": init_travel_times_user_input,
       "atco_list": props.ATCO,
     };
-    let resp = await callAutofillBus(req);
+    let resp
+    try {
+      resp = await callAutofillBus(req);
+    } catch (error) {
+      alert(
+        "This route requires manual entry"
+      );
+      return;
+    }
     if (resp == "Stop present on island") {
       alert(
         "This route requires manual timetable entry"
