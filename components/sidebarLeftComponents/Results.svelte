@@ -36,6 +36,11 @@
         loading = false;
         return;
       }
+      if (typeof requestJson == "string") {
+        loading = false;
+        alert(`${requestJson}`);
+        return;
+      }
       responseJson = await callApi(requestJson);
       // TODO remove this if statement after prototyping phase
       if (responseJson.hasOwnProperty("too_expensive")) {

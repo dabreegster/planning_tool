@@ -51,12 +51,12 @@ export async function getSquareScore(squareID) {
   return await resp.json();
 }
 
-export async function getLABinnedScores(LA_name) {
+export async function getLABinnedScores(tileSettings) {
   let resp;
   resp = await fetch(endpt, {
     method: "POST",
     headers: jsonRequestHeaders("LAScores"),
-    body: JSON.stringify({ LA_name: LA_name }),
+    body: JSON.stringify(tileSettings),
   });
   return await resp.json();
 }
@@ -131,7 +131,40 @@ export async function geojsonToApiPayload(features, login_username) {
       route_number += 1;
     }
   }
-  return req;
+  let errorStatus = checkArrivalDepartureTimeOrder(req);
+  if (errorStatus == "No Errors") {
+    return req;
+  } else {
+    return errorStatus;
+  }
+}
+
+function checkArrivalDepartureTimeOrder(req) {
+  console.log('length')
+  // console.log(req.new_routes_dict.stop_sequence)
+  console.log( Object.keys(req.new_routes_dict.stop_sequence).length)
+  console.log(req.new_routes_dict.arrival_times)
+  console.log(req.new_routes_dict.departure_times)
+  for (let i = 1; i < Object.keys(req.new_routes_dict.stop_sequence).length - 1; i++) {
+    console.log(i)
+    // if arrival after it departs
+    if (req.new_routes_dict.arrival_times[i] > req.new_routes_dict.departure_times[i]) {
+      console.log('returned')
+      return `Stop ${req.new_routes_dict.ATCO[i]} arrival time is before departure`;
+    }
+    console.log(req.new_routes_dict.arrival_times[i])
+    console.log(req.new_routes_dict.departure_times[i])
+    console.log('-----')
+    // check if stop on same route and trip as previous
+    if (req.new_routes_dict.stop_sequence[i] == req.new_routes_dict.stop_sequence[i-1]+1) {
+      // if previous departure time is after arrival time
+      if (req.new_routes_dict.departure_times[i-1] > req.new_routes_dict.arrival_times[i]) {
+        console.log('returned')
+        return `Stop ${req.new_routes_dict.ATCO[i-1]} departs before ${req.new_routes_dict.ATCO[i]} arrives`;
+      }
+    }
+  }
+  return "No Errors"
 }
 
 function findArrivalAndDepartureTimes(feature) {
@@ -242,7 +275,7 @@ function jsonRequestHeaders(APIcode) {
   };
 }
 
-const autofillBusEndpt = "https://d714-34-89-73-233.ngrok-free.app";
+const autofillBusEndpt = "https://b7c1-34-89-73-233.ngrok-free.app";
 
 export async function callAutofillBus(req) {
   const resp = await fetch(autofillBusEndpt, {
@@ -312,12 +345,12 @@ export async function callAutofillBus(req) {
 //   return await resp.json();
 // }
 
-// export async function getLABinnedScores(LA_name) {
+// export async function getLABinnedScores(tileSettings) {
 //   let resp;
 //   resp = await fetch(LAEndpt, {
 //     method: "POST",
 //     headers: jsonRequestHeaders(),
-//     body: JSON.stringify({ LA_name: LA_name }),
+//     body: JSON.stringify(tileSettings),
 //   });
 //   return await resp.json();
 // }
