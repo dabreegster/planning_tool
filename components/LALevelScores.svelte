@@ -14,6 +14,8 @@
 
   const source = "LASquares";
   const layer = "LASquaresLayer";
+  const LAOutlineSource = "LAOutlineSource";
+  const LAOutlineLayer = "LAOutlineLayer";
 
   export let tileOpacity = 50;
   export let tileSettings;
@@ -44,25 +46,39 @@
 
   onMount(() => {
     map.addSource(source, { type: "geojson", data: emptyGeojson() });
+    map.addSource(LAOutlineSource, { type: "geojson", data: emptyGeojson() });
   });
   onDestroy(() => {
     if (map.getLayer(layer)) {
       map.removeLayer(layer);
     }
-
+    if (map.getLayer(LAOutlineLayer)) {
+      map.removeLayer(LAOutlineLayer);
+    }
     if (map.getSource(source)) {
       map.removeSource(source);
+    }
+    if (map.getSource(LAOutlineSource)) {
+      map.removeSource(LAOutlineSource);
     }
   });
 
   // if LA changes, load new LA scores and set on map
   let selectedLA;
+  let selectedMode;
+  let selectedPurpose;
   $: {
     selectedLA = tileSettings["LA"];
+    selectedMode = tileSettings["mode"];
+    selectedPurpose = tileSettings["purpose"];
   }
   $: {
-    if (selectedLA != "Hide") {
+    if (selectedLA != "Hide" && selectedMode && selectedPurpose) {
       loadNewLAScores();
+    } else {
+      if (map.getLayer(LAOutlineLayer)) {
+        map.removeLayer(LAOutlineLayer);
+    }
     }
   }
 
@@ -88,6 +104,7 @@
   // on opacity changes, just reset layer
   $: {
     if (geoJson && tileOpacity) {
+      setOutlineLayer();
       setLayer();
     }
   }
@@ -96,9 +113,11 @@
     tileSettings["level"] = "Local authority";
     console.log("Loading LA scores for:", tileSettings["LA"]);
     // TODO add mode and purpose selection for LA scores
-    let response = await getLABinnedScores(tileSettings["LA"]);
+    let response = await getLABinnedScores(tileSettings);
     if (response == "LA not in LA list") {
     } else {
+      createOutlineGeojson(response["LA_outline"]);
+      setOutlineLayer();
       LAScores = response["scores"];
       map.jumpTo({
         center: response["centroid"],
@@ -113,9 +132,9 @@
   function createLLCoords(LAScores) {
     // create longlat coordinates from the squareID
     let squareENCoordinates = [];
-    let squareScores = [];
+    let squareLADeciles = [];
     Object.entries(LAScores).forEach(
-      ([squareCentroid, scoreGroup_rawScore]) => {
+      ([squareCentroid, squareLADecile]) => {
         let [centroidEasting, centroidNorthing] = squareCentroid
           .split("_")
           .map(Number);
@@ -125,7 +144,7 @@
           [centroidEasting + 50, centroidNorthing + 50],
           [centroidEasting - 50, centroidNorthing + 50],
         ]);
-        squareScores.push(scoreGroup_rawScore);
+        squareLADeciles.push(squareLADecile);
       }
     );
     // flatten array
@@ -140,7 +159,7 @@
       let LLCoordinates = flatSquareLLCoordinates.slice(i, i + 4);
       squareLLCoordinates.push(LLCoordinates);
     }
-    return [squareLLCoordinates, squareScores];
+    return [squareLLCoordinates, squareLADeciles];
   }
 
   function createSquareGeojson() {
@@ -161,8 +180,7 @@
             coordinates: [squareLLCoordinates[i]],
           },
           properties: {
-            scoreGroup: squareScores[i][0],
-            rawScore: squareScores[i][1],
+            scoreGroup: squareScores[i],
           },
         });
       }
@@ -203,6 +221,51 @@
       console.log("set layer");
     }
   }
+  function setOutlineLayer() {
+    if (map.getLayer(LAOutlineLayer)) {
+      map.removeLayer(LAOutlineLayer);
+    }
+
+    let beforeID = null;
+    if (map.getLayer("bus_layer")) {
+      // add below bus_layer
+      beforeID = "bus_layer";
+    }
+    if (tileSettings["LA"] !== "Hide") {
+      map.addLayer(
+        {
+          id: LAOutlineLayer,
+          source: LAOutlineSource,
+          type: "line",
+          filter: ["all", ["==", "$type", "LineString"], ["==", "name", "outline"]],
+          paint: {
+            "line-color": "#000000",
+            "line-width": 3,
+          },
+        },
+        beforeID
+      );
+      console.log("set outline layer");
+    }
+  }
+  function createOutlineGeojson(outlineShapes) {
+    let gj = emptyGeojson();
+    for (let i = 0; i < outlineShapes.length; i++) {
+      gj.features.push({
+        type: "Feature",
+        geometry: {
+          type: "LineString",
+          coordinates: outlineShapes[i],
+        },
+        properties: {
+          name: "outline",
+        },
+      });
+    }
+    map.getSource(LAOutlineSource).setData(gj);
+    return;
+  }
+
 </script>
 
 <style>
