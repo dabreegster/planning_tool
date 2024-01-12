@@ -73,8 +73,6 @@
       console.log(`Lookup square for ${e.lngLat}`);
       console.time("square API");
       let info = await getSquareInfo(e.lngLat);
-      // console.log("info");
-      // console.log(info);
       console.timeEnd("square API");
       if (info == "click_not_on_square") {
         console.log("Click not on square");

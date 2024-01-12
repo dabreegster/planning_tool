@@ -5,35 +5,11 @@
   export let infoForPDF;
   export let tileSettings;
   export let hoverScore;
+  export let hoverDecile;
 
   let linePositionFromLeft = 0;
-  let weightedOverallScore;
-  // $: {
-  //   if (infoForPDF) {
-  //     // select overall score for each mode (not just [6] as currently health not calculated for PT)
-  //     let overallPTScore =
-  //       infoForPDF["squareScores"]["pt"][
-  //         infoForPDF["squareScores"]["pt"].length - 1
-  //       ];
-  //     let overallCyclingScore =
-  //       infoForPDF["squareScores"]["cycling"][
-  //         infoForPDF["squareScores"]["cycling"].length - 1
-  //       ];
-  //     let overallWalkScore =
-  //       infoForPDF["squareScores"]["walk"][
-  //         infoForPDF["squareScores"]["walk"].length - 1
-  //       ];
+  let decileBoxPositionFromLeft = 0;
 
-  //     // weigh to overall score
-  //     weightedOverallScore = Math.round(
-  //       overallPTScore * 0.5 +
-  //         overallCyclingScore * 0.25 +
-  //         overallWalkScore * 0.25
-  //     );
-  //     // calculate linePositionFromLeft in pixels
-  //     linePositionFromLeft = weightedOverallScore * 3.645;
-  //   }
-  // }
   $: {
     if (hoverScore !== null) {
       // calculate linePositionFromLeft in pixels
@@ -43,6 +19,12 @@
       } else {
         linePositionFromLeft = hoverScore * 3.645;
       }
+    }
+  }
+  $: {
+    if (hoverDecile !== null) {
+      // calculate decileBoxPositionFromLeft in pixels
+      decileBoxPositionFromLeft = hoverDecile * 37 -1;
     }
   }
   // TODO: temp hacky fix for alpha release, fix this
@@ -186,24 +168,24 @@
 </script>
 
 <div>
+  <div class="legendtitle">
+    <div class="legendtitle-text"> {getModeText(tileSettings["mode"])} connectivity score for {getPurposeText(tileSettings["purpose"])}:</div>
+    {#if hoverScore !== null}
+      <div
+        class="greybox"
+        title="Overall connectivity score for selected square"
+      >
+        {#if hoverScore !== undefined}
+          {hoverScore}
+        {:else}
+          <RingLoader size="20" color="#FF3E00" unit="px" duration="1.5s"/>
+        {/if}
+      </div>
+    {:else}
+      <div class="greybox" style="opacity: 0;">99</div>
+    {/if}
+  </div>
   {#if tileSettings["level"] === "National"}
-    <div class="legendtitle">
-      <div class="legendtitle-text"> {getModeText(tileSettings["mode"])} connectivity score for {getPurposeText(tileSettings["purpose"])}:</div>
-      {#if hoverScore !== null}
-        <div
-          class="greybox"
-          title="Overall connectivity score for selected square"
-        >
-          {#if hoverScore !== undefined}
-            {hoverScore}
-          {:else}
-            <RingLoader size="20" color="#FF3E00" unit="px" duration="1.5s"/>
-          {/if}
-        </div>
-      {:else}
-        <div class="greybox" style="opacity: 0;">99</div>
-      {/if}
-    </div>
     <div class="legend">
       {#if hoverScore !== null}
         <div class="scoreline" style="left: {linePositionFromLeft}px" />
@@ -222,12 +204,15 @@
         </div>
       {/each}
     </div>
+    <div class="legend_title">
+      Score
+    </div>
   {:else if tileSettings["level"] === "Local authority"}
-    <div class="legendtitle">
+    <!-- <div class="legendtitle">
       <div class="legendtitle-text">Local authority connectivity decile:</div>
       <div class="greybox" style="opacity: 0;">99</div>
-      <!-- TODO: when get decile on click load in which decile here-->
-      <!-- {#if infoForPDF}
+      TODO: when get decile on click load in which decile here
+      {#if infoForPDF}
         <div
           class="greybox"
           title="Overall connectivity score for selected square"
@@ -236,9 +221,12 @@
         </div>
       {:else}
         <div class="greybox" style="opacity: 0;">99</div>
-      {/if} -->
-    </div>
+      {/if}
+    </div> -->
     <div class="legend">
+      {#if hoverDecile !== null}
+        <div class="decilebox" style="left: {decileBoxPositionFromLeft}px" />
+      {/if}
       {#each laScoreColours as colour}
         <div
           class="LA_square"
@@ -253,6 +241,9 @@
         </div>
       {/each}
     </div>
+    <div class="legend_title">
+      Score decile within LA
+    </div>
   {:else}
     <!-- if add new tile layer/colour schemes add here -->
   {/if}
@@ -263,6 +254,12 @@
     display: flex;
     border: 1px solid black;
     position: relative;
+  }
+  .legend_title {
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 3px;
+    /* padding-bottom: -30px; */
   }
   .national_square {
     width: 5px;
@@ -308,5 +305,15 @@
     border: 1px solid rgb(229, 229, 229);
     min-width: min-content;
     font-size: 1.2rem;
+  }
+  .decilebox {
+    height: 32px;
+    width: 38px;
+    border: 2px solid #000000;
+    border-radius: 0px 0px 0px 0px;
+    position: absolute;
+    z-index: 1;
+    box-sizing: border-box; 
+    opacity: 1;
   }
 </style>

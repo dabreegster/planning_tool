@@ -19,9 +19,10 @@
 
   export let tileOpacity = 50;
   export let tileSettings;
+  export let hoverDecile = null;
 
   let LAScores = null;
-
+  let response;
   let geoJson = null;
 
   const laScoreColours = [
@@ -104,7 +105,6 @@
   // on opacity changes, just reset layer
   $: {
     if (geoJson && tileOpacity) {
-      setOutlineLayer();
       setLayer();
     }
   }
@@ -113,7 +113,7 @@
     tileSettings["level"] = "Local authority";
     console.log("Loading LA scores for:", tileSettings["LA"]);
     // TODO add mode and purpose selection for LA scores
-    let response = await getLABinnedScores(tileSettings);
+    response = await getLABinnedScores(tileSettings);
     if (response == "LA not in LA list") {
     } else {
       createOutlineGeojson(response["LA_outline"]);
@@ -128,6 +128,22 @@
       setLayer();
     }
   }
+
+  // when hovering shows LA decile
+  map.on("mousemove", async function (e) {
+    if (tileSettings["level"] == "Local authority") {
+      // convert to EN
+      let ll = [[e.lngLat.lng, e.lngLat.lat]];
+      let ENCoords = ll.map((coords) =>
+        proj4(wgs84, osgb, coords)
+      );
+      let centroid = `${(Math.floor(ENCoords[0][0] / 100) * 100) + 50}_${(Math.floor(ENCoords[0][1] / 100) * 100) + 50}`;
+      hoverDecile = response["scores"][centroid];
+      if (hoverDecile == undefined) {
+        hoverDecile = null;
+      }
+    }
+  });
 
   function createLLCoords(LAScores) {
     // create longlat coordinates from the squareID
@@ -167,7 +183,6 @@
     // find square coords in LL format and custom weighted scores
     let [squareLLCoordinates, squareScores] = createLLCoords(LAScores);
     let geojson = emptyGeojson();
-    console.log(squareScores);
 
     // assert they are of equal length
     if (squareLLCoordinates.length == squareScores.length) {
@@ -187,7 +202,6 @@
     } else {
       console.log("Uneven lengths of coordinates and weighted scores");
     }
-    console.log(geojson);
     return geojson;
   }
 

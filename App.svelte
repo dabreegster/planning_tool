@@ -39,6 +39,7 @@
   let landingPageToggle;
   let toggleDisplayeRouteOnClick;
   let hoverScore;
+  let hoverDecile;
   let tileSettings = {
     toggle: false,
     level: "National",
@@ -69,6 +70,7 @@
     <Settings
       {infoForPDF}
       {hoverScore}
+      {hoverDecile}
       bind:stopStatuses
       bind:tileOpacity
       bind:purpose
@@ -103,10 +105,10 @@
       bind:stopLayerToggle
       bind:line_toggle
     />
-    <LaLevelScores {tileOpacity} bind:tileSettings />
+    <LaLevelScores {tileOpacity} bind:tileSettings bind:hoverDecile />
     <EditingLayer />
     <HoverLayer />
-    <HoverScores {tileSettings} bind:hoverScore/>
+    <HoverScores {tileSettings} bind:hoverScore />
   </Map>
 </div>
 

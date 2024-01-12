@@ -23,10 +23,11 @@
   export let toggleDisplayeRouteOnClick;
   export let tileSettings;
   export let hoverScore;
+  export let hoverDecile;
 </script>
 
 <div class="whitebox">
-  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings} {hoverScore}/>
+  <ScoreLegend {tileOpacity} {infoForPDF} {tileSettings} {hoverScore} {hoverDecile}/>
   <br />
   <div class="greybox">
     <SnapToPostcode />
