@@ -204,9 +204,9 @@
         </div>
       {/each}
     </div>
-    <div class="legend_title">
+    <!-- <div class="legend_title">
       Score
-    </div>
+    </div> -->
   {:else if tileSettings["level"] === "Local authority"}
     <!-- <div class="legendtitle">
       <div class="legendtitle-text">Local authority connectivity decile:</div>
@@ -241,9 +241,9 @@
         </div>
       {/each}
     </div>
-    <div class="legend_title">
+    <!-- <div class="legend_title">
       Score decile within LA
-    </div>
+    </div> -->
   {:else}
     <!-- if add new tile layer/colour schemes add here -->
   {/if}
@@ -258,8 +258,8 @@
   .legend_title {
     font-size: 1rem;
     text-align: center;
-    padding-top: 3px;
-    /* padding-bottom: -30px; */
+    padding-top: 6px;
+    padding-bottom: 8px;
   }
   .national_square {
     width: 5px;

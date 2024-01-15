@@ -131,16 +131,18 @@
 
   // when hovering shows LA decile
   map.on("mousemove", async function (e) {
-    if (tileSettings["level"] == "Local authority") {
-      // convert to EN
-      let ll = [[e.lngLat.lng, e.lngLat.lat]];
-      let ENCoords = ll.map((coords) =>
-        proj4(wgs84, osgb, coords)
-      );
-      let centroid = `${(Math.floor(ENCoords[0][0] / 100) * 100) + 50}_${(Math.floor(ENCoords[0][1] / 100) * 100) + 50}`;
-      hoverDecile = response["scores"][centroid];
-      if (hoverDecile == undefined) {
-        hoverDecile = null;
+    if (tileSettings["level"] == "Local authority" && response) {
+      if (response.scores) {
+         // convert to EN
+        let ll = [[e.lngLat.lng, e.lngLat.lat]];
+        let ENCoords = ll.map((coords) =>
+          proj4(wgs84, osgb, coords)
+        );
+        let centroid = `${(Math.floor(ENCoords[0][0] / 100) * 100) + 50}_${(Math.floor(ENCoords[0][1] / 100) * 100) + 50}`;
+        hoverDecile = response["scores"][centroid];
+        if (hoverDecile == undefined) {
+          hoverDecile = null;
+        }
       }
     }
   });
@@ -254,7 +256,7 @@
           filter: ["all", ["==", "$type", "LineString"], ["==", "name", "outline"]],
           paint: {
             "line-color": "#000000",
-            "line-width": 3,
+            "line-width": 1,
           },
         },
         beforeID

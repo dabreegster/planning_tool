@@ -5,8 +5,6 @@
   import csvExampleUrl from "../../data/csv_example.csv?url";
   import csvTemplateUrl from "../../data/csv_template.csv?url";
 
-  export let innerWidth;
-
   function downloadCsvExampleAndTemplate() {
     const link = document.createElement("a");
     link.href = csvExampleUrl;
@@ -115,14 +113,6 @@
       });
     }
   }
-  function scaleButtonWidth(innerWidth, minWidth, widthFraction) {
-    let sideBarWidth = innerWidth * 0.25;
-    if (sideBarWidth < 490) {
-      return sideBarWidth * widthFraction;
-    } else {
-      return minWidth;
-    }
-  }
 </script>
 
 <div>
@@ -133,15 +123,11 @@
       type="button"
       title="Upload a CSV of your scheme in the format shown in the example"
       onclick="document.getElementById('upload_csv').click();"
-      style="float: left; width: calc({scaleButtonWidth(
-        innerWidth,
-        145,
-        0.38
-      )}px;"
     >
-      Upload scheme from CSV
+      Upload scheme (CSV)
     </button>
   </label>
+  <br/>
   <label>
     <input type="file" id="upload_csv" on:change={loadFile} />
     <button
@@ -149,17 +135,12 @@
       type="button"
       title="Download an example and template CSV"
       on:click={downloadCsvExampleAndTemplate}
-      style="float: right; width: calc({scaleButtonWidth(
-        innerWidth,
-        145,
-        0.38
-      )}px);"
+      style = "margin-top: 5px;"
     >
-      Download example CSV
+      Example CSV
     </button>
   </label>
 </div>
-<br />
 <br />
 
 <style>

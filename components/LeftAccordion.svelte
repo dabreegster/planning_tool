@@ -22,7 +22,6 @@
   export let responseJson;
   export let hoveredInterventionScores;
   export let login_username;
-  export let innerWidth;
   export let loading;
   export let pixelReduction = 90;
   export let scoreLayer;
@@ -54,9 +53,9 @@
     </div>
     <div slot="headRight" class="header">New Scheme</div>
     <div slot="details2">
-      <CsvUpload {innerWidth} />
+      <!-- <CsvUpload {innerWidth} /> -->
       <br />
-      <EntireScheme {innerWidth} />
+      <EntireScheme />
       <!-- <Accordion>
         <span slot="head" class="header" title="Add new public transport route"
           >Add route

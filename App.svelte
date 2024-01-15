@@ -95,7 +95,6 @@
     <LandingPage bind:landingPageToggle />
     <LeftAccordion
       {tileOpacity}
-      {innerWidth}
       {login_username}
       {hoveredInterventionScores}
       bind:responseJson

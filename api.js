@@ -51,16 +51,6 @@ export async function getSquareScore(squareID) {
   return await resp.json();
 }
 
-// export async function getLABinnedScores(tileSettings) {
-//   let resp;
-//   resp = await fetch(endpt, {
-//     method: "POST",
-//     headers: jsonRequestHeaders("LAScores"),
-//     body: JSON.stringify(tileSettings),
-//   });
-//   return await resp.json();
-// }
-
 // Takes the GeoJSON features and creates the API request. Has the side effect
 // of calling the stop lookup API.
 export async function geojsonToApiPayload(features, login_username) {
@@ -253,6 +243,25 @@ export async function callPDFDownload(infoForPDF) {
   return await resp;
 }
 
+export async function callAutofillBus(req) {
+  const resp = await fetch(endpt, {
+    method: "POST",
+    headers: jsonRequestHeaders("autofill"),
+    body: JSON.stringify(req),
+  });
+  return await resp.json();
+}
+
+export async function getLABinnedScores(tileSettings) {
+  let resp;
+  resp = await fetch(endpt, {
+    method: "POST",
+    headers: jsonRequestHeaders("LAScores"),
+    body: JSON.stringify(tileSettings),
+  });
+  return await resp.json();
+}
+
 function jsonRequestHeaders(APIcode) {
   return {
     "Bypass-Tunnel-Reminder": "haha",
@@ -264,26 +273,8 @@ function jsonRequestHeaders(APIcode) {
   };
 }
 
-const autofillBusEndpt = "https://b7c1-34-89-73-233.ngrok-free.app";
-
-export async function callAutofillBus(req) {
-  const resp = await fetch(autofillBusEndpt, {
-    method: "POST",
-    headers: jsonRequestHeaders("autofill"),
-    body: JSON.stringify(req),
-  });
-  return await resp.json();
-}
-const LAEndpt = "https://9bd2-35-242-168-104.ngrok-free.app";
-export async function getLABinnedScores(tileSettings) {
-  let resp;
-  resp = await fetch(LAEndpt, {
-    method: "POST",
-    headers: jsonRequestHeaders(),
-    body: JSON.stringify(tileSettings),
-  });
-  return await resp.json();
-}
+const LAEndpt = "https://430e-35-242-168-104.ngrok-free.app";
+const autofillBusEndpt = "https://b686-34-89-73-233.ngrok-free.app";
 
 // const squareInfoEndpt = "https://a147-35-242-177-130.ngrok-free.app";
 // const floodfillEndpt = "https://cec0-35-242-177-130.ngrok-free.app";

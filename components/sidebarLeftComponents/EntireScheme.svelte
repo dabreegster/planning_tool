@@ -1,9 +1,10 @@
 <script>
   import { gjScheme } from "../../stores.js";
   import "carbon-components-svelte/css/white.css";
+  import Accordion from "../Accordion.svelte";
+  import CsvUpload from "./CsvUpload.svelte";
 
   const prefix = "dft_connectivity";
-  export let innerWidth;
 
   // Set up local storage sync
   let loadLocal = window.localStorage.getItem(prefix);
@@ -81,14 +82,7 @@
     return count;
   }
 
-  function scaleButtonWidth(innerWidth, minWidth, widthFraction) {
-    let sideBarWidth = innerWidth * 0.25;
-    if (sideBarWidth < 490) {
-      return sideBarWidth * widthFraction;
-    } else {
-      return minWidth;
-    }
-  }
+
 </script>
 
 <div class="govuk-form-group">
@@ -112,36 +106,38 @@
   />
 </div>
 
-<div>
-  <!-- TODO Interactive elements inside a label are apparently invalid, but this works -->
-  <label>
-    <input type="file" id="load_geojson" on:change={loadFile} />
-    <button
-      type="button"
-      class="white_button"
-      title=""
-      onclick="document.getElementById('load_geojson').click();"
-      style="width: calc({scaleButtonWidth(innerWidth, 145, 0.38)}px);"
-    >
-      Upload scheme from GeoJSON
-    </button>
-  </label>
+<Accordion>
+  <span slot="head" class="header">Upload/Download scheme</span>
+  <div slot="details">
+    <CsvUpload />
+    <div>
+      <!-- TODO Interactive elements inside a label are apparently invalid, but this works -->
+      <label>
+        <input type="file" id="load_geojson" on:change={loadFile} />
+        <button
+          type="button"
+          class="white_button"
+          title=""
+          onclick="document.getElementById('load_geojson').click();"
+        >
+          Upload scheme (GeoJSON)
+        </button>
+      </label>
+      <br />
+      <button
+        type="button"
+        class="white_button"
+        title="Download your current scheme as a GeoJson"
+        on:click={exportToGeojson}
+        disabled={$gjScheme.features.length == 0}
+        style = "margin-top: 5px;"
+      >
+        Download scheme (GeoJSON)
+      </button>
+    </div>
+  </div>
+</Accordion>
 
-  <button
-    type="button"
-    class="white_button"
-    title="Download your current scheme as a GeoJson"
-    style="float: right; width: calc({scaleButtonWidth(
-      innerWidth,
-      145,
-      0.38
-    )}px);"
-    on:click={exportToGeojson}
-    disabled={$gjScheme.features.length == 0}
-  >
-    Download scheme as GeoJSON
-  </button>
-</div>
 
 <br />
 
@@ -160,6 +156,9 @@
 </div>
 
 <style>
+  /* .header {
+    font-size: 1rem;
+  } */
   input[type="file"] {
     cursor: pointer;
 

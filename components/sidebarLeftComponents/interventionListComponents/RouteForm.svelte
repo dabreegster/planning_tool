@@ -157,7 +157,7 @@
     Optional: Estimate bus timetable
     <br />
     <div style="float: left; font-size: 13px;">
-      Departure time:
+      Set departure time:
       <input
         title="Departure time"
         type="time"
@@ -167,7 +167,7 @@
         style="padding:5px;"
       />
     </div>
-    <div style="float: left;"> 
+    <div style="float: left; padding-top: 6px;"> 
       <button class="grey_button"  on:click={autofillBusRoute}>Estimate bus timetable</button>
       <button class="grey_button" style="float: right;" on:click={resetTimetable}>Reset timetable</button>
     </div>
@@ -218,6 +218,7 @@
     border-radius: 8px;
     font-size: 0.8rem;
     transition: background-color 0.05s ease-in-out;
+    margin-right: 8px; 
   }
   .grey_button:hover {
     background: #dfdfdf;
