@@ -38,8 +38,8 @@
     The Connectivity Planning Tool serves the professional planning community by
     offering valuable insights into the connectivity of locations within England
     and Wales. With this tool, users can analyze current connectivity, generate comprehensive
-    reports, and even model the effects of new transportation initiatives. Here's
-    how a user can leverage its features:
+    reports, and even model the effects of new transportation initiatives. 
+    <!-- Here's how a user can leverage its features:
     <br />
     <br />
     <p class="italic">Access Connectivity Scores:</p>
@@ -75,7 +75,7 @@
     interest and re-calculate the Connectivity metrics.
     <br />
     By offering these functionalities, the Connectivity Planning Tool empowers planners
-    to make data-driven decisions for improving regional transportation and connectivity.
+    to make data-driven decisions for improving regional transportation and connectivity. -->
   </div>
 {/if}
 
@@ -86,12 +86,16 @@
   .landed {
     background-color: white;
     position: absolute;
-    width: calc(100% - 600px);
-    height: calc(100% - 200px);
+    /* width: calc(100% - 600px);
+    height: calc(100% - 200px); */
+    width: 800px;
+    height: 450px;
     padding: 20px;
     border-radius: 10px;
-    right: 300px;
-    top: 100px;
+    /* right: 300px;
+    top: 100px; */
+    right: calc(50% - 400px);
+    top: calc(50% - 225px);
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     font-size: 0.8rem;
