@@ -51,6 +51,10 @@
         return;
         // Request already made for this squareID, do nothing
       } else {
+        // reset scores if have over 40k loaded - increase performance on weaker machines
+        if (Object.keys(scores).length >= 40_000) {
+          scores = {}
+        }
         // TODO: optimise the request limit
         if (timeSinceLastRequest >= 50) {
           lastRequestTime = currentTime;
