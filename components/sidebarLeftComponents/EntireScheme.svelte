@@ -117,7 +117,7 @@
         <button
           type="button"
           class="white_button"
-          title=""
+          title="Upload a scheme from a GeoJson"
           onclick="document.getElementById('load_geojson').click();"
         >
           Upload scheme (GeoJSON)

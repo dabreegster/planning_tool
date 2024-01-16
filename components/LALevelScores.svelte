@@ -1,7 +1,7 @@
 <script>
   import proj4 from "proj4";
   import { onMount, onDestroy, getContext } from "svelte";
-  import { getLABinnedScores } from "../api.js";
+  import { getLABinnedScores, getLAOutlineAndCoords } from "../api.js";
 
   const { getMap } = getContext("map");
 
@@ -21,8 +21,7 @@
   export let tileSettings;
   export let hoverDecile = null;
 
-  let LAScores = null;
-  let response;
+  let LAScores = {};
   let geoJson = null;
 
   const laScoreColours = [
@@ -64,41 +63,98 @@
     }
   });
 
+    // if just tile level changes then add or remove layer
+  // let levelToggle;
+  // $: {
+  //   levelToggle = tileSettings["level"];
+  // }
+  // let tileToggleOnOff;
+  // $: {
+  //   tileToggleOnOff = tileSettings["toggle"];
+  // }
+  // $: {
+  //   if (levelToggle == "National" || selectedLA == "Hide" || !tileToggleOnOff) {
+  //     if (map.getLayer(layer)) {
+  //       map.removeLayer(layer);
+  //     }
+  //   } else {
+  //     setLayer();
+  //   }
+  // }
+
+
   // if LA changes, load new LA scores and set on map
   let selectedLA;
   let selectedMode;
   let selectedPurpose;
+  let selectedLevel;
+  let tileToggleOnOff;
   $: {
     selectedLA = tileSettings["LA"];
     selectedMode = tileSettings["mode"];
     selectedPurpose = tileSettings["purpose"];
+    selectedLevel = tileSettings["level"];
+    tileToggleOnOff = tileSettings["toggle"];
   }
-  $: {
-    if (selectedLA != "Hide" && selectedMode && selectedPurpose) {
-      loadNewLAScores();
-    } else {
-      if (map.getLayer(LAOutlineLayer)) {
-        map.removeLayer(LAOutlineLayer);
-    }
+
+
+  function ifNeedNewScores() {
+    if (tileToggleOnOff) {
+      if (LAScores.LA != selectedLA || LAScores.mode != selectedMode || LAScores.purpose != selectedPurpose) {
+        loadNewLAScores();
+      } else {
+        setLayer()
+      }
     }
   }
 
-  // if just tile level changes then add or remove layer
-  let levelToggle;
   $: {
-    levelToggle = tileSettings["level"];
-  }
-  let tileToggleOnOff;
-  $: {
-    tileToggleOnOff = tileSettings["toggle"];
-  }
-  $: {
-    if (levelToggle == "National" || selectedLA == "Hide" || !tileToggleOnOff) {
+    if (selectedLevel == "National") {
       if (map.getLayer(layer)) {
         map.removeLayer(layer);
       }
     } else {
-      setLayer();
+      ifNeedNewScores();
+    }
+  }
+
+  function ifLevelIsLA() {
+    if (selectedLevel == "Local authority" && tileToggleOnOff) {
+      loadNewLAScores();
+    }
+  }
+
+  // when a change occurs in purpose or mode
+  $: {
+    // change in mode or purpose
+    if (selectedMode || selectedPurpose) {
+      ifLevelIsLA();
+    }
+  }
+
+  // when selecting a new LA
+  $: {
+    if (selectedLA != "Hide") {
+      loadOutlineAndCoords();
+      ifLevelIsLA();
+    } else {
+      if (map.getLayer(LAOutlineLayer)) {
+        map.removeLayer(LAOutlineLayer);
+      }
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
+    }
+  }
+
+  // when toggle tiles on/off
+  $: {
+    if (tileToggleOnOff) {
+      ifNeedNewScores();
+    } else {
+      if (map.getLayer(layer)) {
+        map.removeLayer(layer);
+      }
     }
   }
 
@@ -109,20 +165,33 @@
     }
   }
 
+  async function loadOutlineAndCoords() {
+    let response = await getLAOutlineAndCoords(tileSettings);
+    createOutlineGeojson(response["LA_outline"]);
+    setOutlineLayer();
+    map.jumpTo({
+      center: response["centroid"],
+      zoom: 11,
+    });
+  }
+
   async function loadNewLAScores() {
-    tileSettings["level"] = "Local authority";
+    // tileSettings["level"] = "Local authority";
     console.log("Loading LA scores for:", tileSettings["LA"]);
     // TODO add mode and purpose selection for LA scores
-    response = await getLABinnedScores(tileSettings);
+    let response = await getLABinnedScores(tileSettings);
     if (response == "LA not in LA list") {
     } else {
-      createOutlineGeojson(response["LA_outline"]);
-      setOutlineLayer();
-      LAScores = response["scores"];
-      map.jumpTo({
-        center: response["centroid"],
-        zoom: 12,
-      });
+      // createOutlineGeojson(response["LA_outline"]);
+      // setOutlineLayer();
+      LAScores["scores"] = response["scores"];
+      LAScores["LA"] = tileSettings["LA"];
+      LAScores["mode"] = tileSettings["mode"];
+      LAScores["purpose"] = tileSettings["purpose"];
+      // map.jumpTo({
+      //   center: response["centroid"],
+      //   zoom: 12,
+      // });
       geoJson = createSquareGeojson();
       map.getSource(source).setData(geoJson);
       setLayer();
@@ -131,15 +200,15 @@
 
   // when hovering shows LA decile
   map.on("mousemove", async function (e) {
-    if (tileSettings["level"] == "Local authority" && response) {
-      if (response.scores) {
+    if (tileSettings["level"] == "Local authority" && LAScores.scores) {
+      if (LAScores.scores) {
          // convert to EN
         let ll = [[e.lngLat.lng, e.lngLat.lat]];
         let ENCoords = ll.map((coords) =>
           proj4(wgs84, osgb, coords)
         );
         let centroid = `${(Math.floor(ENCoords[0][0] / 100) * 100) + 50}_${(Math.floor(ENCoords[0][1] / 100) * 100) + 50}`;
-        hoverDecile = response["scores"][centroid];
+        hoverDecile = LAScores.scores[centroid];
         if (hoverDecile == undefined) {
           hoverDecile = null;
         }
@@ -147,11 +216,11 @@
     }
   });
 
-  function createLLCoords(LAScores) {
+  function createLLCoords(scores) {
     // create longlat coordinates from the squareID
     let squareENCoordinates = [];
     let squareLADeciles = [];
-    Object.entries(LAScores).forEach(
+    Object.entries(scores).forEach(
       ([squareCentroid, squareLADecile]) => {
         let [centroidEasting, centroidNorthing] = squareCentroid
           .split("_")
@@ -183,7 +252,7 @@
   function createSquareGeojson() {
     // TODO: Add check so doesn't rerun on on already calculated scores
     // find square coords in LL format and custom weighted scores
-    let [squareLLCoordinates, squareScores] = createLLCoords(LAScores);
+    let [squareLLCoordinates, squareScores] = createLLCoords(LAScores.scores);
     let geojson = emptyGeojson();
 
     // assert they are of equal length

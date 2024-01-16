@@ -257,7 +257,16 @@ export async function getLABinnedScores(tileSettings) {
   resp = await fetch(endpt, {
     method: "POST",
     headers: jsonRequestHeaders("LAScores"),
-    body: JSON.stringify(tileSettings),
+    body: JSON.stringify({ ...tileSettings, ...{requestType: "LAScores"}}),
+  });
+  return await resp.json();
+}
+export async function getLAOutlineAndCoords(tileSettings) {
+  let resp;
+  resp = await fetch(endpt, {
+    method: "POST",
+    headers: jsonRequestHeaders("LAScores"),
+    body: JSON.stringify({ ...tileSettings, ...{requestType: "OutlineAndCoords"}}),
   });
   return await resp.json();
 }
@@ -273,8 +282,8 @@ function jsonRequestHeaders(APIcode) {
   };
 }
 
-const LAEndpt = "https://430e-35-242-168-104.ngrok-free.app";
-const autofillBusEndpt = "https://b686-34-89-73-233.ngrok-free.app";
+// const LAEndpt = "https://430e-35-242-168-104.ngrok-free.app";
+// const autofillBusEndpt = "https://b686-34-89-73-233.ngrok-free.app";
 
 // const squareInfoEndpt = "https://a147-35-242-177-130.ngrok-free.app";
 // const floodfillEndpt = "https://cec0-35-242-177-130.ngrok-free.app";
