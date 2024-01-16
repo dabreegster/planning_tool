@@ -42,18 +42,18 @@
         alert(`${requestJson}`);
         return;
       }
-      // responseJson = await callApi(requestJson);
-      // // TODO remove this if statement after prototyping phase
-      // if (responseJson.hasOwnProperty("too_expensive")) {
-      //   loading = false;
-      //   responseJson = null;
-      //   alert(
-      //     "This requests is currently over the threshold cost limit for the prototype"
-      //   );
-      // } else {
-      //   console.log(responseJson);
-      //   loading = false;
-      // }
+      responseJson = await callApi(requestJson);
+      // TODO remove this if statement after prototyping phase
+      if (responseJson.hasOwnProperty("too_expensive")) {
+        loading = false;
+        responseJson = null;
+        alert(
+          "This requests is currently over the threshold cost limit for the prototype"
+        );
+      } else {
+        console.log(responseJson);
+        loading = false;
+      }
     } else {
       alert("Please select the impact areas you are interested in");
       return;
