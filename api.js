@@ -101,6 +101,18 @@ export async function geojsonToApiPayload(features, login_username) {
       }
       route_number += 1;
     } else {
+      // catch if not set number of daily trips
+      if (!feature.properties.dailyTrips) {
+        return `Route ${feature.properties.name} is missing "Number of services on route per day"`;
+      }
+      // if a single trip then set frequency to 0
+      if (feature.properties.dailyTrips == 1) {
+        feature.properties.frequency = 0;
+      }
+      // if no frequency for multiple trips then raise error
+      if (!feature.properties.frequency && feature.properties.frequency != 0) {
+        return `Route ${feature.properties.name} is missing "Time between each of these services"`;
+      }
       let {
         fullatcoCodes,
         fullArrivalTimes,
